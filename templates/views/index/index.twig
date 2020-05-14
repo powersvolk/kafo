@@ -1,0 +1,14 @@
+{% include '@header' with header %}
+
+{% for post in posts %}
+    <article>
+        <h2>{{ post.title }}</h2>
+        {% if post.content is defined %}
+            {{ post.content }}
+        {% else %}
+            {% include '@editor' %}
+        {% endif %}
+    </article>
+{% endfor %}
+{% include '@pagination' with pagination|merge({modifier:''}) %}
+{% include '@footer' with footer %}

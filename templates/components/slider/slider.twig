@@ -1,0 +1,37 @@
+<div class="slider {{ modifier }} {{ class }}">
+    <div class="slider__items js-slider {{ sliderMod }}" data-arrows="{{ hasArrows|default(true) }}">
+        {% for slide in slides %}
+        <div class="slider__item">
+            {% if template %}
+                {% include template with slide %}
+            {% elseif slide.video %}
+                {% include '@video' with slide %}
+            {% else %}
+                {% if slide.fullImage %}
+                <a href="{{ slide.fullImage }}" data-custom-class="modaal--gallery" rel="product-gallery" class="slider__link js-modaal-gallery" {% if slide.alt %}data-modaal-desc="{{ slide.alt }}"{% endif %}>
+                {% endif %}
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ slide.image }}" data-sizes="auto" class="slider__image lazyload" {% if slide.alt %}alt="{{ slide.alt }}"{% endif %}>
+                {% if slide.fullImage %}
+                </a>
+                {% endif %}
+                {% if slide.title %}
+                    <div class="slide-copy">
+                        <h1>{{slide.title}}</h1>
+                        <p>{{slide.text}}</p>
+                        {% include '@button' with { element: 'a', link: slide.cta.link, text: slide.cta.text|default('Default text'), icon: slide.cta.icon|default('ic-open'), iconAlign: 'right', modifier: 'button--naked'} %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% if thumbnailNavigation %}
+    <div class="slider__thumbnails">
+        {% for index, slide in slides %}
+        <div class="slider__thumbnail" data-index="{{ index }}">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ slide.thumbnail }}" data-sizes="auto" class="slider__thumbnail-image lazyload" alt="{{ slide.alt }}">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,13 @@
+<div class="tooltip {{ modifier }} {{ class }}" data-tooltip-content="#{{ id }}">
+    {% if tooltip %}
+        {% set mod = tooltip %}
+    {% else %}
+        {% set mod = 'info' %}
+    {% endif %}
+    {% if not hideIcon %}
+        {% include '@icon' with { modifier: mod, class: 'tooltip__trigger' } %}
+    {% endif %}
+    <div id="{{ id }}" class="tooltip__content">
+        {{ content }}
+    </div>
+</div>

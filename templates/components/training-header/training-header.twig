@@ -1,0 +1,70 @@
+<div class="training-header">
+    <div class="training-header__content">
+        <div class="training-header__figure">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" alt="" class="training__img lazyload">
+        </div>
+        <div class= "training-header__card">
+            <div class="training-header__card__top">
+                <p class="training-header__title">{{ title }}</p>
+                <div class="training-header__info-box">
+                    {% for item in info %}
+                        <p class="training-header__info">{{ item.infoItem }}</p>
+                        <p class="training-header__subinfo">{{ item.infoItem2 }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="training-header__card__bottom">
+                {% include '@button' with {
+                    element: 'a',
+                    link: '#' ~ modal.id,
+                    text: button,
+                    modifier: 'button button--small button--block training-header__button',
+                    class: modal ? 'js-modaal',
+                    customAttributes: 'data-custom-class="' ~ modal.modifier ~ '"' }
+                %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if modal %}
+    {% set modalSecondaryContent %}
+        <h3 class="modaal__title modaal__title--small">{{ modal.trainingDetails.title }}</h3>
+        <ul class="modaal__list">
+            {% if modal.trainingDetails.price %}<li class="modaal__list-item"><span class="modaal__list-label">{{ modal.trainingDetails.priceLabel }}</span><br>{{ modal.trainingDetails.price }}</li>{% endif %}
+            {% if modal.trainingDetails.length %}<li class="modaal__list-item"><span class="modaal__list-label">{{ modal.trainingDetails.lengthLabel }}</span><br>{{ modal.trainingDetails.length }}</li>{% endif %}
+            {% if modal.trainingDetails.time %}<li class="modaal__list-item"><span class="modaal__list-label">{{ modal.trainingDetails.timeLabel }}</span><br>{{ modal.trainingDetails.time }}</li>{% endif %}
+            {% if modal.trainingDetails.location %}<li class="modaal__list-item"><span class="modaal__list-label">{{ modal.trainingDetails.locationLabel }}</span><br>{{ modal.trainingDetails.location }}</li>{% endif %}
+            {% if modal.trainingDetails.priceTotal %}<li class="modaal__list-item modaal__list-item--total"><span class="modaal__list-label">{{ modal.trainingDetails.priceTotalLabel }}</span><br>{{ modal.trainingDetails.priceTotal }}</li>{% endif %}
+            {% if modal.trainingDetails.next %}<li class="modaal__list-item modaal__list-item--last h-hidden-xs"><span class="modaal__list-label">{{ modal.trainingDetails.nextLabel }}</span><br>{{ modal.trainingDetails.next }}</li>{% endif %}
+        </ul>
+    {% endset %}
+    {% if modal.gravityForm %}
+        {% include '@modaal' with { modifier: modal.modifier, id: modal.id, title: modal.title, split: true, modalPrimaryContent: modal.gravityForm, modalSecondaryContent: modalSecondaryContent } %}
+    {% else %}
+        {% set modalPrimaryContent %}
+        <form>
+            <div class="form-group">
+                <div class="form-group__row">
+                    {% include '@select' with { modifier: '', class: '', label: modal.formData.size.label, id: modal.formData.size.id, options: modal.formData.size.options } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.name.label, id: modal.formData.name.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.email.label, id: modal.formData.email.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.phone.label, id: modal.formData.phone.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.address.label, id: modal.formData.address.id } %}
+                </div>
+                <div class="form-group__row form-group__row--last">
+                    {% include '@button' with { modifier: 'button--block', text: modal.formData.submit } %}
+                </div>
+            </div>
+        </form>
+        {% endset %}
+        {% include '@modaal' with { modifier: modal.modifier, id: modal.id, title: modal.title, split: true, modalPrimaryContent: modalPrimaryContent, modalSecondaryContent: modalSecondaryContent } %}
+    {% endif %}
+{% endif %}

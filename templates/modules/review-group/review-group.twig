@@ -1,0 +1,17 @@
+<div class="review-group">
+    <div class="h-container">
+        <div class="review-group__header">
+            <h2 class="review-group__title">{{ title }}</h2>
+            {% include '@select' with { id: 'reviews-sorting', class: 'review-group__sorting', modifier: 'form-select--naked', label: 'Sorteeri', options: sortOptions } %}
+            {% include '@button' with { text: insertReview, modifier: 'button--small button--yellow button--no-shadow', class: 'review-group__add js-add-reviews' } %}
+        </div>
+        <div class="review-group__reviews">
+            {% for review in reviews %}
+                {% include '@review' with review %}
+            {% endfor %}
+        </div>
+        <div class="review-group__footer">
+            {% include '@button' with { text: showMore, modifier: 'button--small button--white button--no-shadow review-group__load-more', class: 'js-load-reviews' } %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<section class="section {{ modifier }}" {% if id %}id="{{ id }}"{% endif %}>
+    {% if title %}
+    <div class="h-container">
+        {% block section_head %}
+            <div class="section__head">
+                {% if section_title %}
+                    {{ section_title }}
+                {% else %}
+                    {% block section_title %}
+                    <div class="section__grid">
+                        <div class="section__primary">
+                            {% if isMainTitle %}
+                            <h1 class="section__title">{{ title }}</h1>
+                            {% else %}
+                            <h2 class="section__title">{{ title }}</h2>
+                            {% endif %}
+                        </div>
+                        {% if description %}
+                        <div class="section__secondary">
+                            {% block section_description %}
+                                <div class="section__description">{{ description }}</div>
+                            {% endblock %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endblock %}
+                {% endif %}
+            </div>
+        {% endblock %}
+    </div>
+    {% endif %}
+    {% if isContainer %}
+    <div class="h-container">
+    {% endif %}
+        {% if section_content %}
+            {{ section_content }}
+        {% else %}
+            {% block section_content %}
+                {{ content }}
+            {% endblock %}
+        {% endif %}
+    {% if isContainer %}
+    </div>
+    {% endif %}
+</section>

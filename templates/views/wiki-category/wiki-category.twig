@@ -1,0 +1,21 @@
+{% include '@header' with header %}
+{% include '@submenu' with subMenu %}
+{% embed '@section' with { modifier: 'section--blog', isContainer: false } %}
+    {% block section_content %}
+        <div class="h-container">
+            {% include '@article-grid' with { columns: posts, modifier: '', hasFeatured: hasFeatured } %}
+        </div>
+        <div class="h-container">
+        {% if pagination is defined %}
+            {% include '@pagination' with pagination|merge({modifier:''}) %}
+        {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

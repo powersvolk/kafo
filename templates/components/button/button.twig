@@ -1,0 +1,5 @@
+<{{ element|default('button') }} {% if element == 'a' %} href="{{ link|default('#') }}" {% else %} type="{{ type|default('button') }}" {% endif %} {% if name is defined %} name="{{ name }}" {% endif %} {% if value %} value="{{ value }}" {% endif %} class="button {{ modifier }}{% if class %} {{ class }}{% endif %}"{% if customAttributes %} {{customAttributes}}{% endif %}{% if target %} target="{{ target }}"{% endif %}>
+    <span class="button__inner">{% if not iconAlign and icon %}{% include '@icon' with { modifier:icon, class: 'button__icon' } %}{% endif %}{% if text %}{{ text }}{% endif %}</span>
+    {% if icon  and iconAlign == 'right' %}{% include '@icon' with { modifier:icon, class: 'button__icon' } %}{% endif %}
+    <i class="button__bubble"></i>
+</{{ element|default('button') }}>

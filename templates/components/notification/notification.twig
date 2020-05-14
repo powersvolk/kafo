@@ -1,0 +1,8 @@
+<div class="notification {{ modifier }} {{ class }}">
+    <div class="notification__content js-note-content">
+        {{ content }}
+    </div>
+    <div class="notification__close js-note-close">
+        {% include '@icon' with { modifier: 'ic_40_close', class: 'notification__icon'} %}
+    </div>
+</div>

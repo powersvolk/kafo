@@ -1,0 +1,296 @@
+{% include '@header' with header %}
+
+{% embed '@section' with { title: false } %}
+    {% block section_content %}
+        <div class="tabs js-tabs">
+            <div class="intro intro--account">
+                <picture class="intro__figure">
+                    <source media="(min-width: 1921px)"
+                    data-srcset="{{ intro.bg.xl }}"
+                    />
+                    <source media="(min-width: 1441px)"
+                    data-srcset="{{ intro.bg.lg }} 1920w, {{ intro.bg.lg2x }} 3840w"
+                    />
+                    <source media="(min-width: 1201px)"
+                    data-srcset="{{ intro.bg.md }} 1440w, {{ intro.bg.md2x }} 2880w"
+                    />
+                    <source media="(min-width: 513px)"
+                    data-srcset="{{ intro.bg.sm }} 768w, {{ intro.bg.sm2x }} 1536w"
+                    />
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ intro.bg.xs }} 320w, {{ intro.bg.xs2x }} 640w" data-sizes="auto" alt="" class="intro__image lazyload">
+                </picture>
+                <div class="intro__inner">
+                    <div class="intro__content">
+                        <h1 class="intro__title">{{ intro.title }}</h1>
+                        <div class="intro__text">{{ intro.text }}</div>
+                    </div>
+                    <div class="intro__navigation">
+                        <ul class="tabs__nav-list">
+                            {% for key, accountTab in accountTabs %}
+                                <li class="tabs__nav-item intro__navigation-item">
+                                    <a href="{% if accountTab.link %}{{ accountTab.link }}{% else %}#{{ key }}{% endif %}"
+                                    class="tabs__nav-link intro__navigation-link{% if not accountTab.link %} js-tabs-control{% endif %} {% if accountTab.isCurrent %} is-current{% endif %}">
+                                        {{ accountTab.linkText }}
+                                        {% if accountTab.linkIcon %}
+                                            {% include '@icon' with {modifier: accountTab.linkIcon, class: 'intro__navigation-icon'} %}
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tabs__content">
+                <div class="tabs__content-item js-tabs-content{% if accountTabs.orders.isCurrent %} is-open{% endif %}"
+                     id="{{ accountTabs.orders.id }}">
+                    <div class="tabs__content-inner">
+                        {% if pendingOrders %}
+                            <div class="card card--order">
+                                <div class="card__content text">
+                                    <h4 class="card__title">{{ pendingOrders.title }}</h4>
+                                    <div class="accordion accordion--light js-accordion-group">
+                                        {% for key, pendingOrder in pendingOrders.orders %}
+                                            <div class="accordion__item js-accordion" id="orders-accordion-{{ key }}">
+                                                <a href="#orders-accordion-{{ key }}"
+                                                   class="accordion__header js-accordion-control">
+                                                    <div class="accordion__title">
+                                                        <div class="accordion__order-date">
+                                                            {{ pendingOrder.date }}
+                                                            <span class="accordion__order-year">{{ pendingOrder.year }}</span>
+                                                        </div>
+                                                        <div class="accordion__order-code">{{ pendingOrder.number }}</div>
+                                                        <div class="accordion__order-content">{{ pendingOrder.title }}</div>
+                                                        <div class="accordion__order-sum h-hidden-xs">{{ pendingOrder.sum }}</div>
+                                                    </div>
+                                                    {% include '@icon' with {modifier: 'chevron', class: 'accordion__icon'} %}
+                                                </a>
+                                                <div class="accordion__content js-accordion-content">
+                                                    <div class="accordion__inner">
+                                                        {% include '@order-details' with pendingOrder.details %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if completeOrders %}
+                            {% include '@separator' %}
+                            <div class="card card--order">
+                                <div class="card__content text">
+                                    <h4 class="card__title">{{ completeOrders.title }}</h4>
+                                    <div class="accordion accordion--light js-accordion-group">
+                                        {% for key, completeOrder in completeOrders.orders %}
+                                            <div class="accordion__item js-accordion" id="orders-accordion-{{ key }}">
+                                                <a href="#orders-accordion-{{ key }}"
+                                                   class="accordion__header js-accordion-control">
+                                                    <div class="accordion__title">
+                                                        <div class="accordion__order-date">
+                                                            {{ completeOrder.date }}
+                                                            <span class="accordion__order-year">{{ completeOrder.year }}</span>
+                                                        </div>
+                                                        <div class="accordion__order-code">{{ completeOrder.number }}</div>
+                                                        <div class="accordion__order-content">{{ completeOrder.title }}</div>
+                                                        <div class="accordion__order-sum">{{ completeOrder.sum }}</div>
+                                                    </div>
+                                                    {% include '@icon' with {modifier: 'chevron', class: 'accordion__icon'} %}
+                                                </a>
+                                                <div class="accordion__content js-accordion-content">
+                                                    <div class="accordion__inner">
+                                                        {% include '@order-details' with completeOrder.details %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="tabs__content-item tabs__content-item--white js-tabs-content{% if accountTabs.specials.isCurrent %} is-open{% endif %}"
+                     id="{{ accountTabs.specials.id }}">
+                    <div class="tabs__content-inner">
+                        <div class="profile__offers h-container">
+                            <h2 class="profile__offers-title text-uppercase"><strong>{{ productOffers.title }} <span
+                                            class="text-red text-medium">({{ productOffers.products|length }}
+                                        )</strong></span></h2>
+                            {% include '@separator' with { modifier: 'separator--medium' } %}
+                            <div class="grid">
+                                {% for productOffer in productOffers.products %}
+                                    <div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36">
+                                        {% include '@product' with productOffer %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabs__content-item js-tabs-content{% if accountTabs.account.isCurrent %} is-open{% endif %}"
+                     id="{{ accountTabs.account.id }}">
+                    <div class="tabs__content-inner">
+                        <div class="grid">
+                            <div class="grid__col--sm-6 grid__col--md-4">
+                                <div class="card card--form">
+                                    <div class="card__content card__content--padding-large">
+                                        <span class="card__title">{{ mydetails.account.title }}</span>
+                                        {% if mydetails.account.content %}
+                                            {{ mydetails.account.content }}
+                                        {% else %}
+                                            {% embed '@editable--compact' with { editableValue: { title: 'Nimi', content: 'Jari Polkupyörä' } } %}
+                                                {% block editable_content %}
+                                                    {% include '@textfield' with { label: 'Nimi', id: 'name', value: 'Jari Polkupyörä' } %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                            {% embed '@editable--compact' with { editableValue: { title: 'Email', content: 'jari@uwaga.ee' } } %}
+                                                {% block editable_content %}
+                                                    {% include '@textfield' with { label: 'Email', id: 'email', value: 'jari@uwaga.ee' } %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                            {% embed '@editable--compact' with { editableValue: { title: 'Telefon', content: '5578524' } } %}
+                                                {% block editable_content %}
+                                                    {% include '@textfield' with { label: 'Telefon', id: 'phone', value: '5578524' } %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                            {% embed '@editable--compact' with { editableValue: { title: 'Sünnipäev', content: '20.08.1987' } } %}
+                                                {% block editable_content %}
+                                                    {% include '@datepicker' with { label: 'Sünnikuupäev', icon: 'calendar', value: '20.08.1987' } %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                            {% embed '@editable--compact' with { editableValue: { title: 'Salasõna', content: '**************************' } } %}
+                                                {% block editable_content %}
+                                                    {% include '@textfield' with { label: 'Salasõna', id: 'password', value: '**************************' } %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <span class="form-group__label">{{ strings.accountEmailLabel }}</span>
+                                            <div class="form-group__row form-group__row--small-margin">
+                                                {% include '@check' with { modifier: '', class: 'js-editable-profile-list', isChecked: mydetails.account.specialSubscribe, label: mydetails.account.specialDeals|default("Saada mulle eripakkumisi"), name: 'list_special_offers', id: 'special-offers' } %}
+                                            </div>
+                                            <div class="form-group__row form-group__row--small-margin">
+                                                {% include '@check' with { modifier: '', class: 'js-editable-profile-list', isChecked: mydetails.account.newsSubscribe, label: mydetails.account.notifyAboutBlog|default("Teavita mind blogi uudistest"), name: 'list_news', id: 'news' } %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid__col--sm-6 grid__col--md-4">
+                                <div class="card card--form">
+                                    <div class="card__content card__content--padding-large">
+                                        <span class="card__title">{{ mydetails.addresses.title }}</span>
+                                        {% if mydetails.addresses %}
+                                            {{ mydetails.addresses.content }}
+                                        {% else %}
+                                            {% embed '@editable' with { editableValue: { title: 'Aadress #3 - KONTOR', content: 'Narva mnt. 29 <br> TALLINN <br> 55350 HARJUMAA', isDefault: true } } %}
+                                                {% block editable_content %}
+                                                    <div class="form-group">
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { id: 'firstName', value: 'Kontor' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { label: 'Aadress', id: 'address', value: 'Tartu, Tänav 8-' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { id: 'post-code', value: '55350' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { id: 'city', value: 'Tallinn' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { id: 'county', value: 'Harjumaa' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center">
+                                                            {% include '@textfield' with { id: 'county', value: 'Harjumaa' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center form-group__row--double">
+                                                            {% include '@check' with { label: "Sea vaikimisi aadressiks", id: 'set-default' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center form-group__row--double">
+                                                            {% include '@button' with { modifier: '', text: 'Salvesta', class: 'js-save-editable' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--align-center form-group__row--last">
+                                                            {% include '@button' with { modifier: 'button--naked button--naked-gray', text: 'Kustuta' } %}
+                                                        </div>
+                                                    </div>
+                                                {% endblock %}
+                                            {% endembed %}
+                                            {% embed '@editable' with { editableValue: { title: 'Aadress #3 - KONTOR', content: 'Narva mnt. 29 <br> TALLINN <br> 55350 HARJUMAA' } } %}
+                                                {% block editable_content %}
+                                                    <div class="form-group">
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { id: 'firstName', value: 'Kontor' } %}
+                                                        </div>
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { label: 'Aadress', id: 'address', value: 'Tartu, Tänav 8-' } %}
+                                                        </div>
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { id: 'post-code', value: '55350' } %}
+                                                        </div>
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { id: 'city', value: 'Tallinn' } %}
+                                                        </div>
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { id: 'county', value: 'Harjumaa' } %}
+                                                        </div>
+                                                        <div class="form-group__row">
+                                                            {% include '@textfield' with { id: 'county', value: 'Harjumaa' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--double">
+                                                            {% include '@check' with { label: "Sea vaikimisi aadressiks", id: 'set-default' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--double">
+                                                            {% include '@button' with { modifier: '', text: 'Salvesta', class: 'js-save-editable' } %}
+                                                        </div>
+                                                        <div class="form-group__row form-group__row--last">
+                                                            {% include '@button' with { modifier: 'button--naked button--naked-gray', text: 'Kustuta' } %}
+                                                        </div>
+                                                    </div>
+                                                {% endblock %}
+                                            {% endembed %}
+                                        {% endif %}
+                                        {{ mydetails.addresses.contentNew }}
+                                        <br>
+                                        <br>
+                                        {% include '@button' with { element: 'a', modifier: 'button--add', class: 'js-editable-new-add', text: mydetails.addresses.addNew|default('Lisa uus aadress'), icon: 'plus' } %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid__col--md-4">
+                                <div class="card card--form">
+                                    <div class="card__content card__content--padding-large">
+                                        <span class="card__title">{{ mydetails.company.title }}</span>
+                                        {{ mydetails.company.content }}
+                                        {% if mydetails.company.canAdd %}
+                                            <br>
+                                            <br>
+                                            {% include '@button' with { element: 'a', modifier: 'button--add', class: 'js-editable-new-add', text: mydetails.company.addNew|default('Lisa firma andmed'), icon: 'plus' } %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% if related %}
+    <div class="confirmation-page__product-list">
+        <div class="h-container">
+            <div class="confirmation-page__product-list-inner">
+                <div class="confirmation-page__product-list-top">
+                    <h4 class="h3 h3--alt"> {{ related.title }} </h4>
+                    {% include '@button' with { element: 'a', link: related.button.link, modifier: 'button--small button--gray', icon: '', text: related.button.text, class: 'confirmation-page__more-button' } %}
+                </div>
+                {% include '@product-grid' with related.grid|merge({class: 'js-product-slider'}) %}
+                {% include '@button' with { element: 'a', link: related.button.link, modifier: 'button--small button--gray', icon: '', text: related.button.text, class: 'confirmation-page__more-button-2' } %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% include '@brands-list' with footerBrands %}
+{% include '@footer' with footer %}

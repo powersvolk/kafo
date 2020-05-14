@@ -1,0 +1,54 @@
+{% include '@header' with header %}
+<div class="h-hidden-xs">
+    {% include '@submenu' with subMenu %}
+</div>
+{% embed '@section' with { isContainer: true, title: recipeTitle, modifier: 'section--recipe section--bottom-padding' } %}
+    {% block section_content %}
+        <div class="grid">
+            <div class="grid__col--sm-2 grid__col--md-1 grid__col--offset-md-1 h-hidden-xs">
+                {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+            </div>
+            <div class="grid__col--xs-12 grid__col--sm-8 grid__col--md-8">
+                <div class="text text-medium">
+                    {% if coverImage %}
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ coverImage }}" data-sizes="auto" class="h-img-fluid lazyload">
+                    {% endif %}
+                    {{ content }}
+                    {% if recipeList %}
+                        {% include '@recipe-list' with recipeList %}
+                    {% endif %}
+                    {% if instructionsText %}
+                        {% if instructionsTitle %}<h2>{{ instructionsTitle }}</h2>{% endif %}
+                        {{ instructionsText }}
+                    {% endif %}
+                </div>
+                <div class="h-hidden h-visible-xs">
+                    {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+                </div>
+                {% include '@author' with author %}
+                {% include '@tags' with tags %}
+            </div>
+            <div class="grid__col--sm-2 grid__col--md-2 h-hidden-xs">
+                {% include '@postmeta' with postmeta %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { title: relatedTitle, isContainer: true, modifier: 'section--related section--related-blog section--bottom-padding' } %}
+    {% block section_content %}
+        <div class="js-slider js-related-blog slider--related-blog">
+            {% for article in articles %}
+                <div class="product-grid__item">
+                    {% include '@article' with { modifier: '', link: article.link, image: article.image, title: article.title, date: article.date } %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

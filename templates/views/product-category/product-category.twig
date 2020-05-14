@@ -1,0 +1,146 @@
+{% include '@header' with header %}
+
+
+
+{% if (type_template == 'jura') %}
+
+<div class="category-new-top" {% if (wishlist_count == '0') %} style="display:none;" {% endif %}>
+   <div class="h-container">
+        <div class="category-new-top__inner">
+            <div class="category-new-top__in">
+           
+                <h4 class="category-new-top__subtitle">{{ lisasid }}</h4> 
+                <h2 class="category-new-top__title">{{ compare_name }}</h2> 
+             </div>
+            <div class="category-new-top__btn">
+                <a href="{{ url }}?action=yith-woocompare-remove-product&amp;id=all" data-product_id="all" class="button category-new-top-btn1 yith_woocompare_clear" rel="nofollow">
+                    <span class="button__inner">{{ tule }}</span>
+                    <i class="button__bubble"></i>
+                </a>
+				<div class="button category-new-top-btn2">
+					
+					{% filter shortcodes %}
+						[yith_woocompare_counter]
+					{% endfilter %}
+				</div>
+				
+				<!-- <a href="" class="button category-new-top-btn2" data-custom-class=""> -->
+                    <!-- <span class="button__inner">Vaata VÕRDLUST (2)</span> -->
+                    <!-- <i class="button__bubble"></i> -->
+                <!-- </a> -->
+            </div>
+        </div>
+   </div>
+</div>
+
+
+<div class="category-new">
+    <div class="h-container">
+
+        <div class="category-new__inner">
+            <div class="category-new__menu">
+                <div class="category-new__logo">
+                    <img src="/wp-content/themes/kafo/inc/img/layer1.svg">
+                    <a href="#" class="filter-section__trigger category-new__trigger">
+                        <div class="filter-section__trigger-text">
+                            <span class="filter-section__trigger-text-inner">{{ filter_name }}</span>
+                        </div>
+                        <div class="filter-section__trigger-box">
+                            <svg class="icon filter-section__trigger-icon">
+                                <use xlink:href="/wp-content/themes/kafo/inc/svg/global.1.2.9.svg#filter"></use>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="category-new__menu-inner">
+					 <div class="category-new__menu__items">
+                        <h3 class="category-new__subtitle">
+                            {{ category_title }}
+                        </h3>
+						{% if menu_cat %} 
+                        <ul class="category-new__sublist">
+							{% for cat in menu_cat %}
+						    <li class="{% if (cat.current_url ==  cat.link) %}active{% endif %}">
+                                <a href="{{ cat.link }}">{{ cat.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+						{% endif %}
+                    </div>
+                    {%  if filterSectionData is defined %}
+						{% include '@filter-section' with filterSectionData %}
+					{% else %}
+						{% include '@intro' with intro %}
+					{% endif %}
+					
+                </div>
+            </div>
+      
+            <div class="category-new__list">
+                <h1 class="category-new__title">{{ category_title }}</h1>
+                {% embed '@section' %}
+					{% block section_content %}
+						{%  include '@view-product-category--list' %}
+						{% if pagination is defined %}
+							{% include '@pagination' with pagination %}
+						{% endif %}
+					{% endblock %}
+				{% endembed %}
+
+            </div>
+
+
+        </div>
+
+        
+    </div>
+</div>
+{% else %}
+
+	{%  if filterSectionData is defined %}
+		{% include '@filter-section' with filterSectionData %}
+	{% else %}
+		{% include '@intro' with intro %}
+	{% endif %}
+
+
+
+
+	{% embed '@section' with { modifier: 'section--products', isContainer: true } %}
+		{% block section_content %}
+			{%  include '@view-product-category--grid' %}
+			{% if pagination is defined %}
+				{% include '@pagination' with pagination %}
+			{% endif %}
+		{% endblock %}
+	{% endembed %}
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if emo %}
+{% include '@emo' with emo %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+
+{% include '@footer' with footer %}

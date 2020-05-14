@@ -1,0 +1,400 @@
+{% if isDemo %}
+    <a href="#{{ id }}" title="{{ title }}" class="{{ modalTrigger|default('js-modaal') }}" data-custom-class="{{ modifier }}">
+        {{ modalLink|default('Open modal') }}
+    </a>
+
+    {% set modalPrimaryContent %}
+        {% if collapsed == true %}
+            {% include '@filter' with filterData %}
+        {% elseif split == true %}
+            {% if meeting %}
+            <form>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@select' with { label: '', id: 'meeting_length', options: [
+                            {
+                            name: "Lühike koosolek (30:00 / 250€+km)",
+                            value: "1"
+                            },
+                            {
+                            name: "Normaalne koosolek (1:00 / 500€+km)",
+                            value: "2"
+                            },
+                            {
+                            name: "Pikk koosolek (3:00 / 1000€+km)",
+                            value: "3"
+                            }
+                        ] } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Nimi', id: 'firstName' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'E-mail', id: 'email' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Telefon', id: 'phone' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@datepicker' with { modifier: '', class: '', label: 'Toimumisaeg', id: 'datepicker', icon: 'calendar' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@button' with { modifier: 'button--block', class: 'modaal__submit-button', text: 'Tee eelbroneering' } %}
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <form>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@select' with { modifier: '', class: '', label: 'Inimeste arv', id: 'people', options: [{ 'name': '1','value': '1'},{'name': '2','value': '2'},{'name': '3','value': '3'}] } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Kontaktisiku nimi', id: 'firstName' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'E-mail', id: 'email' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Telefon', id: 'phone' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Aadress', id: 'address' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@button' with { modifier: 'button--block', class: 'modaal__submit-button', text: 'Registreeri koolitusele' } %}
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        {% elseif bordered == true %}
+            <form>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Mitu tassi päevas?', id: 'firstName' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@select' with { label: 'Hind või maitse?', id: 'priceTaste', options: [{name: "Hind", value: "1"},{name: "Maitse",value: "2"}] } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@select' with { label: 'Kas soovid ise poes käia?', id: 'shopping', options: [{name: "Jah",value: "1"},{name: "Ei",value: "2"}] } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@button' with { modifier: 'button--block', class: 'modaal__submit-button', text: 'Näita tulemust' } %}
+                    </div>
+                </div>
+            </form>
+        {% elseif thankyou == true %}
+            <div class="text text-centered">
+                <p><b>Kuidas nüüd edasi tegutseda?</b></p>
+                <p>Lihtne! Varsti võtab keegi ühendust meie kliendihalduriga ja juba saadki enda klientidel lasta mekkida ülihead kohvi.</p>
+            </div>
+        {% elseif denied == true %}
+            <div class="text text-centered">
+                {% include '@button' with { modifier: 'button--block', class: 'modaal__submit-button', text: button } %}
+            </div>
+        {% elseif application == true %}
+            <div class="text">
+                <p>Tehke kohe eeltaotlus, et teada saada, kas soovitud tingimustel järelmaksu saaksite.<br>
+                Antud taotlus ei kohusta Teid millekski, ega tekita Teile kohustusi. Kinnituse saamisel ja tellimuse kinnitusel vaadetakse uuesti teie taotlus üle.</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Ees- ja perekonnanimi', id: 'name' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Isikukood', id: 'id-code' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Igakuine sissetulek (EUR)', id: 'income' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { label: 'Igakuised laenu- ja liisingumaksed (EUR)', id: 'loans' } %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        <div class="grid text-medium">
+                            <div class="grid__col--sm-6">Ostukorvi maksumus</div>
+                            <div class="grid__col--sm-6"><b>2819,00 €</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@select' with { id: 'sissemakse', label: 'Sissemakse (EUR)', options: [{name: '100', value: 100}, {name: '200', value: 200}, {name: '300', value: 300}, {name: '400', value: 400}] } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@select' with { id: 'periood', label: 'Periood (kuud)', options: [{name: '1', value: 1}, {name: '2', value: 2}, {name: '3', value: 3}, {name: '4', value: 4}] } %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        <div class="grid text-medium">
+                            <div class="grid__col--sm-6">Järelmaksu summa</div>
+                            <div class="grid__col--sm-6"><b>24 x 89,43 €</b></div>
+                        </div>
+                    </div>
+                    <div class="form-group__row">
+                        <div class="grid text-medium">
+                            <div class="grid__col--sm-6">Toote hind järelmaksuga</div>
+                            <div class="grid__col--sm-6"><b>3086,00 €</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@check' with { id: 'terms-and-conditions', label: 'Kinnitan, et minu poolt esitatud andmed on täielikud ja õiged. Olen teadlik ja annan oma nõusoleku Tevo Kaup AS-le minu poolt esitatud kõikide andmete töötlemiseks ja edastamiseks Tevo Kaup AS poolt valitud finantsteenuse pakkujale. Olen teadlik ja annan oma nõusoleku finantsteenuse pakkujale, minu poolt esitatud ja finantsteenuse pakkuja poolt kogutud minu isikuandmete töötlemiseks, ulatuses ja mahus, mis on vajalik minu maksevõime hindamiseks ja minuga osamaksetega tasumise lepingu sõlmimiseks.', name: 'terms-and-conditions' } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@button' with { modifier: 'button--block', class: 'modaal__submit-button', text: 'Saada taotlus' } %}
+                    </div>
+                </div>
+            </form>
+            <br>
+            <br>
+            {% include '@accordion' with { modifier: 'accordion--simple', id: 'modal-accordion', accordionItems: [{title: 'Järelmaksu tingimused', content: '<div class="text"><ul><li>Vanus 21 kuni 70a (k.a);</li><li>Regulaarne tõendatav kuu sissetulek vähemalt 240 EURi.  Regulaarse sissetuleku moodustab näit: töötasu, pension,  emapalk.</li><li>Eelnev maksekäitumine on korrektne ning puuduvad  aktiivsed maksehäireid.</li><li>Kehtiv elamis- ja tööluba (välismaalase passi korral).  Isikut tõendava dokumendina aktsepteerime: EV passi,  EV Välismaalase passi ja ID-kaarti.</li></ul><p>Tähelepanu! Tegemist on finantsteenusega. Enne lepingu sõlmimist soovitame Teil tutvuda finantsteenuse tingimustega, konsulteerida spetsialistiga ning tutvuda krediidi kulukuse määra näidistega!</p> <p>Näitlikud krediidi kulukuse määrad eeldusel, et tasute maksed õigeaegselt:</p> <p><em>Pakutava järelmaksu krediidikulukuse määr on 24,22% aastas järgmistel näidistingimustel: järelmaksu summa 2000€, lepinguperiood kuudes 48, intressimäär 11,9% ostusummalt, sissemakse 0%, lepingutasu 15€, haldustasu 0,9€, igakuine osamakse 62,85€, krediidi kogukulu 3016,80 €. Teenuse pakkujaks on Inbank AS.</em></p>' }] } %}
+        {% endif %}
+    {% endset %}
+
+    {% set modalSecondaryContent %}
+        {% if split == true %}
+            {% if meeting %}
+            <h3 class="modaal__title modaal__title--small">Koosolek lühike</h3>
+            <ul class="modaal__list">
+                <li class="modaal__list-item"><span class="modaal__list-label">Hind</span><br>200€ + km</li>
+                <li class="modaal__list-item"><span class="modaal__list-label">Kestvus</span><br>3h + 45min koolitus</li>
+                <li class="modaal__list-item"><span class="modaal__list-label">Asukoht</span><br>Tammsaare tee 47. Tallinn (KAFO peakontor)</li>
+                <li class="modaal__list-item h-hidden-xs"><span class="modaal__list-label">Mis edasi?</span><br>Saadame sinu emailile kinnituse koos arvega ja täpsustame ajagraafikud.</li>
+            </ul>
+            {% else %}
+            <h3 class="modaal__title modaal__title--small">Koolitus Barista</h3>
+            <ul class="modaal__list">
+                <li class="modaal__list-item"><span class="modaal__list-label">Hind</span><br>90€/1 inimene</li>
+                <li class="modaal__list-item"><span class="modaal__list-label">Eeldatav aeg</span><br>22.09.2017, kell 15:00</li>
+                <li class="modaal__list-item"><span class="modaal__list-label">Asukoht</span><br>Tammsaare tee 47. Tallinn</li>
+                <li class="modaal__list-item modaal__list-item--total"><span class="modaal__list-label">Hind kokku</span><br>90 €</li>
+                <li class="modaal__list-item h-hidden-xs"><span class="modaal__list-label">Mis edasi?</span><br>Saadame sinu emailile kinnituse koos arvega ja täpsustame ajagraafikud.</li>
+            </ul>
+            {% endif %}
+        {% endif %}
+    {% endset %}
+
+    {% set content %}
+        {% if terms %}
+        <div class="text">
+            <p>Veebipoe ABCD.EE (edaspidi Veebipood) omanik on OÜ _______ (registrikood _______), asukohaga _______.</p>
+            <p>Müügilepingu kehtivus, kauba- ja hinnainfo</p>
+            <p>Müügitingimused kehtivad Veebipoest kaupade ostmisel.<br>
+            Veebipoes müüdavate toodete hinnad on märgitud toodete juurde. Hinnale lisandub tasu kauba kättetoimetamise eest. Kauba kättetoimetamise tasu sõltub ostja asukohast ning kättetoimetamise viisist. Kättetoimetamise tasu kuvatakse ostjale tellimuse vormistamisel. Teave kauba kohta on esitatud Veebipoes vahetult kauba juures.</p>
+            <p>Tellimuse vormistamine</p>
+            <p>Kauba tellimiseks tuleb lisada soovitud tooted ostukorvi. Tellimuse vormistamiseks tuleb täita nõutud andmeväljad ning valida sobiv toodete kohaletoimetamise viis. Seejärel kuvatakse ekraanile tasu suurus, mille saab tasuda pangalingi kaudu või muu makselahenduse abil.</p>
+            <p>Leping jõustub alates tasumisele kuuluva summa laekumisest Veebipoe arvelduskontole. Kui tellitud kaupa ei ole võimalik tarnida seoses kauba lõppemisega või muul põhjusel, teavitatakse sellest ostjat esimesel võimalusel ning tagastatakse tasutud raha (sh kauba kättetoimetamise kulud) viivitamata, kuid mitte hiljem kui 14 päeva jooksul teate saatmisest.</p>
+            <p>Kohaletoimetamine</p>
+            <p>Kaupu saadetakse järgmistesse riikidesse: _______</p>
+            <p>Kauba saatmiskulud kannab ostja ning vastav hinnainfo on kuvatud saatmisviisi juures. Eestisisesed saadetised jõuavad üldjuhul ostja määratud sihtpunkti 3-7 tööpäeva jooksul alates müügilepingu jõustumist. Väljaspool Eestis toimub kohaletoimetamine _______ kalendripäeva jooksul.</p>
+            <p>Lisa õiged tingimused</p>
+        </div>
+        {% elseif form %}
+        <form>
+            <div class="form-group">
+                {% if formData.name %}
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: formData.name.label, id: formData.name.id } %}
+                </div>
+                {% endif %}
+                {% if formData.email %}
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: formData.email.label, id: formData.email.id } %}
+                </div>
+                {% endif %}
+                {% if formData.phone %}
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: formData.phone.label, id: formData.phone.id } %}
+                </div>
+                {% endif %}
+                {% if formData.date %}
+                <div class="form-group__row">
+                    {% include '@datepicker' with { modifier: '', class: '', label: formData.date.label, id: formData.date.id, icon: formData.date.icon } %}
+                </div>
+                {% endif %}
+                {% if formData.rating %}
+                <div class="form-group__row form-group__row--double">
+                    {% include '@rating' with { modifier: '', result: formData.rating.result } %}
+                </div>
+                {% endif %}
+                {% if formData.question %}
+                <div class="form-group__row form-group__row--clean">
+                    {% include '@textarea' with { modifier: 'form-textarea--small', class: '', label: formData.question.label, id: formData.question.id } %}
+                </div>
+                {% endif %}
+                {% if formData.notes %}
+                <div class="form-group__row form-group__row--clean">
+                    {% include '@textarea' with { modifier: 'form-textarea--small', class: '', label: formData.notes.label, id: formData.notes.id } %}
+                </div>
+                {% endif %}
+                <div class="form-group__row">
+                    {% include '@button' with { modifier: 'button--block', text: formData.submit } %}
+                </div>
+            </div>
+        </form>
+        {% elseif order %}
+        <div class="order-package">
+            {% if content %}
+            <div class="text">
+                {{ content }}
+            </div>
+            {% endif %}
+            {% if formData %}
+            <form class="order-package__form">
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: formData.name.label, id: formData.name.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: formData.email.label, id: formData.email.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: formData.phone.label, id: formData.phone.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        <a href="#" class="button button--block js-button-trigger">{{ formData.submit }}</a>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+            {% if gravityForm %}
+                {{ gravityForm }}
+            {% endif %}
+        </div>
+        {% elseif package %}
+            <div class="package-details">
+                <div class="grid">
+                    <div class="grid__col--sm-5">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ detailsModal.image.srcset }}" alt="{{ detailsModal.image.alt }}" data-sizes="auto" class="h-img-fluid lazyload">
+                    </div>
+                    <div class="grid__col--sm-7">
+                        <h3 class="package-details__title">{{ detailsModal.title }}</h3>
+                        <div class="package-details__content">
+                        {% if detailsModal.monthlyPricing %}{{ detailsModal.monthlyPricing }}<br>{% endif %}
+                        {% if detailsModal.cuplyPricing %}{{ detailsModal.cuplyPricing }}<br>{% endif %}
+                        {% if detailsModal.buyNow %}{{ detailsModal.buyNow }}<br>{% endif %}
+                        </div>
+                        <a href="#{{ orderButton.link }}" class="button button--small button--block-xs {% if orderModal %}js-modaal{% endif %}" data-custom-class="{{ orderModal.modifier }}">{{ detailsModal.button }}</a>
+                    </div>
+                </div>
+            </div>
+            {% if detailsModal.detailsContent %}
+            <div class="text">
+            {{ detailsModal.detailsContent }}
+            </div>
+            {% endif %}
+            <hr>
+            {% if detailsModal.contents %}
+            <div class="package-contents">
+                <h3 class="package-contents__title">{{ detailsModal.contents.title }}</h3>
+                <div class="package-contents__header">
+                    <div class="package-contents__product-figure">{{ detailsModal.contents.labels.name }}</div>
+                    <div class="package-contents__product-amount">{{ detailsModal.contents.labels.amount }}</div>
+                    <div class="package-contents__product-price">{{ detailsModal.contents.labels.price }}</div>
+                </div>
+                <div class="package-contents__list">
+                {% for item in detailsModal.contents.list %}
+                    {% if not item.extra %}
+                    <div class="package-contents__list-item">
+                        <div class="package-contents__product-figure">
+                            <img class="package-contents__product-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ item.image }}" data-sizes="auto">
+                            <span class="package-contents__product-title">{{ item.title }}</span>
+                        </div>
+                        <div class="package-contents__product-amount"><div class="package-contents__product-data">{{ item.amount }} tk</div></div>
+                        <div class="package-contents__product-price"><div class="package-contents__product-data">{{ item.price }} €</div></div>
+                    </div>
+                    {% else %}
+                    <div class="package-contents__list-item package-contents__list-item--extra">
+                        <div class="package-contents__product-figure">
+                            <img class="package-contents__product-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ item.image }}" data-sizes="auto">
+                            <span class="package-contents__product-title">{{ item.title }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if detailsModal.additions %}
+            <div class="package-additions">
+                <h3 class="package-additions__title">{{ detailsModal.additions.title }}</h3>
+                <div class="text">
+                {{ detailsModal.additions.content }}
+                </div>
+            </div>
+            {% endif %}
+            {% if detailsModal.terms %}
+            <div class="package-terms">
+                {% include '@accordion' with { modifier: 'accordion--simple', class: '', id: 'meeeeeh', accordionItems: [{ title: detailsModal.terms.title, content: detailsModal.terms.content, modifier: 'text' }] } %}
+            </div>
+            {% endif %}
+        {% elseif default %}
+        <div class="text">
+            <p><b>Kuidas nüüd edasi tegutseda</b></p>
+            <p>Lihtne! Võta ühendust meie kliendihalduriga ja varsti saadki enda klientidel lasta mekkida ülihead kohvi.</p>
+            <p>6518885<br>
+            <a href="#">horeca@kafo.ee</a></p>
+        </div>
+        {% endif %}
+    {% endset %}
+
+{% endif %}
+
+{% if video == true %}
+    {% set content %}
+        {% include '@video' with { image: videoContent.image, video: videoContent.video} %}
+    {% endset %}
+    {% set title = false %}
+{% endif %}
+
+<div class="h-hidden" id="{{ id }}">
+    <div class="modaal__content {% if video == true %} modaal__video {% endif %}">
+        {% if split %}
+        <div class="grid grid--no-gutter grid--equalheight modaal__split-grid">
+            <div class="grid__col--md-8">
+                <div class="modaal__content-inner modaal__content-inner--primary">
+                    {% if headerIcon %}{% include '@icon' with { modifier:headerIcon, class:'modaal__header-icon' }%}{% endif %}
+                    <h3 class="modaal__title">{{ title }}</h3>
+                    {{ modalPrimaryContent }}
+                </div>
+            </div>
+            <div class="grid__col--md-4">
+                <div class="modaal__content-inner modaal__content-inner--secondary">
+                    {{ modalSecondaryContent }}
+                </div>
+            </div>
+            {{ modalFooter }}
+        </div>
+        {% else %}
+            {% if headerIcon %}{% include '@icon' with { modifier:headerIcon, class:'modaal__header-icon' }%}{% endif %}
+            {% if title %}
+                <h3 class="modaal__title">{{ title }}</h3>
+            {% endif %}
+            {% if content %}
+                {{ content }}
+            {% endif %}
+            {% if products %}
+                <div class="grid">
+                    {% for product in products %}
+                        <div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36 grid__col--bottom-sm">
+                            {% include '@product' with product|merge({ inModal: true }) only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if filterData is defined %}
+                {% include '@filter' with filterData %}
+            {% endif %}
+            {% if modalPrimaryContent %}
+                {{ modalPrimaryContent }}
+            {% endif %}
+        {% endif %}
+    </div><!-- /.modaal__content -->
+</div><!-- /div -->

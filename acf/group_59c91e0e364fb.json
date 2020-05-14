@@ -1,0 +1,72 @@
+{
+    "key": "group_59c91e0e364fb",
+    "title": "User settings",
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gtap-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567769564,
+    "fields": [
+        {
+            "key": "field_59c91e18b37c1",
+            "label": "Offers title",
+            "name": "product_offers_title",
+            "type": "text",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_59c91e2cb37c2",
+            "label": "Offers products",
+            "name": "product_offers_ids",
+            "type": "relationship",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": "",
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        }
+    ]
+}

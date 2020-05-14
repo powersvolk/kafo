@@ -1,0 +1,19 @@
+{% set defaultForm %}
+<form action="">
+    <div class="grid">
+        <div class="grid__col--xs-12">
+            {% include '@textfield' %}
+        </div>
+        <div class="grid__col--xs-12">
+            {% include '@textfield' %}
+        </div>
+        <div class="grid__col--xs-12">
+            {% include '@textfield' %}
+        </div>
+        <div class="grid__col--xs-12">
+            {% include '@textfield' %}
+        </div>
+    </div>
+</form>
+{% endset %}
+{{ form|default(defaultForm) }}

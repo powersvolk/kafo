@@ -1,0 +1,12 @@
+<div class="brag-container {{ modifier }}">
+    <div class="brag-bar">
+    {% for brag in brags %}
+        <div class="brag-bar__item brag-bar__item-{{ loop.index }}">
+            <div>
+            {% include '@icon' with { modifier: brag.icon, class: 'brag-bar__item-icon' } %}
+            </div>
+            <p class="brag-bar__item-text">{{ brag.text }}</p>
+        </div>
+    {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,63 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@contact' with hero %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: '' } %}
+    {% block section_content %}
+        <div class="accordion accordion--full accordion--padded">
+            <div class="accordion__item js-accordion" id="principles">
+                <a href="#principles" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ principles.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        {% if principles.title and principles.content %}
+                        <div class="h-container">
+                            <div class="grid grid--center-sm">
+                                <div class="grid__col--sm-9 grid__col--md-5">
+                                    <div class="text text-medium text-centered">
+                                        {% if principles.logo.srcset %}
+                                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ principles.logo.srcset }}" alt="{{ principles.logo.alt }}" class="h-img-fluid lazyload">
+                                        {% endif %}
+                                        {% if principles.content %}
+                                            {{ principles.content }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion accordion--full">
+            <div class="accordion__item accordion__item--second js-accordion" id="team-members">
+                <a href="#team-members" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ team.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        <div class="h-container">
+                            {% include "@team-list" with team.list %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

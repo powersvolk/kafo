@@ -1,0 +1,28 @@
+<div class="brands-list {{ modifier }}">
+    <div class="h-container">
+        <div class="brands-list__grid">
+            <div class="brands-list__inner">
+                {% if brandLogos %}
+                <ul class="brands-list__list">
+                    {% for brand in brandLogos %}
+                    <li class="brands-list__item">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ brand.image }}" alt="{{ brand.alt }}" data-sizes="auto" class="brands-list__img lazyload">
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <a href="{{ link }}" class="brands-list__more h-hidden-xs h-hidden-sm">
+                    {% include '@icon' with { modifier: 'ic_24_arrow', class: 'brands-list__more-icon' } %}
+                </a>
+            </div>
+            {% if cta %}
+            <div class="brands-list__cta">
+                {% include '@button' with { text: cta, element: 'a', link: link, modifier: 'button--white button--small button--block-xs', class: 'brands-list__button '~ btnClass, customAttributes: modalClass, icon: 'ic_40_beans', iconAlign: 'right' } %}
+            </div>
+            {% endif %}
+            {% if modal %}
+                {% include '@modaal' with modal %}
+            {% endif %}
+        </div>
+    </div>
+</div>

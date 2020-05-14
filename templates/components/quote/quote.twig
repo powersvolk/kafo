@@ -1,0 +1,13 @@
+<div class="quote {{ modifier }}">
+    <div class="h-container">
+        <div class="quote__grid">
+            <div class="quote__quote">
+                {% include '@icon' with { modifier: 'ic_40_quotation', class: 'quote__icon' } %}
+            </div>
+            <div class="quote__text">{{ text }}</div>
+            <div class="quote__cta">
+                {% include '@button' with { element: 'a', link: button.link, text: button.text, modifier: 'button--icon button--naked button--block-xs', class: 'quote__button', icon: 'ic_24_arrow', iconAlign: 'right' } %}
+            </div>
+        </div>
+    </div>
+</div>

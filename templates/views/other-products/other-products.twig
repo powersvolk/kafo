@@ -1,0 +1,25 @@
+{% include '@header' with header %}
+{% include '@intro' with intro %}
+{% embed '@section' with { modifier: 'section--products', isContainer: true } %}
+    {% block section_content %}
+        <div class="grid">
+            {% for product in products %}
+                <div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36">
+                    {% include '@product' with product %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}
+{% if emo %}
+    {% include '@emo' with emo %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

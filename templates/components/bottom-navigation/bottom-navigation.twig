@@ -1,0 +1,10 @@
+<div class="bottom-navigation {{ modifier }} {{ class }} {% if bottomNavJs %} {{ bottomNavJs }} {% endif %}">
+    <div class="bottom-navigation__items">
+        {% for item in bottomItems %}
+        <a href="{{ item.link }}" class="bottom-navigation__item {% if item.isActive %}is-active{% endif %}">
+            {% include '@icon' with { 'modifier': item.icon, 'class': 'bottom-navigation__icon' } %}
+            <span class="bottom-navigation__text">{{ item.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>

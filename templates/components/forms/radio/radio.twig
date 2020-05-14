@@ -1,0 +1,31 @@
+<div class="form-radio {{ modifier }}">
+    {% if withInput %}
+        <input type="radio" id="{{ id }}" name="{{ name }}" class="form-radio__input">
+        <input class="form-radio__value" type="text" placeholder="Sisesta summa" maxlength="7">
+        <div class="form-radio__trigger">
+            {% include '@icon' with { modifier: 'check', class: 'form-radio__icon form-radio__icon--check' } %}
+            {% include '@icon' with { modifier: 'edit', class: 'form-radio__icon form-radio__icon--edit' } %}
+        </div>
+    {% else %}
+        <input type="radio" id="{{ id }}" name="{{ name }}" value="{{ value }}" class="form-radio__input" {% if isChecked %} checked{% endif %} {{ data }}>
+        <label for="{{ id }}" class="form-radio__label">
+            {% if color %}
+                <i class="form-radio__color" style="background-color: {{ color }}"></i>
+            {% endif %}
+            {{ label }}
+        </label>
+        {% if image %}
+        <div class="form-radio__image">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image.srcset }}" alt="{{ image.alt }}" data-sizes="auto" class="h-img-fluid lazyload">
+        </div>
+        {% endif %}
+        {% if hiddenContent %}
+        <div class="form-radio__hidden">
+            {% block hidden_content %}
+                {{ hiddenContent }}
+            {% endblock %}
+        </div>
+        {% endif %}
+        <div class="form-radio__bubble"></div>
+    {% endif %}
+</div>

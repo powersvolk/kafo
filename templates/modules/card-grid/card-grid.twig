@@ -1,0 +1,7 @@
+<div class="card-grid js-slider{% if modifier %} {{ modifier }}{% endif %} {{ class }}">
+{% if cards %}
+    {% for card in cards %}
+        {% include '@card' with card %}
+    {% endfor %}
+{% endif %}
+</div>

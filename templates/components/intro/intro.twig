@@ -1,0 +1,55 @@
+{% if tabsWrap %}
+<div class="js-tabs">
+{% endif %}
+    <div class="intro {{ modifier }}">
+        {% if (bg.xl or bg.lg or bg.lg2x or bg.md or bg.md2x or bg.sm or bg.sm2x or bg.xs or bg.xs2x ) %}
+        <picture class="intro__figure">
+            <source media="(min-width: 1921px)" data-srcset="{{ bg.xl }}"/>
+            <source media="(min-width: 1441px)" data-srcset="{{ bg.lg }} 1920w, {{ bg.lg2x }} 3840w"/>
+            <source media="(min-width: 1201px)" data-srcset="{{ bg.md }} 1440w, {{ bg.md2x }} 2880w"/>
+            <source media="(min-width: 513px)" data-srcset="{{ bg.sm }} 768w, {{ bg.sm2x }} 1536w"/>
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ bg.xs }} 320w, {{ bg.xs2x }} 640w" data-sizes="auto" class="intro__image lazyload">
+        </picture>
+        {% elseif image.srcset %}
+            <div class="intro__figure">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image.srcset }}" data-sizes="auto" class="intro__image lazyload">
+            </div>
+        {% endif %}
+        <div class="intro__inner">
+            <div class="intro__content">
+                <h1 class="intro__title">{{ title }}</h1>
+                <div class="intro__text">{{ text }}</div>
+            </div>
+            {% if tabItems %}
+            <div class="intro__navigation">
+                <ul class="tabs__nav-list">
+                    {% for tabItem in tabItems %}
+                    <li class="tabs__nav-item intro__navigation-item">
+                        <a href="{% if tabItem.content %}#{{ tabItem.link }}{% else %}{{ tabItem.link }}{% endif %}" class="tabs__nav-link intro__navigation-link{% if tabItem.content %} js-tabs-control{% endif %}{% if tabItem.isCurrent %} is-current{% endif %}">
+                            {{ tabItem.text }}
+                            {% if tabItem.icon %}
+                            {% include '@icon' with {'modifier': tabItem.icon, 'class': 'intro__navigation-icon'} %}
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if tabItems %}
+    <div class="tabs__content">
+        {% for tabItem in tabItems %}
+        <div class="tabs__content-item js-tabs-content{% if tabItem.isCurrent %} is-open{% endif %}" id="{{ tabItem.link }}">
+            <div class="tabs__content-inner">
+                {{ tabItem.content }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% if tabsWrap %}
+</div>
+{% endif %}

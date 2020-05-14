@@ -1,0 +1,24 @@
+<div class="form-group billing_address js-billing-user">
+    {% for field in billingFields %}
+        <div id="{{ field.id }}" class="form-group__row {{ field.class }}">
+            {% if field.template %}
+                {% if isStyleguide %}
+                    {% if field.template == 'radio' %}
+                        include radio
+                    {% else %}
+                        {% include '@'~field.template with field.input %}
+                    {% endif %}
+                {% else %}
+                    {% if field.template == '@radio' %}
+                        include radio
+                    {% else %}
+                        {% include field.template with field.input|merge({modifier:''}) %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if field.raw is defined %}
+                {{ field.raw }}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

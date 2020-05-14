@@ -1,0 +1,165 @@
+{% if (template_jura == 'jura') %}
+
+{% include '@loader' with { loaderText: strings.label.loader, modifier: 'loader--center'} %}
+
+	<div class="prod-carousel product-poster__media">
+        {% if sliderData %}
+            {% if price.isSale %}
+            {% include '@badge' with { class: 'product-poster__badge' } %}
+            {% endif %}
+            {% include '@slider' with sliderData %}
+        {% else %}
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" class="product-poster__image lazyload">
+        {% endif %}
+    </div>
+
+            <div class="prod-content">
+                <div class="prod-logo">
+                    <img src="{{ cururl }}/wp-content/themes/kafo/inc/img/layer1.svg">
+                </div>
+                <div class="prod-content__inner">
+                    <div class="prod-left">
+                        <h3 class="prod__title">
+                            {{ title }}
+                        </h3>
+                        <div class="category-product__price category-product__price-mobile">
+							<span class="category-product__price-in">{{ price.text }}</span>
+							{% if price.isSale %}
+								<span class="product__poster-sale-price">{{ price.appendText }}</span>
+							{% endif %}
+                            <div class="prod-content__prices">
+                                <div class="category-product__price-text">
+								  Järelmaks {{ postpayPrice.price }}&euro;{{ postpayPrice.time }}
+                                   <div class="toolt " title="This is my image's tooltip message!" >
+                                        <img src="{{ cururl }}/wp-content/themes/kafo/inc/img/tooltip.svg" >
+                                    </div>
+								</div>
+								<span class="category-product__price-info">{{ price_info }}</span>
+                            </div>
+                        </div>
+						{% if rating %}
+							{% include '@rating' with {modifier: 'rating--static', static: true, class: 'product-poster__rating', rating: rating.score, review: {link: rating.link, title: strings.title.rating|default('Loe arvustusi'), count: rating.count} } %}
+						{% endif %}
+						
+					
+                        {% if producrs_attributes %}
+							<div class="category-product__info">
+								{% for attr in producrs_attributes %}
+									<div class="category-product__info-item">
+										<span>{{ attr.attr_name }}</span>
+										<span>{{ attr.attr_description }}</span>
+									</div>
+								{% endfor %}
+							</div>
+						{% endif %}
+                        <a href="#prodTabs" class="prod__btn-down">
+                            <img src="{{ cururl }}/wp-content/themes/kafo/inc/img/arr-bottom.svg">
+                        </a>
+                    </div>
+                    <div class="prod__right">
+                        <div class="category-product__price">
+                            <div>
+                                <span class="category-product__price-in">
+                                    {{ price.text }}
+                                </span>
+								{% if price.isSale %}
+									<span class="product__poster-sale-price">{{ price.appendText }}</span>
+								{% endif %}
+                                <div class="category-product__price-text">
+                                   Järelmaks {{ postpayPrice.price }}&euro;{{ postpayPrice.time }}
+									<!-- {% include '@tooltip' with { id: postpayPrice.tooltip.id, content: postpayPrice.tooltip.content, class: 'product-poster__tooltip' } %} -->
+									
+									<div class="toolt" title="{{ postpayPrice.tooltip.content }}" >
+                                        <img src="{{ cururl }}/wp-content/themes/kafo/inc/img/tooltip.svg" >
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="category-product__price-info">{{ price_info }}</span>
+                        </div>
+                        <div class="category-product__nav">
+                            <form method="post" class="product-poster__form {{ formData.class }}" enctype="multipart/form-data" {{ formData.data }}>
+								{% include '@form-group--product' with addToCart %}
+							</form>
+                            <div class="category-product__compare">
+                                <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.99 5V8L9 4L12.99 0V3H20V5H12.99ZM0 9H7.01V6L11 10L7.01 14V11H0V9Z"></path>
+                                </svg>
+                                {{ compare_button }}
+                            </div>
+                        </div>
+						{% if postPayModal %}
+							<script src="https://partners.lhv.ee/assets/scripts/calculator.min.js"></script>
+							{% include '@modaal' with postPayModal %}
+						{% endif %}
+                    </div>
+                </div>
+            </div>
+{% else %}
+<div class="product-poster">
+    {% include '@loader' with { loaderText: strings.label.loader, modifier: 'loader--center'} %}
+    <div class="product-poster__media">
+        {% if sliderData %}
+            {% if price.isSale %}
+            {% include '@badge' with { class: 'product-poster__badge' } %}
+            {% endif %}
+            {% include '@slider' with sliderData %}
+        {% else %}
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" class="product-poster__image lazyload">
+        {% endif %}
+    </div>
+    <div class="product-poster__info">
+        <div class="product-poster__info-inner">
+            <h1 class="product-poster__title">{{ title }}</h1>
+            {% if rating %}
+            {% include '@rating' with {modifier: 'rating--static', static: true, class: 'product-poster__rating', rating: rating.score, review: {link: rating.link, title: strings.title.rating|default('Loe arvustusi'), count: rating.count} } %}
+            {% endif %}
+            <div class="product-poster__description text">{{ description }}</div>
+            <form method="post" class="product-poster__form {{ formData.class }}" enctype="multipart/form-data" {{ formData.data }}>
+                <div class="grid grid--gutter-20 product-poster__grid">
+                    {% if variations.variationInputs %}
+                    <div class="{% if isGift %}grid__col--xs-12{% else %}grid__col--sm{% endif %} product-poster__column">
+                        <h5 class="product-poster__column-title">{{ variations.prependText }}</h5>
+                        <div class="product-poster__variations">
+                            {% for variationInput in variations.variationInputs %}
+                                {% include '@radio' with variationInput %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if price %}
+                    <div class="grid__col--xs-6 grid__col--sm product-poster__column">
+                        <h5 class="product-poster__column-title">{{ strings.label.priceBuy|default('Hind ostes') }}</h5>
+                        <span class="product__poster-price{% if price.isSale %} product__poster-price--sale{% endif %} price">{{ price.text }}</span>
+                        {% if price.isSale %}
+                        <span class="product__poster-sale-price">{{ price.appendText }}</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% if postpayPrice %}
+                    <div class="grid__col--xs-6 grid__col--sm product-poster__column">
+                        <h5 class="product-poster__column-title">{{ strings.label.priceLease|default('Hind järelmaksuga') }}</h5>
+                        {% if postPayModal %}
+                            <a href="#{{ postPayModal.id }}" data-custom-class="modaal--collapsed modaal--large" class="product__poster-price js-modaal">{{ postpayPrice.price }}<span class="product__poster-price-period">{{ postpayPrice.time }}</span></a>
+                        {% else %}
+                            <span class="product__poster-price">{{ postpayPrice.price }}<span class="product__poster-price-period">{{ postpayPrice.time }}</span></span>
+                        {% endif %}
+                        {% include '@tooltip' with { id: postpayPrice.tooltip.id, content: postpayPrice.tooltip.content, class: 'product-poster__tooltip' } %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- {!% include '@button' with { class: 'product-poster__button', text: 'Add to cart button' } %} -->
+                {% include '@form-group--product' with addToCart %}
+            </form>
+            {% if postPayModal %}
+                <script src="https://partners.lhv.ee/assets/scripts/calculator.min.js"></script>
+                {% include '@modaal' with postPayModal %}
+            {% endif %}
+            {% if transportOptions %}
+            {% include '@accordion' with { class: 'product-poster__transport', triggerIcons: [{icon: 'plus-circle', class: 'accordion__icon accordion__icon--plus'}, {icon: 'minus-circle', class: 'accordion__icon accordion__icon--minus'}], accordionItems: transportOptions } %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endif %}

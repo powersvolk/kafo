@@ -1,0 +1,14 @@
+<div class="form-group form-group--product form-group--product-no-nr">
+    <div class="form-group__row">
+        <div class="form-group__row-item form-group__row-item--action">
+            {%  if type == 'variable' %}
+                {% include '@button' with { id: 'add-to-cart', type: 'submit', modifier: 'button--block button--no-shadow', text: strings.button.addCart|default('Lisa korvi'), class: 'js-button-trigger single_add_to_cart_button single-hero__btn' } %}
+                <input type="hidden" name="add-to-cart" value="{{ cartValue }}">
+                <input type="hidden" name="product_id" value="{{ cartValue }}">
+                <input type="hidden" name="variation_id" value="0">
+            {% else %}
+                {% include '@button' with { id: 'add-to-cart', name: 'add-to-cart', value: cartValue, type: 'submit', modifier: 'button--block button--no-shadow', text: strings.button.addCart|default('Lisa korvi'), class: 'js-button-trigger single_add_to_cart_button single-hero__btn' } %}
+            {% endif %}
+        </div>
+    </div>
+</div>

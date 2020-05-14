@@ -1,0 +1,20 @@
+{% if visible %}
+    <nav class="languages {{ modifier }} js-languages">
+        {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class: 'language__toggle', icon: 'globe' } %}
+        <i class="languages__pointer"></i>
+        {% if items %}
+            <div class="languages__select">
+                {% include '@select' with { modifier:'form-textfield__input--default form-select--naked form-select--labelless form-select--lang', class: 'js-change-page', options: items } %}
+            </div>
+            <ul class="languages__list">
+                {% for item in items %}
+                    <li class="languages__item{% if item.isSelected %} is-current{% endif %}">
+                        <a href="{{ item.link }}" class="l__link">
+                            {{ item.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
+{% endif %}

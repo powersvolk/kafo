@@ -1,0 +1,143 @@
+{# Setting content #}
+{% set tab4Content %}
+    <div class="accordion__specs-container">
+        {% for table in accordion.tab4.tables %}
+            <div class="accordion__inner-title"> {{ table.title }} </div>
+            <div class="break"></div>
+                {% for item in table.items %}
+                    <div class="specs-item">
+                        <div class="specs-item__title">{{ item.title }}</div>
+                        <div class="specs-item__value">{{ item.value }}</div>
+                    </div>
+                {% endfor %}
+        {% endfor %}
+    </div>
+{% endset %}
+{% set tab3Content %}
+    <div class="review-group review-group--new">
+        <div class="h-container">
+            <div class="review-group__header">
+                <h2 class="review-group__title">{{ strings.title.feedback }} ({{ productPoster.rating.count }})</h2>
+            </div>
+            {% if accordion.tab3.reviews %}
+            <div class="review-group__reviews">
+                {% for review in accordion.tab3.reviews %}
+                    {% if loop.index > 3 %}
+                        <div class="h-hidden js-hidden-review">
+                            {% include '@review' with review|merge({newReview: true}) %}
+                        </div>
+                    {% else %}
+                        {% include '@review' with review|merge({newReview: true}) %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="review-group__footer">
+            {% if accordion.tab3.reviews|length > 3 %}
+                <div>
+                {% include '@button' with { text: accordion.tab3.showMore, modifier: 'button--small button--white button--text-dark button--no-shadow review-group__load-more', class: 'js-load-reviews' } %}
+                </div>
+            {% endif %}
+            {% if accordion.tab3.canReview %}
+                <div>
+                {% include '@button' with { text: strings.label.addReview, element: 'a', link: '#add-comment', modifier: 'button--small button--yellow button--no-shadow', class: 'review-group__add js-add-reviews js-modaal', customAttributes:'data-custom-class="modaal--small"' } %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endset %}
+{% set reviewForm %}
+    <div class="form-group">
+        {{ accordion.tab3.reviewForm }}
+    </div>
+{% endset %}
+{# endset #}
+
+{# Hero + Header #}
+{% include '@header' with header|merge({isNewHeader: true, dark: isDarkHeader}) %}
+{{ content }}
+{% include '@single-hero' with singleHero|merge({dark: isDarkHeader, arrowTarget: "#content-wrap"}) %}
+{# end Hero + Header #}
+
+{# Sections #}
+<div id="content-wrap">
+{% for section in sections %}
+    {% include '@image-section' with section %}
+{% endfor %}
+{# end sections #}
+
+{# Blog section #}
+{% if blogSection %}
+    <div class="section-slider__overlay">
+        {% include '@slider-section' with {slider: blogSection} %}
+    </div>
+{% endif %}
+{# END Blog section #}
+
+{% include '@single-hero' with midHero %}
+{% include '@accordion' with { modifier: 'accordion--full accordion--transparent', id: 'single-product', triggerIcons: [{icon:'chevron'}], accordionItems: [{title: accordion.tab4.title, content: tab4Content, modifier: 'accordion__inner--gray', hidden: accordion.tab4.isHidden}, {title: accordion.tab3.title, content: tab3Content, modifier: 'accordion__inner--gray', hidden: accordion.tab3.isHidden}] } %}
+
+{% if accordion.tab3.canReview %}
+    {% include '@modaal' with { id: "add-comment", title: strings.title.feedback, content: reviewForm } %}
+{% endif %}
+
+{% if relatedList %}
+    {% for related in relatedList %}
+        {% set related_title %}
+            <div class="grid grid--middle-sm grid--between-sm">
+                <div class="grid__col--sm">
+                    <h2 class="section__title">{{ related.title }}</h2>
+                </div>
+                <div class="grid__col--sm h-visible-xl">
+                    {% include '@button' with { element: 'a', link: related.button.link, text: related.button.text, modifier: 'button--small button--gray' } %}
+                </div>
+            </div>
+        {% endset %}
+        {% set related_content %}
+            <div class="h-offset-container">
+                {% include '@product-grid' with {class: 'js-product-slider', products: related.products} %}
+            </div>
+            <div class="grid__col--sm h-hidden-xl section-related__btn-footer">
+                {% include '@button' with { element: 'a', link: related.button.link, text: related.button.text, modifier: 'button--small button--gray' } %}
+            </div>
+        {% endset %}
+        {% include '@section' with { isContainer: true, title: true, section_title:related_title, section_content:related_content, modifier:'section--product-alt' } %}
+    {% endfor %}
+{% endif %}
+{% if accessories.products %}
+    {% set accessories_title %}
+        <div class="grid grid--middle-sm grid--between-sm">
+            <div class="grid__col--sm">
+                <h2 class="section__title">{{ accessories.title }}</h2>
+            </div>
+            <div class="grid__col--sm">
+                {% include '@button' with { element: 'a', href: accessories.button.link, text: accessories.button.text, modifier: 'button--small button--gray' } %}
+            </div>
+        </div>
+    {% endset %}
+    {% set accessories_content %}
+        <div class="h-offset-container">
+            {% include '@product-grid' with { modifier: '', class: 'js-product-slider', products: accessories.products} %}
+        </div>
+    {% endset %}
+    {% include '@section' with { modifier: 'section--product-alt', isContainer: true, title: true, section_title:accessories_title, section_content:accessories_content } %}
+{% endif %}
+
+
+{% if emo %}
+    {% include '@emo' with { modifier: 'emo--reverse emo--background emo--top-wave', title: emo.title, description: emo.description, button: emo.button, image: emo.image } %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+
+
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+</div>
+
+{% include '@footer' with footer|merge({modifier: "footer--white footer--new", bottomNavJs: "js-bottomNav"}) %}

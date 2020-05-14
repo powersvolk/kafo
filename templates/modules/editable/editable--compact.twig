@@ -1,0 +1,28 @@
+<form class="editable editable--compact {{ class }}">
+    <div class="editable__value js-edit">
+        <span class="editable__value-title">{{ editableValue.title }}</span>
+        <span class="editable__value-content">{{ editableValue.content }}</span>
+
+        {% include '@icon' with { modifier: 'edit', class: 'editable__icon' } %}
+    </div>
+
+    <div class="editable__edit">
+        <div class="editable__edit-content">
+            {% if editableValue.fields %}
+                <div class="form-group">
+                    {% for field in editableValue.fields %}
+                        <div class="form-group__row form-group__row--align-center {{ field.rowModifier }}">
+                            {% include field.editableType with field %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% block editable_content %}{% endblock %}
+            {% endif %}
+        </div>
+        <div class="editable__edit-buttons">
+            {% include '@button' with { modifier: 'button--icon-rect', class: 'editable__edit-button js-close-editable', icon: 'ic_24_close' } %}
+            {% include '@button' with { modifier: 'button--green button--icon-rect', customAttributes: editableValue.buttonData, class: 'editable__edit-button js-save-editable', icon: 'ic_24_checkmark' } %}
+        </div>
+    </div>
+</form>

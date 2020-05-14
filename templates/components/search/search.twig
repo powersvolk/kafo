@@ -1,0 +1,58 @@
+<div class="search {{ modifier }}">
+    <form class="search__form" action="{{ homeUrl }}">
+        <div class="form-group {{ class }}">
+            <div class="form-group__row">
+                <div class="search__inner">
+                    {% if searchClose %}
+                        <button type="button" class="search__close js-search-close">
+                            {% include '@icon' with { modifier:'ic_24_close', class:'' } %}
+                        </button>
+                    {% endif %}
+                    <div class="search__submit">
+                        {% if btnDark %}
+                            {% set color = "color-white" %}
+                        {% else %}
+                            {% set color = "color-black" %}
+                        {% endif %}
+                        {% if btnNaked %}
+                            {% include '@button' with { modifier: 'button--small button--icon button--icon-rect button--naked ' ~ color, class:'search__button  js-search-submit', icon: "search" } %}
+                        {% else %}
+                            {% include '@button' with { modifier: 'button--small button--icon button--icon-rect button--dark ', class:'search__button  js-search-submit', icon: "search" } %}
+                        {% endif %}
+                    </div>
+                    <div class="search__field">
+                        {% include '@textfield' with { modifier: 'form-textfield--classic', class: 'search__textfield', noFloatingLabel: true, name: 's', closeIcon: 'close', autocomplete: 'off', label: search_placeholder|default('Otsi'), id: 'type-1' } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="search__results{% if searchClose %} js-search-autosuggest-results{% else %} is-open{% endif %}">
+        {% block search_results %}
+            {% for group in groups %}
+                <div class="search__results-row">
+                    <div class="grid grid--no-vertical-gutter">
+                        <div class="grid__col--xs-4 grid__col--sm-3">
+                            <div class="search__results-title">{{ group.title }}</div>
+                        </div>
+                        <div class="grid__col--xs-8 grid__col--sm-9">
+                            <ul class="search__results-list">
+                                {% for result in group.results %}
+                                    <li class="search__results-item">
+                                        <a href="#" class="search__results-link">{{ result.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {% if group.more %}
+                                <a href="#" class="search__results-all">{{ group.more }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endblock %}
+    </div>
+</div>
+{% if searchOverlay %}
+    <div class="h-search-overlay"></div>
+{% endif %}

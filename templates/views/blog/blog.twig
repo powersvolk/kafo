@@ -1,0 +1,34 @@
+{% include '@header' with header %}
+{% include '@submenu' with subMenu %}
+{% embed '@section' with { modifier: 'section--blog', isContainer: false } %}
+    {% block section_content %}
+        <div class="h-container">
+            {% include '@article-grid' with { columns: posts, modifier: 'article-grid--blog', hasFeatured: hasFeatured } %}
+        </div>
+        <div class="h-container">
+        {% if pagination is defined %}
+            {% include '@pagination' with pagination|merge({modifier:''}) %}
+        {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}
+{% if cards %}
+    {% embed '@section' with { title: cardsTitle, description: true, modifier: 'section--cards' } %}
+        {% block section_description %}
+            {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'arrow-right', iconAlign: 'right' } %}{% endif %}
+        {% endblock %}
+        {% block section_content %}
+            {% include '@card-grid' with { class: 'js-testimonial-slider', cards: cards } %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% if bottomBar %}
+    {% include '@blogi-signup-bar' with bottomBar %}
+{% endif %}
+{% include '@footer' with footer %}

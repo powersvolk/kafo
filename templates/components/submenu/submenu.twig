@@ -1,0 +1,20 @@
+<div class="submenu {{ modifier }} {{ class }}">
+    <div class="submenu__container">
+        <div class="submenu__elements">
+            <div class="submenu__content">
+                <h1 class="submenu__title">{{ title }}</h1>
+            </div>
+            <div class="submenu__items">
+            {% for item in menuItems %}
+                <div class="submenu__item {% if item.active %} submenu__item--active {% endif %}">
+                {% if item.options %}
+                    {% include '@dropdown' with { modifier: '', label: item.title, id: item.id, options: item.options, class: 'submenu__select' } %}
+                {% else %}
+                    <a href="{{ item.link }}" class="submenu__item-link">{{ item.title }}</a>
+                {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

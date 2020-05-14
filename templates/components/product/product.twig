@@ -1,0 +1,28 @@
+
+	<a href="{{ link }}" class="product {{ modifier }}" data-id="{{ id }}">
+		{{ type_cat }}
+		{% if price.sale %}
+		{% include '@badge' with { class: 'product__badge' } %}
+		{% endif %}
+		<figure class="product__image">
+			<img src="{{ product.image_full }}" data-srcset="{{ product.image }}" data-sizes="auto" alt="" class="product__image-img lazyload">
+		</figure>
+		<div class="product__content">
+			<h2 class="product__title">{{ title }}</h2>
+			{% if description %}
+			<p class="product__description">{{ description }}</p>
+			{% endif %}
+			<div class="product__price">
+				{% if price.sale %}
+					<del>{{ price.normal }}</del><span class="product__price-sale">{{ price.sale }}</span>
+				{% else %}
+					{{ price.normal }}
+				{% endif %}
+			</div>
+			{% if inModal %}
+				{% include '@button' with { modifier: 'button--small button--grid', class: 'product__button js-modal-add-to-cart', text: strings.button.addCart|default('Lisa korvi'), customAttributes: 'data-id="' ~ id ~ '"' } %}
+			{% else %}
+				{% include '@button' with { modifier: 'button--product', class: 'product__button js-add-to-card', text: strings.button.addCart|default('Lisa korvi'), icon:'ic_24_cart', iconAlign: 'right', iconClass: 'product__button-icon' } %}
+			{% endif %}
+		</div>
+	</a>

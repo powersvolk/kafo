@@ -1,0 +1,107 @@
+<div class="order-details">
+    <div class="order-details__header">
+        <div class="order-details__order-info">
+            <h4 class="order-details__title text-red"><strong>{{ title }}</strong></h4>
+            <p class="text-tiny">
+                <strong>{{ strings.orderNo }}</strong> {{ orderNumber }} <br>
+                <strong>{{ strings.dateLabel }}</strong> {{ orderDate }}
+            </p>
+        </div>
+        <div class="order-details__buttons">
+            {% if downloadPdf %}
+                <div class="order-details__button">
+                    {% include '@button' with { element: 'a', modifier: 'button--naked', text: downloadPdf.text, link: downloadPdf.link, icon: 'ic_24_download', target: '_blank' } %}
+                </div>
+            {% endif %}
+            {% if reOrder %}
+                <div class="order-details__button">
+                    {% include '@button' with { element: 'a', modifier: 'button--small button--block-xs js-reorder', text: reOrder.text, link: reOrder.link, customAttributes: reOrder.data } %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if orderInfo %}
+        <div class="order-details__columns">
+            {% for orderInfoColumn in orderInfo %}
+                <div class="order-details__column">
+                    <p class="order-details__column-title"><strong>{{ orderInfoColumn.title }}</strong></p>
+                    <p>{{ orderInfoColumn.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="order-details__table">
+        <div class="order-details__table-head">
+            <div class="order-details__table-row">
+                <div class="order-details__table-column">
+                    <strong>{{ strings.nameLabel }}</strong>
+                </div>
+                <div class="order-details__table-column">
+                    <strong>{{ strings.amountLabel }}</strong>
+                </div>
+                <div class="order-details__table-column">
+                    <strong>{{ strings.priceLabel }}</strong>
+                </div>
+                <div class="order-details__table-column">
+                    <strong>{{ strings.totalLabel }}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="order-details__table-body">
+            {% for orderProduct in orderProducts %}
+                <div class="order-details__table-row">
+                    <div class="order-details__table-column">
+                        <img class="h-img-fluid lazyload" data-srcset="{{ orderProduct.image }}" data-sizes="auto">
+                    </div>
+                    <div class="order-details__table-column">
+                        <div class="order-details__product-info">
+                            <div class="order-details__product-title">
+                                <strong>{{ orderProduct.title }}</strong>
+                            </div>
+                            <div class="order-details__product-quantity h-hidden-xs">
+                                {{ orderProduct.quantity }}
+                            </div>
+                            <div class="order-details__product-price">
+                                {{ orderProduct.itemPrice }} <span
+                                        class="h-hidden-sm h-hidden-md h-hidden-lg">({{ strings.piece }})</span>
+                            </div>
+                            <div class="order-details__product-sum">
+                                {{ orderProduct.sumPrice }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="order-details__columns order-details__columns--end">
+        <div class="order-details__column order-details__column--fluid">
+            <p class="order-details__column-title"><strong>{{ strings.toBePaid }}</strong></p>
+            <div class="grid grid--gutter-20">
+                <div class="grid__col--xs">
+                    <div class="text text-tiny">
+                        <p>
+                            {{ strings.subTotal }} <br>
+                            {{ strings.transportLabel }} <br>
+                            {{ strings.vatLabel }} <br>
+                            <strong>{{ strings.summaryTotal }}</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="grid__col--xs">
+                    <div class="text text-tiny">
+                        <p>
+                            {{ summary.subTotal }} € <br>
+                            {% if summary.transport %}{{ summary.transport }} € <br>{% endif %}
+                            {{ summary.VAT }} € <br>
+                            <strong>{{ summary.total }} €</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% include '@header' with header %}
+
+{% embed '@section' with { modifier: 'section--background-light-gray', title: false } %}
+    {% block section_content %}
+        {% include '@intro' with intro %}
+        <div class="h-container">
+            {% include '@faq' with faq %}
+        </div>
+    {% endblock %}
+{% endembed %}
+
+{% include '@brands-list' with footerBrands %}
+{% include '@footer' with footer %}

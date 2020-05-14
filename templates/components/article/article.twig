@@ -1,0 +1,14 @@
+<a href="{{ link|default('#') }}" class="article {{ modifier }}">
+    {% if image and image.srcset %}
+    <div class="article__figure">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image.srcset }}" data-sizes="auto" alt="{{ image.alt }}" class="article__image lazyload">
+    </div>
+    {% endif %}
+    <div class="article__content">
+        <h2 class="article__title">{{ title }}</h2>
+        <span class="article__date">{{ date }}</span>
+        {% if description %}
+        <p class="article__description">{{ description }}</p>
+        {% endif %}
+    </div>
+</a>

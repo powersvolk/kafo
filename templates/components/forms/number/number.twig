@@ -1,0 +1,15 @@
+<div class="form-textfield form-number {{ modifier }}{% if class %} {{ class }}{% endif %}">
+    <div class="form-textfield__inner">
+        <div class="form-textfield__decrement">-</div>
+        {% if qtyTooltip %}
+            {% include '@tooltip' with { id: qtyTooltip.tooltip.id, content: qtyTooltip.tooltip.content, class: 'qtyTooltip product-poster__tooltip', hideIcon: true} %}
+        {% endif %}
+        <input class="form-textfield__input {{ innerClass }}" data-min="{{ minimum|default('1') }}" data-max="{{ maximum|default('99') }}" value="{{ value }}" type="{{ type|default('number') }}" id="{{ id }}" name="{{ name }}" value="{{ value }}" {% if isDisabled %}disabled{% endif %} {{ data }}{% if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}{{ attributes }}>
+        <div class="form-textfield__increment">+</div>
+    </div>
+    {% if message %}
+    <div class="form-textfield__message">
+        <div class="form-textfield__message-text">{{ message }}</div>
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,20 @@
+<div class="grid article-grid {{ modifier }} {{ class }}">
+    {% for index, column in columns %}
+        {% set columnClass = '' %}
+        {% set articleData = column.articleData %}
+        {% set columnClass = column.articleData.columnClass %}
+
+        {% if hasFeatured == true %}
+            {% if not index %}
+                {% set columnClass = 'grid__col--xs-12' %}
+                {% set articleData = articleData|merge({ modifier: 'article--featured' }) %}
+            {% elseif column.articleData.isWide %}
+                {% set columnClass = 'grid__col--sm-6' %}
+                {% set articleData = articleData|merge({ modifier: 'article--wide' }) %}
+            {% endif %}
+        {% endif %}
+        <div class="js-article js-search-sortable {{ columnClass }} article-grid__column{% if not index %} article-grid__column--featured{% endif %}"{% if hideFrom and index >= hideFrom %} style="display: none"{% endif %} data-stamp="{{ articleData.timestamp }}">
+            {% include '@article' with articleData %}
+        </div>
+    {% endfor %}
+</div>

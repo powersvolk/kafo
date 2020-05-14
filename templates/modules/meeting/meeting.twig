@@ -1,0 +1,11 @@
+<div class="meeting">
+    <div class="meeting__container">
+        <p class="meeting__title">{{ meeting.title }}</p>
+        <p class="meeting__subtitle">{{ meeting.subtitle }}</p>
+    </div>
+    <div class="meeting-card">
+        {% for card in meeting.cards %}
+            {% include '@meeting-package' with card|merge({modifier: card.modifier}) %}
+        {% endfor %}
+    </div>
+</div>

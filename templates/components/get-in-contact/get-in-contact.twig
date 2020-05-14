@@ -1,0 +1,14 @@
+<div class="get-in-contact">
+    <div class="get-in-contact__content">
+        {% if image and image2x %}
+            <div class="get-in-contact__image">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }} 86w, {{ image2x }} 172w" data-sizes="auto" alt="" class="contact__img lazyload">
+            </div>
+        {% endif %}
+        <div clas="get-in-contact__details">
+            <p class="get-in-contact__title">{{ title }}</p>
+            <p class="get-in-contact__email">{{ email }}</p>
+            <p class="get-in-contact__telephone">{{ telephone }}</p>
+        </div>
+    </div>
+</div>

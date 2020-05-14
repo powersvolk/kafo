@@ -1,0 +1,23 @@
+<div class="split-content {{ modifier }}">
+    <div class="prod-split">
+					{% for info in product_infos %}
+					
+					<div class="prod-split__item">
+                        <div class="prod-split__content">
+							{% if info.title is defined %}
+						    <h3 class="prod-split__title">
+                                {{ info.title }}
+                            </h3>
+							{% endif %}
+                            <p class="prod-split__info">
+                                {{ info.content }}
+							</p>
+                        </div>  
+                        <div class="prod-split__image" style="background: url({{ info.image }}) no-repeat center/contain">
+                        </div>
+                    </div>
+					{% endfor %}
+					
+                    
+                </div>
+</div>

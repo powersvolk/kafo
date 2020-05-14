@@ -1,0 +1,49 @@
+<nav class="navigation {{ modifier }} {{ class }} {% if dark %} navigation--dark {% endif %}">
+    {% if logo %}
+        {% include '@logo' with { class: 'navigation__logo' }|merge(logo) %}
+    {% endif %}
+    {% if title %}
+        <div class="navigation__title">{{ strings.title.menu|default('Menüü') }}</div>
+    {% endif %}
+    {% if items %}
+    <ul class="navigation__list">
+        {% for item in items %}
+        <li class="navigation__item{% if item.typeClass %} {{ item.typeClass }}{% endif %}{% if item.children %} has-subnav{% endif %}{% if item.img %} has-image{% endif %}{% if item.current %} is-current{% endif %} {{ item.modifier }}">
+            <a href="{% if item.children %}#{% else %}{{ item.link }}{% endif %}" class="navigation__link">{{ item.title }}</a>
+            {% if item.img %}<img class="lazyload navigation__img" data-sizes="auto" data-srcset="{{ item.img.srcset }}" width="100" alt="{{ img.alt }}">{% endif %}
+            {% if not item.children %}
+            {# {% include '@icon' with { modifier: 'ic_24_arrow', class: 'navigation__icon' } %} #}
+            {% else %}
+            {# {% include '@icon' with { modifier: 'chevron', class: 'navigation__icon navigation__icon--sub' } %} #}
+            <i class="navigation__item-pointer"></i>
+            <ul class="navigation__list{% if item.menuClass %} {{ item.menuClass }}{% endif %}">
+                {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'navigation__back', icon: "chevron" } %}
+                <div class="navigation__title">{{ item.title }}</div>
+                {% for child in item.children %}
+                <li class="navigation__item{% if child.children %} has-subnav{% endif %}{% if child.current %} is-current{% endif %}{% if not child.title %} h-hidden-xs h-hidden-sm{% endif %}">
+                    <a href="{% if child.children %}#{% else %}{{ child.link }}{% endif %}" class="navigation__link">{{ child.title }}</a>
+                    {# {% if child.children %}{% include '@icon' with { modifier: 'chevron', class: 'navigation__icon navigation__icon--sub' } %}{% else %}{% include '@icon' with { modifier: 'ic_24_arrow', class: 'navigation__icon' } %}{% endif %} #}
+                    {% if child.children %}
+                    <ul class="navigation__list{% if child.menuClass %} {{ child.menuClass }}{% endif %}">
+                        {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'navigation__back', icon: "chevron" } %}
+                        {% if child.title %}<div class="navigation__title">{{ child.title }}</div>{% endif %}
+                        {% for grandchild in child.children %}
+                        <li class="navigation__item {% if grandchild.current %}is-current{% endif %}">
+                            <a href="{{ grandchild.link }}" class="navigation__link">{{ grandchild.title }}</a>
+                            {# {% include '@icon' with { modifier: 'ic_24_arrow', class: 'navigation__icon' } %} #}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% if item.cta %}
+                    {% include '@button' with { element: 'a', text: item.cta.text, link: item.cta.link, modifier: 'button--icon button--naked', iconAlign: 'right', icon: 'ic_24_arrow', class: item.cta.class } %}
+                {% endif %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</nav>

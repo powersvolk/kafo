@@ -1,0 +1,44 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero %}
+        {% include '@brands-list' with { modifier: 'brands-list--red brands-list--top', cta: brands.cta, link: brands.link, brandLogos: brands.logos, btnClass: brands.btnClass, modalClass: brands.modalClass, modal: brands.modal } %}
+        {% include '@features' with { modifier: 'features--gray features--top-overlay', features: features } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: 'section--bottom-padding section--narrow-head', isContainer: true, title: categoriesTitle, description: categoriesContent } %}
+    {% block section_content %}
+        {% include '@featured-cats' with { categories: categories } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% if emo %}
+            {% include '@emo' with { modifier: 'emo--large emo--background emo--top-and-bottom-wave', title: emo.title, description: emo.description, button: emo.button, image: emo.image, modal: emo.modal } %}
+        {% elseif emoModule %}
+            {% include '@emo--module' with emoModule %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% if reviewSlider %}
+    {% embed '@section' with { modifier: 'section--background-gray' ~ ((emo or emoModule.module_emo) ? ' section--surf' : '') } %}
+        {% block section_content %}
+            {% include '@review-slider' with reviewSlider %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' with { title: cardsTitle, description: true, modifier: 'section--cards' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'ic_24_arrow', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { class: 'js-testimonial-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with { modifier: 'quote--front', text: footerQuote.text, button: footerQuote.button } %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

@@ -1,0 +1,204 @@
+{% include '@header' with header %}
+
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero %}
+		 <div class="features {{ modifier }}">
+			<div class="h-container">
+				<div class="features__inner">
+					{% if features %}
+					<ul class="features__list">
+						{% for feature in features %}
+						<li class="features__item">
+							<img class="icon features__icon features__icon__new" src="{{ feature.icon }}">
+							<div class="features__text text">
+								<h4 class="features__title">{{ feature.title }}</h4>
+								<p class="features__description">{{ feature.text }}</p>
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+    {% endblock %}
+{% endembed %}
+
+<style>
+	
+	.modaal-container .product{
+		display:none;
+	}
+</style>
+
+<section class="section">
+	<div class="h-container">
+		<div class="section__head">
+			<div class="section__grid align_center">
+				<div class="section__primary_new">
+					<h2 class="section__title">
+						{{ productTitle }}
+					</h2>
+				</div>
+				<div class="section__secondary section__secondary_new">
+					<div class="section__description">
+						{{ productContent }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% if products %}
+<section class="section section--products">
+	<div class="h-container">
+		<div class="grid js-product-grid">
+			{% for product in products %}
+				<div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36"> 
+					<a href="{{ product.product_link }}" class="product product_new">
+						<figure class="product__image"> 
+							<img src="{{ product.product_image }}" class="product__image-img lazyautosizes lazyloaded">
+						</figure>
+						<div class="product__content">
+							<h2 class="product__title">
+								{{ product.product_title }}
+							</h2>
+							<div class="product_line"></div>
+							<p class="product__description">
+								{{ product.product_desc }}
+							</p>
+						</div>
+					</a>
+				</div>
+			{% endfor %}	
+		</div>	
+	</div>
+</section>
+{% endif %}
+
+
+<section class="section">
+	<div class="h-container">
+		<div class="section__head section__head_pad_top">
+			<div class="section__grid align_center">
+				<div class="section__secondary section__secondary_partners">
+					<div class="section__description ">
+						<h2 class="section__title">
+							{{ partners_title }}
+						</h2>
+							{{ partners_content }}
+					</div>
+				</div>
+				<div class="section__primary_new section__primary_partners">
+					<img src="{{ partners_image }}" class="lazyautosizes lazyloaded">
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section horeca_new">
+	<div class="horeca_item">
+		<div class="horeca_thumb" style="background:url({{ banner.image_first }}) no-repeat center/cover; ">
+		</div>
+	</div>
+	<div class="horeca_item horeca_text">
+		
+			<h2>
+				{{ banner.title_first }}
+			</h2>
+			<p>
+				{{ banner.text_first }}
+			</p>
+	</div>
+</section>
+
+<section class="section horeca_new horeca--bottom-wave">
+	<div class="horeca_item horeca_text horeca_text_hide">
+		<h2>
+			{{ banner.title_second }}
+		</h2>
+		<p>
+			{{ banner.text_second }}
+		</p>
+	</div>
+	<div class="horeca_item">
+		<div class="horeca_thumb" style="background:url({{ banner.image_second }}) no-repeat center/cover; ">
+		</div>
+	</div>
+	<div class="horeca_item horeca_text horeca_text_show">
+		<h2>
+			{{ banner.title_second }}
+		</h2>
+		<p>
+			{{ banner.text_second }}
+		</p>
+	</div>
+</section>
+
+<section class="section">
+	<div class="properties properties--meeting">
+		<div class="h-container properties__inner">
+			<div class="properties__content">
+				<div class="properties__text text">
+					<h2 class="properties__title">
+						{{ about.title }}
+					</h2>
+					{{ about.text }}
+				</div>
+				<div class="properties__info">
+					{% if about.lists %}
+					<ul class="list list--icon ">
+						{% for list in about.lists %}
+							<li class="list__item">
+								<div class="list__icon list__icon_new"> 
+									<img src="{{ list.about_icon }}">
+								</div> 
+								{{ list.about_list_text }}
+							</li>
+						{% endfor %}	
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+			<div class="properties__content-image marg_top_100"> 
+				<img src="{{ about.image }}">
+			</div>
+		</div>
+	</div>
+
+</section>
+
+{% embed '@section' with { modifier: 'new_emo'}%}
+    {% block section_content %}
+        {% if emo1 and emo2 %}
+            {% include '@emo' with { modifier: 'emo--background emo--bottom-wave', title: emo1.title, description: emo1.description, image: emo1.image } %}
+            {% include '@emo' with { modifier: 'emo--large emo--background emo--reverse emo--bottom-wave', title: emo2.title, description: emo2.description, button: emo2.button, image: emo2.image } %}
+        {% elseif emoModule %}
+            {% include '@emo--module' with emoModule %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+
+{% embed '@section' with { modifier: 'new_packeg section--bottom-padding', id: 'popular', isContainer: true } %}
+    {% block section_content %}
+        {% for packageGroup in packageGroups %}
+            {% include '@events-grid' with { class: 'js-slider js-product-slider', title: packageGroup.title, products: packageGroup.products } %}
+        {% endfor %}
+    {% endblock %}
+{% endembed %}
+
+
+{% embed '@section' with { title: cardsTitle, description: true, modifier: 'section--cards' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'ic_24_arrow', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { class: 'js-testimonial-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+
+{% include '@footer' with footer %}

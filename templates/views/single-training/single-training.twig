@@ -1,0 +1,48 @@
+{% include '@header' with header %}
+{% embed '@section' with { isContainer: true, title: trainingTitle, modifier: 'section--recipe section--bottom-padding', isMainTitle:true } %}
+    {% block section_content %}
+        <div class="grid">
+            <div class="grid__col--sm-2 grid__col--md-1 grid__col--offset-md-1 h-hidden-xs">
+                {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+            </div>
+            <div class="grid__col--xs-12 grid__col--sm-8 grid__col--md-8">
+                <div class="text text-medium">
+                    {% include "@training-header" with registering %}
+                    {{ content }}
+                    {{ details }}
+                    {{ notes }}
+                    <div class="h-hidden h-visible-xs">
+                        {% include '@button' with {
+                            element: 'a',
+                            link: '#' ~ registering.modal.id,
+                            text: registering.button,
+                            modifier: 'button button--small button--block training-header__button',
+                            class: registering.modal ? 'js-modaal' : '',
+                            customAttributes: 'data-custom-class="' ~ registering.modal.modifier ~ '"' }
+                        %}
+                    </div>
+                </div>
+                <div class="h-hidden h-visible-xs">
+                    {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+                </div>
+                {% include '@author' with author %}
+                {% include '@tags' with tags %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { title: cardsTitle, description: true, id: 'trainings', modifier: 'section--cards section--training' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'arrow-right', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { modifier: 'card-grid--training', class: 'js-training-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

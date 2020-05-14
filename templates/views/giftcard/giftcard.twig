@@ -1,0 +1,30 @@
+{% include '@header' with header %}
+{% include '@product-poster' with productPoster %}
+<div class="accordion accordion--full js-accordion-group">
+    <div class="accordion__item js-accordion" id="single-product-0">
+        <a href="#single-product-0" class="accordion__header js-accordion-control">
+            <div class="accordion__title">
+                Vaata kõiki omadusi
+                {% include '@icon' with { modifier: 'chevron', class: 'accordion__icon'} %}
+            </div>
+        </a>
+        <div class="accordion__content js-accordion-content">
+            <div class="accordion__inner">
+                {% embed '@section' with { modifier: 'section--accordion', isContainer: false } %}
+                    {% block section_content %}
+                        <div class="h-container">
+                            {% include '@split-content' with splitContent %}
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        </div>
+    </div>
+</div>
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with brands %}
+        {% include '@quote' with quote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

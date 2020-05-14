@@ -1,0 +1,21 @@
+<div class="accordion {{ modifier }} {{ class }} js-accordion-group">
+    {% for index, accordionItem in accordionItems %}
+    <div class="accordion__item js-accordion {% if accordionItem.hidden %}h-hidden{% endif %}{% if accordionItem.class %}accordion__item--{{ accordionItem.class }}{% endif %}" id="{% if accordionItem.id %}{{ accordionItem.id }}{% else %}{{ id }}-{{ index }}{% endif %}">
+        <a href="#{% if accordionItem.id %}{{ accordionItem.id }}{% else %}{{ id }}-{{ index }}{% endif %}" class="accordion__header js-accordion-control">
+            <div class="accordion__title">
+                {{ accordionItem.title }}
+                {% if triggerIcons %}
+                    {% for triggerIcon in triggerIcons %}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </a>
+        <div class="accordion__content js-accordion-content">
+            <div class="accordion__inner {{ accordionItem.modifier }}">
+                {{ accordionItem.content }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

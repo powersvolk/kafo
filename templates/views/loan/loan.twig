@@ -1,0 +1,27 @@
+{% include '@header' with header %}
+<div class="h-container loan__container">
+    <h1 class="loan__title"> {{ title }} </h1>
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" class="loan__image lazyload">
+    <p class="loan__subtitle"> {{ subtitle }} </p>
+    <p class="loan__list-title"> {{ listTitle }} </p>
+    <div class="text">
+        <ul class="list">
+            {% for item in list %}
+                <li class="loan__list-text">{{ item.listItem }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p class="loan__example loan__example-first"> {{ example }} </p>
+    <div class="text">
+        <ul class="list">
+            {% for item in list2 %}
+                <li class="loan__list-text">{{ item.listItem }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p class="loan__example"> {{ specification }} </p>
+    <p class="loan__subinfo"> {{ subinfo }} </p>
+</div>
+{% include '@brands-list' with brands %}
+{% include '@quote' with quote %}
+{% include '@footer' with footer %}

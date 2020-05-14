@@ -1,0 +1,49 @@
+{% include '@header' with header %}
+{% embed '@section' with { isContainer: true, title: recipeTitle, modifier: 'section--brand section--bottom-padding', isMainTitle: true } %}
+    {% block section_content %}
+        <div class="grid">
+            <div class="grid__col--sm-2 grid__col--md-1 grid__col--offset-md-1 h-hidden-xs">
+                {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+            </div>
+            <div class="grid__col--xs-12 grid__col--sm-8 grid__col--md-8">
+                <div class="text text-medium editor">
+                    {% if coverImage %}
+                        <figure class="wp-caption">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ coverImage }}" data-sizes="auto" class="h-img-fluid lazyload">
+                            <figcaption class="wp-caption-text">{{ coverImageCaption }}</figcaption>
+                        </figure>
+                    {% endif %}
+                    <br>
+                    {{ content }}
+                </div>
+                <div class="h-hidden h-visible-xs">
+                    {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+                </div>
+                {% include '@author' with author %}
+                {% include '@tags' with tags %}
+            </div>
+            <div class="grid__col--sm-2 grid__col--md-2 h-hidden-xs">
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { title: relatedTitle, isContainer: true, modifier: 'section--related section--related-blog section--bottom-padding' } %}
+    {% block section_content %}
+    <div class="slider slider--related-blog">
+        <div class="js-slider js-related-blog">
+            {% for article in articles %}
+                <div class="product-grid__item">
+                    {% include '@article' with { modifier: '', link: article.link, image: article.image, title: article.title, description: article.description } %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

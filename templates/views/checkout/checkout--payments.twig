@@ -1,0 +1,9 @@
+<div class="form-group woocommerce-checkout-payment" id="payment">
+    {% if paymentMethods %}
+        {% for method in paymentMethods %}
+            <div class="form-group__row">
+                {% include '@radio' with method %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

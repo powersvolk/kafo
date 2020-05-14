@@ -1,0 +1,70 @@
+{% include '@header' with header %}
+{% embed '@section' with { modifier: 'section--background-gray section--bottom-padding', title: false  } %}
+    {% block section_content %}
+        {% set shop_primary %}
+            {% if cover.pdf %}
+                <iframe width="750" height="1024" src="{{ cover.pdf }}" class="confirmation-page__pdf"></iframe>
+            {% elseif cover.content %}
+                <div class="confirmation-page__cover">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ cover.content.image }}" data-sizes="auto" class="confirmation-page__image lazyload">
+                    {% if cover.content.list %}
+                        <div class="confirmation-page__cover-text text">
+                            <h3>{{ cover.content.title }}</h3>
+                            <ul class="list">
+                            {% for item in cover.content.list %}
+                                <li><strong>{{ item.label }}</strong>: {{ item.text }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            {% elseif cover.image %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ cover.image }}" data-sizes="auto" class="confirmation-page__image lazyload">
+            {%  endif %}
+        {% endset %}
+        {% set shop_secondary %}
+            {% if backButton %}
+            <div class="h-hidden h-visible-xs">
+                {% include '@button' with { element: 'a', link: backButton.link, modifier: 'button--yellow button--small button--block-xs', icon: '', text: backButton.text, class: 'confirmation-page__back-button' } %}
+            </div>
+            {% endif %}
+            <div class="shop__tip shop__tip-confirmation-page">
+                {% include '@icon' with { modifier: shop.tip.icon, class: 'shop__tip-icon' } %}
+                <div class="shop__tip-text">{{ shop.tip.content }}</div>
+            </div>
+            {% if sidebar.video %}
+                {% include '@video' with sidebar.video|merge({ modifier: 'video--default', class: 'confirmation-class__video' }) %}
+            {% endif %}
+            <p class="confirmation-page__label">{{ sidebar.label }}</p>
+            <p class="confirmation-page__email">{{ sidebar.email }}</p>
+            <p class="confirmation-page__phone"> <strong> Tel:</strong> {{ sidebar.phone }} </p>
+            <p class="confirmation-page__xs-email">{% include '@icon' with { modifier: 'ic_24_email', class: 'confirmation-page__email-icon' } %}<span class="confirmation-page__email-text"><a href="mailto:{{ sidebar.email }}">{{ sidebar.email }}</a></span></p>
+            <p class="confirmation-page__xs-phone">{% include '@icon' with { modifier: 'ic_24_phone', class: 'confirmation-page__phone-icon' } %}<span class="confirmation-page__phone-text">{{ sidebar.phone }}</span></p>
+        {% endset %}
+        {% include '@shop' with shop|merge({ title: shopTitle, modifier: 'shop--confirmation', headContent: subtitle, primary: shop_primary, secondary: shop_secondary}) %}
+    {% endblock %}
+{% endembed %}
+{% if lhvModal %}
+    <a href="#{{ lhvModal.id }}" class="js-modaal js-lhv-modal h-hidden" data-open="true" data-custom-class="{{ lhvModal.modifier }}">LHV notice</a>
+    {% include '@modaal' with lhvModal %}
+{% endif %}
+{% if related %}
+    <div class="confirmation-page__product-list">
+        <div class="h-container">
+            <div class="confirmation-page__product-list-inner">
+                <div class="confirmation-page__product-list-top">
+                    <h4 class="h3 h3--alt"> {{ related.title }} </h4>
+                    {% include '@button' with { element: 'a', link: related.button.link, modifier: 'button--small button--gray', icon: '', text: related.button.text, class: 'confirmation-page__more-button' } %}
+                </div>
+                {% include '@product-grid' with related.grid|merge({class: 'js-product-slider'}) %}
+                {% include '@button' with { element: 'a', link: related.button.link, modifier: 'button--small button--gray', icon: '', text: related.button.text, class: 'confirmation-page__more-button-2' } %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

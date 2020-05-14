@@ -1,0 +1,100 @@
+<div class="footer {{ modifier }}">
+    <div class="h-container">
+        <div class="grid grid--center-sm footer__grid">
+            <div class="{% if isCheckout %} grid__col--xs-6 {% else %} grid__col--sm-5 {% endif %} grid__col--md-4 footer__grid-item h-visible-xs">
+                <h4 class="footer__title">{{ footer.column5.title }}</h4>
+                <div class="footer__content text">
+                    {{ footer.column5.content }}
+                    {% if footer.column5.image %}<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset='//placehold.it/106x106 1x, //placehold.it/212x212 2x' class="footer__image lazyload" width="106" height="106">{% endif %}
+                </div>
+                {% if not isCheckout %}
+                <div class="footer__newsletter">
+                    {% include '@form-group--onesie' with { label: footer.column5.placeholder, textfieldId: 'newsletter1' } %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="grid__col--xs-6 grid__col--md-2 {% if not isCheckout %} grid__col--sm-3 {% endif %} footer__grid-item">
+                <h4 class="footer__title">{{ footer.column1.title }}</h4>
+                <div class="footer__content text">
+                    {{ footer.column1.content }}
+                </div>
+                {% if footer.column1.social %}
+                <div class="footer__social">
+                    {% for socialItem in footer.column1.social %}
+                    <a href="{{ socialItem.link }}" class="footer__social-item">
+                        {% include '@icon' with { class:'footer__social-icon', modifier: socialItem.icon } %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="{% if isCheckout %} grid__col--xs-6 grid__col--md-2 {% else %} grid__col--sm-2 h-hidden-xs h-hidden-sm {%  endif %} footer__grid-item">
+                <h4 class="footer__title">{{ footer.column2.title }}</h4>
+                <div class="footer__content{% if isCheckout %} text{% endif %}">
+                {% if not isCheckout %}
+                    <ul class="footer__menu">
+                        {% for item in footer.column2.nav %}
+                        <li class="footer__menu-item{% if item.mobileOnly %} h-hidden-sm h-hidden-md h-hidden-lg{% endif %}"><a href="{{ item.link }}" class="footer__menu-link">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    {{ footer.column2.content }}
+                    {% if footer.column2.image %}<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset='//placehold.it/166x62 1x, //placehold.it/332x124 2x' class="footer__image lazyload h-img-fluid" width="166" height="62">{% endif %}
+                    {% if footer.column2.image2 %}<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset='//placehold.it/123x34 1x, //placehold.it/246x68 2x' class="footer__image lazyload h-img-fluid" width="123" height="34">{% endif %}
+                {% endif %}
+                </div>
+            </div>
+            <div class="grid__col--xs-6 grid__col--md-2 {% if not isCheckout %} grid__col--sm-4 {% endif %} footer__grid-item">
+                <h4 class="footer__title">{{ footer.column3.title }}</h4>
+                <div class="footer__content {% if isCheckout %} text{% endif %}">
+                {% if not isCheckout %}
+                    <ul class="footer__menu">
+                        {% for item in footer.column3.nav %}
+                        <li class="footer__menu-item"><a href="{{ item.link }}" class="footer__menu-link">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    {{ footer.column3.content }}
+                    {% if footer.column3.image %}<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset='//placehold.it/113x44 1x, //placehold.it/226x88 2x' class="footer__image lazyload" width="113" height="44">{% endif %}
+                {% endif %}
+                </div>
+            </div>
+            <div class="{% if isCheckout %} grid__col--xs-6 grid__col--md-2 {%  else %} grid__col--xs-12 grid__col--sm-2 {%  endif %} h-hidden-xs h-hidden-sm footer__grid-item">
+                <h4 class="footer__title">{{ footer.column4.title }}</h4>
+                <div class="footer__content text">{{ footer.column4.content }}</div>
+            </div>
+            <div class="{% if isCheckout %} grid__col--xs-6 {% else %} grid__col--sm-5 {% endif %} grid__col--md-4 footer__grid-item h-hidden-xs">
+                <h4 class="footer__title">{{ footer.column5.title }}</h4>
+                <div class="footer__content text">
+                    {{ footer.column5.content }}
+                    {% if footer.column5.image %}<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset='//placehold.it/106x106 1x, //placehold.it/212x212 2x' class="footer__image lazyload" width="106" height="106">{% endif %}
+                </div>
+                {% if not isCheckout %}
+                <div class="footer__newsletter">
+                    {% include '@form-group--onesie' with { label: footer.column5.placeholder, textfieldId: 'newsletter2' } %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="grid__col--sm-12">
+            <div class="grid grid--no-vertical-gutter">
+                <div class="grid__col--sm-6">
+                    <ul class="footer__submenu">
+                        {% for item in footer.bottomNav.nav %}
+                        {% if item.link %}
+                            <li class="footer__submenu-item"><a href="{{ item.link }}" class="footer__submenu-link">{{ item.name }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="grid__col--sm-6">
+                    <footer class="footer__disclaimer">{{ footer.disclaimer }}</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# {% include '@bottom-navigation' %} #}
+{% if not isCheckout %}
+{% include '@popup' with popupData %}
+{% endif %}

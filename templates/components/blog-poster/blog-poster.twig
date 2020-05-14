@@ -1,0 +1,33 @@
+<div class="blog-poster {{ modifier }}">
+    {% if backLink %}
+    <div class="blog-poster__back">
+        {% include '@button' with {element: 'a', modifier: 'button--naked', link: backLink, text: strings.button.back|default('Tagasi'), icon: 'chevron-left', class: 'blog-poster__back-button' } %}
+    </div>
+    {% endif %}
+    <picture class="blog-poster__bg">
+        <source media="(min-width: 1921px)"
+        data-srcset="{{ bg.xl }}"
+        />
+        <source media="(min-width: 1441px)"
+        data-srcset="{{ bg.lg }} 1920w, {{ bg.lg2x }} 3840w"
+        />
+        <source media="(min-width: 1201px)"
+        data-srcset="{{ bg.md }} 1440w, {{ bg.md2x }} 2880w"
+        />
+        <source media="(min-width: 513px)"
+        data-srcset="{{ bg.sm }} 768w, {{ bg.sm2x }} 1536w"
+        />
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ bg.xs }} 320w, {{ bg.xs2x }} 640w" data-sizes="auto" alt="" class="blog-poster__img lazyload">
+    </picture>
+    <div class="blog-poster__container h-container">
+        <div class="blog-poster__inner">
+            <div class="blog-poster__content">
+                {% if title %}<h1 class="blog-poster__title">{{ title }}</h1>{% endif %}
+                <div class="blog-poster__meta text text--narrow">
+                    <div class="blog-poster__meta-label h-hidden-xs">{{ metaLabel }}</div>
+                    <p class="blog-poster__meta-data">{% if time is defined %}<span class="blog-poster__meta-time h-hidden-xs">{{ time }}</span>{% endif %} {% if category is defined %}<span class="blog-poster__meta-cat h-hidden-xs">{{ category }}</span>{% endif %} {% if photoAuthor is defined %}<span class="blog-poster__meta-photo">{{ photoAuthor }}</span>{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

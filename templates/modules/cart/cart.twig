@@ -1,0 +1,78 @@
+<div class="cart {{ modifier }}">
+    {% if isPopout %}
+    {% include '@loader' with { loaderText: strings.label.loader, modifier: 'loader--center'} %}
+    {% endif %}
+    {% if not ajaxCart %}
+        <div class="cart__panel">
+            <div class="cart__inner">
+                {% if isPopout %}
+                <div class="cart__header">
+                    <div class="cart__title">{{ title }}</div>
+                </div>
+                {% endif %}
+                <ul class="cart__items">
+                    {% if hasColumns %}
+                    <li class="cart__item cart__item--header">
+                        <div class="cart__grid">
+                            <div class="cart__item-col cart__item-product">{{ strings.title.cartProduct }}</div>
+                            <div class="cart__item-col cart__item-quantity">{{ strings.title.cartQnt }}</div>
+                            <div class="cart__item-col cart__item-price">{{ strings.title.cartPrice }}</div>
+                            <div class="cart__item-col cart__item-total">{{ strings.title.cartTotal }}</div>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% for product in items %}
+                    <li class="cart__item woocommerce-cart-form__cart-item {{ product.class }}">
+                        <div class="cart__grid">
+                            <div class="cart__item-col cart__item-product">
+                                <div class="cart__product">
+                                    <div class="cart__product-image"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ product.image }}" data-sizes="auto" alt="" class="cart__product-img lazyload"></div>
+                                    <div class="cart__product-name">{{ product.title }}
+                                        <div class="cart__product-subtitle js-cart-remove product-remove"><a href="{{ product.remove.link }}" {{ product.remove.data }}>{{ strings.label.cartRemove }}</a></div>
+                                        {% if product.total %}
+                                            <div class="cart__item-total">{{ product.total }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if product.quantity %}
+                            <div class="cart__item-col cart__item-quantity quantity">
+                                <div class="cart__item-label">{{ strings.label.cartAmount }}</div>
+                                {% include '@number' with { modifier: 'form-number--small', id: 'quantity', name: product.quantityName, attributes: 'data-id="' ~ product.id ~ '"', value: product.quantity, type: 'number', innerClass: 'qty', maximum: '99' } only %}
+                            </div>
+                            {% endif %}
+                            {% if product.price %}
+                            <div class="cart__item-col cart__item-price h-hidden-xs">{{ product.price }}</div>
+                            {% endif %}
+                            {% if product.total %}
+                            <div class="cart__item-col cart__item-total h-hidden-xs">{{ product.total }}</div>
+                            {% endif %}
+                            <div class="cart__item-col cart__item-remove">
+                                <div class="cart__product-subtitle h-hidden-xs js-cart-remove product-remove"><a href="{{ product.remove.link }}" {{ product.remove.data }}>{{ strings.label.cartRemove }}</a></div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% if message %}
+        <div class="cart__message">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% if isPopout %}
+        <div class="cart__footer">
+            {% if footer.transport and footer.pickup %}
+            <div class="cart__secure">
+              {% if footer.transport %}<div class="cart__secure-item"><span class="cart__secure-label">{{ strings.label.transportLabel|default('Transport') }}</span>{% include '@icon' with { modifier: 'ic_24_chevron', class: 'cart__secure-icon' } %}{{ footer.transport }}</div>{% endif %}
+              {% if footer.pickup %}<div class="cart__secure-item"><span class="cart__secure-label">{{ strings.label.pickupLabel|default('Tulen ise järgi') }}</span>{% include '@icon' with { modifier: 'ic_24_chevron', class: 'cart__secure-icon' } %}{{ footer.pickup }}</div>{% endif %}
+            </div>
+            {% endif %}
+            <div class="cart__checkout">
+                {% include '@button' with { element: 'a', text: button.text, link: button.link, modifier: 'button--block button--white', class: 'cart__checkout-button' } %}
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>

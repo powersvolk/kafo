@@ -1,0 +1,7 @@
+<div class="grid {{ modifier }}" style='{{ style }}'>
+    {% for column in columns %}
+    <div class='{{ column.class }}'>
+        <div class="sg-box">{{ column.text }}</div>
+    </div>
+    {% endfor %}
+</div>

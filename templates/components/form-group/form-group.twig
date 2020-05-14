@@ -1,0 +1,91 @@
+<div class="form-group {{ class }}">
+    <div class="form-group__row">
+        <div class="grid">
+            <div class="grid__col--sm-12">
+                {% include '@range-slider' with { modifier: '', label: "I'm a private customer", id: 'type-1' } %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group__row">
+        <div class="grid">
+            <div class="grid__col--sm-6">
+                {% include '@textfield' with { label: 'Your name', id: 'firstName' } %}
+            </div>
+            <div class="grid__col--sm-6">
+                {% include '@textfield' with { modifier: 'is-edit', value: 'Valueh', icon: 'menu', label: 'Your last name', id: 'lastName' } %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group__row">
+        <div class="grid">
+            <div class="grid__col--sm-6 form-group__row--xs">
+                {% include '@select' with { label: 'Select country', id: 'select1', options: [
+                    {
+                    name: "Estonia",
+                    value: "1"
+                    },
+                    {
+                    name: "Finland",
+                    value: "2"
+                    },
+                    {
+                    name: "Latvia",
+                    value: "3"
+                    }
+                ] } %}
+            </div>
+            <div class="grid__col--sm-6 form-group__row--xs">
+                {% include '@select' with { modifier: 'is-done', icon: 'check', label: 'Select state', id: 'select2', value: 'Option 2', options: [
+                    {
+                    name: "Option1",
+                    value: "1"
+                    },
+                    {
+                    name: "Option2",
+                    value: "2",
+                    cuttent: true
+                    },
+                    {
+                    name: "Option3",
+                    value: "3"
+                    },
+                    {
+                    name: "Option4",
+                    value: "4"
+                    }
+                ] } %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group__row">
+        {% include '@textfield' with { label: 'Choose city', id: 'city' } %}
+    </div>
+    <div class="form-group__row">
+        {% include '@textfield' with { label: 'Address', id: 'address' } %}
+    </div>
+    <div class="form-group__row">
+        {% include '@textarea' with { label: 'Your notes or questions', id: 'textarea1' } %}
+    </div>
+    <div class="form-group__row">
+        <div class="grid">
+            <div class="grid__col--sm-6">
+                {% include '@radio' with { modifier: '', label: "I'm a private customer", name:'type', id: 'type-1' } %}
+            </div>
+            <div class="grid__col--sm-6">
+                {% include '@radio' with { modifier: '', label: "I'm a business customer", name:'type', id: 'type-2' } %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group__row">
+        {% include '@check' with { modifier: '', label: "One porfavor", id: 'check-1' } %}
+        {% include '@check' with { modifier: '', label: "Two porfavor", id: 'check-2' } %}
+        {% include '@check' with { modifier: '', label: "Three porfavor", id: 'check-3' } %}
+        {% include '@check' with { modifier: '', label: "Four porfavor", id: 'check-4' } %}
+    </div>
+    <div class="form-group__row">
+        {% include '@check' with { modifier: '', label: "Sign up for exclusive market insights newsletter", id: 'check-1' } %}
+    </div>
+    <div class="form-group__row form-group__row--last">
+        {% include '@button' with { modifier: '', class: '', text: 'Submit' } %}
+    </div>
+</div>

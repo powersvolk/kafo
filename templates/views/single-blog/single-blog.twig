@@ -1,0 +1,50 @@
+{% include '@header' with header %}
+{% include '@blog-poster' with blogPoster %}
+{% embed '@section' with { isContainer: true, modifier: 'section--blog-single section--bottom-padding' } %}
+    {% block section_content %}
+        <div class="grid grid--between-sm grid--start-md">
+            <div class="grid__col--sm grid__col--md-1 grid__col--offset-md-1 h-hidden-xs">
+                {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+            </div>
+            <div class="grid__col--xs-12 grid__col--sm-8 grid__col--md-8">
+                <div class="h-hidden-sm h-hidden-md h-hidden-lg">
+                    {% include '@postmeta' with postmeta %}
+                    <br>
+                </div>
+                <div class="text text-medium editor">
+                    {{ content }}
+                </div>
+                <div class="h-hidden h-visible-xs">
+                    {% include '@social-media' with { modifier: '', logos: socialMedia.logos, title: socialMedia.title } %}
+                </div>
+                {% include '@author' with author %}
+                {% include '@tags' with tags %}
+            </div>
+            <div class="grid__col--sm-2 grid__col--md-2 h-hidden-xs">
+                {% include '@postmeta' with postmeta %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% if articles %}
+    {% embed '@section' with { title: relatedTitle, isContainer: true, modifier: 'section--related section--related-blog section--bottom-padding' } %}
+        {% block section_content %}
+            <div class="slider slider--related-blog">
+                <div class="js-slider js-related-blog">
+                    {% for article in articles %}
+                        <div class="product-grid__item">
+                            {% include '@article' with { modifier: '', link: article.link, image: article.image, title: article.title, date: article.date } %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

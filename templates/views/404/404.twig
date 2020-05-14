@@ -1,0 +1,26 @@
+{% include '@header' with header %}
+<div class="h-container">
+    <div class="v404__top">
+        <div class="v404__bg"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="" height="" data-srcset="{{ ('/inc/img/sofikohvi.jpg')|path }}, {{ ('/inc/img/sofikohvi@2x.jpg')|path }} 2x" class="lazyload" data-sizes="auto"></div>
+        <div class="grid">
+            <div class='grid__col--xs-12 grid__col--md-7'>
+                <h1 class="v404__title">{{ titleXs }}</h1>
+                <p class="v404__subtitle"> {{ subtitle }} </p>
+                {% if button %}
+                    {% include '@button' with { element: 'a', modifier: 'button', icon: '', text: button.text, link: button.url, class: 'v404__button' } %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% embed '@section' with { title: cardsTitle, description: true, modifier: 'section--cards' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'arrow-right', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { class: 'js-testimonial-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+{% include '@brands-list' with brands %}
+{% include '@quote' with quote %}
+{% include '@footer' with footer %}

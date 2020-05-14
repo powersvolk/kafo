@@ -1,0 +1,68 @@
+<div class="single-hero {{ modifier }} {% if dark %} single-hero--dark {% endif %}">
+    <div class="single-hero__image lazyload" data-bgset="{{ image }}">
+        {% if slides %}
+            <div class="single-hero__slider">
+                {% include '@slider' with {thumbnailNavigation: thumbnailNavigation, sliderMod: sliderMod, modifier: sliderDotsModifier, slides: slides} %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="single-hero__info">
+        <div class="single-hero__image-title">{{ title }}</div>
+        <div class="image-info__info">
+            <div class="info-price">
+                <div class="info__label">{{ strings.priceLabel }}</div>
+                <div class="info__price">{{ price }}</div>
+            </div>
+            {% if postpayPrice %}
+            <div class="info-postpay">
+                <div class="info__label">{{ strings.postpayLabel }}</div>
+                <div class="info__price">{{ postpayPrice }} {{ currency }}<span class="price-unit"> {{ postpayTime }} </span> {% include '@tooltip' with { id: postpayPriceTooltip.tooltip.id, content: postpayPriceTooltip.tooltip.content, class: 'product-poster__tooltip', tooltip: 'ic_tooltip' } %} </div>
+            </div>
+            {% endif %}
+        </div>
+        <form method="post" class="product-poster__form {{ formData.class }}" enctype="multipart/form-data" {{ formData.data }}>
+            {% include '@form-group--product-no-nr' with addToCart %}
+        </form>
+        {% if (video or isReel) %}
+            <div class="single-hero__image-gallery">
+                {% if video.video %}
+                <div class="image-gallery__video image-gallery__item">
+                    {% include '@lightbox' with { isVideo: true, data: { url: video.video, image: video.image.srcset } } %}
+                </div>
+                {% endif %}
+                {% if reel %}
+                <div class="image-gallery__reel image-gallery__item">
+                    {% include '@lightbox' with { isReel: true, data: { reelImages: reel, fancyboxId: 'reel-lightbox', image: reelImagePlaceholder } } %}
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if transportOptions %}
+            {% include '@accordion' with { class: 'product-poster__transport', triggerIcons: [{icon: 'plus-circle', class: 'accordion__icon accordion__icon--plus'}, {icon: 'minus-circle', class: 'accordion__icon accordion__icon--minus'}], accordionItems: transportOptions } %}
+        {% endif %}
+    </div>
+    {% if features %}
+        <div class="single-hero__features">
+            {% for item in features %}
+                <div class="feature-item">
+                    <div class="single-hero__text">
+                        <div class="feature-item__value">
+                            {{ item.value }}
+                        </div>
+                        <div class="feature-item__title">
+                            {{ item.title }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="feature-item">
+                {% include '@rating' with {modifier: "rating--static single-hero__rating", review : score.review, static: true, rating: score.rating } %}
+            </div>
+        </div>
+    <div>
+        <a class="single-hero__arrow bounce js-scrollto" href="{{ arrowTarget }}">
+            {% include '@icon' with { modifier: "chevron-down" } %}
+        </a>
+    </div>
+    {% endif %}
+</div>

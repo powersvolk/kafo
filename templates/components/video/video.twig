@@ -1,0 +1,26 @@
+<figure class="video {{ modifier }} {{ class }}">
+    <div class="video__inner">
+        {% if showLogo %}
+        <div class="video__logo">
+            <img src="{{ '/inc/img/kafo-logo.svg'|path }}" alt="{{ title }}" class="video__logo-image">
+        </div>
+        {% endif %}
+        {% if video %}
+        <button class="video__btn" type="button">
+            {% if image %}
+                {% if image.srcset %}
+                <img class="lazyload img-responsive video__image" data-sizes="auto" data-srcset="{{ image.srcset }}" width="640" alt="{{ image.alt }}">
+                {% endif %}
+            {% endif %}
+            {% include '@icon' with { modifier: 'play-circle', class: 'video__icon' } %}
+        </button>
+        <div class="video__holder">
+            <iframe class="video__iframe lazyload" data-src="{{ video }}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+        {% elseif image %}
+            {% if image.srcset %}
+                <img class="lazyload img-responsive video__image" data-sizes="auto" data-srcset="{{ image.srcset }}" width="640" alt="{{ image.alt }}">
+            {% endif %}
+        {% endif %}
+    </div>
+</figure>

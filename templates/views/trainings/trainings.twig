@@ -1,0 +1,37 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero|merge( { modifier:'hero--portrait' }) %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { title: cardsTitle, description: true, id: 'trainings', modifier: 'section--cards section--top-padding section--training' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'arrow-right', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { modifier: 'card-grid--training', class: 'js-training-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+{% if reviewSlider %}
+    {% embed '@section' with { modifier: 'section--background-gray' } %}
+        {% block section_content %}
+            {% include '@review-slider' with reviewSlider %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% if emo %}
+            {% include '@emo' with { modifier: 'emo--large emo--background emo--reverse', title: emo.title, description: emo.description, button: emo.button, image: emo.image, modal: emo.modal } %}
+        {% elseif emoModule %}
+            {% include '@emo--module' with emoModule %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with { modifier: 'quote--front', text: footerQuote.text, button: footerQuote.button } %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

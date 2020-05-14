@@ -1,0 +1,27 @@
+<div class="recipe-list">
+    <div class="recipe-list__content">
+    <p class="recipe-list__title">{{ title }}</p>
+        <div class="recipe-list__list">
+            <div class="recipe-list__first-list">
+                <p class="recipe-list__subtitle">{{ subtitle }}</p>
+                     <ul class="recipe-list__checkbox-list">
+                        {% for item in list %}
+                            <li class="recipe-list__checkbox-item">{% include '@check' with { modifier: 'check--large', class: 'recipe-list__check', label: item.label, id: item.id, image: false } %}</li>
+                        {% endfor %}
+                    </ul>
+            </div>
+            <div class="recipe-list__second-list">
+                <p class="recipe-list__subtitle">{{ subtitle2 }}</p>
+                    <ul>
+                        {% for item in list2 %}
+                            <li class="recipe-list__checkbox-item">{% include '@check' with { modifier: 'check--large', class: 'recipe-list__check', label: item.label, id: item.id, image: false  } %}</li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+        <div class="recipe-list__progress">
+            <div class="recipe-list__progress-bar"></div>
+            <p class="recipe-list__progress-bar-text">{{ progressBarText }}</p>
+        </div>
+    </div>
+</div>

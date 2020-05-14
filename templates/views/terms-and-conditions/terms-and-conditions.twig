@@ -1,0 +1,10 @@
+{% include '@header' with header %}
+<div class="section section--bottom-padding">
+    <div class="h-container terms__container">
+        <h1 class="terms__title"> {{ title }} </h1>
+        <div class="terms__paragraph text"> {{ paragraph }} </div>
+    </div>
+</div>
+{% include '@brands-list' with brands %}
+{% include '@quote' with quote %}
+{% include '@footer' with footer %}

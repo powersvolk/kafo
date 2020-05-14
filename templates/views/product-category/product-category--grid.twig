@@ -1,0 +1,11 @@
+	<div class="grid js-product-grid">
+		{% include '@loader' with { loaderText: strings.label.loader, modifier: ''} %}
+		{% for product in products %}
+			<div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36">
+				{% include '@product' with product|merge( { modifier: '' }) %}
+			</div>
+		{% endfor %}
+		<div class="grid__col--sm-12 {% if products %}h-hidden{% endif %} js-no-products">
+			<div class="">{{ strings.label.noProducts }}</div>
+		</div>
+	</div>

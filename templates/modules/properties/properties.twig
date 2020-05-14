@@ -1,0 +1,55 @@
+<div class="properties {{ modifier }}">
+    <div class="h-container properties__inner">
+        {% if propertiesLogo.srcset or propertiesLinks %}
+        <div class="properties__pre h-hidden h-visible-sm h-visible-xs">
+            <div class="properties__producer">
+            {% if propertiesLogo.srcset  %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ propertiesLogo.srcset }}" alt="{{ propertiesLogo.alt }}" class="properties__producer-logo lazyload">
+            {% endif %}
+            {% if propertiesLinks %}
+                <div class="properties__producer-links">
+                    {% include '@button-group' with { groupButtons: propertiesLinks, modifier:'' } %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        <div class="properties__content">
+            <div class="properties__text text">
+                <h2 class="properties__title">{{ propertiesTitle }}</h2>
+                {{ propertiesContent }}
+                {% if contactPerson %}
+                    {% include '@get-in-contact' with contactPerson %}
+                {% endif %}
+            </div>
+            <div class="properties__info">
+                {% if propertiesLogo.srcset and propertiesLinks %}
+                <div class="properties__producer h-hidden-xs h-hidden-sm">
+                    {% if propertiesLogo.srcset  %}
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ propertiesLogo.srcset }}" alt="{{ propertiesLogo.alt }}" class="properties__producer-logo lazyload">
+                    {% endif %}
+                    {% if propertiesLinks  %}
+                        <div class="properties__producer-links">
+                            {% include '@button-group' with { groupButtons: propertiesLinks, modifier:'' } %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% if propertiesDescription %}
+                    <div class="properties__description">{{ propertiesDescription }}</div>
+                {% endif %}
+                {% if propertiesList %}
+                    {% if propertiesListTitle %}
+                        <h4 class="properties__list-title">{{ propertiesListTitle }}</h4>
+                    {% endif %}
+                    {% include '@list' with { modifier: 'list--icon', listItems: propertiesList } %}
+                {% endif %}
+            </div>
+        </div>
+        {% if propertiesImage %}
+            <div class="properties__content-image">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ propertiesImage.srcset }}" alt="{{ propertiesImage.alt }}" class="properties__image lazyload">
+            </div>
+        {% endif %}
+    </div>
+</div>

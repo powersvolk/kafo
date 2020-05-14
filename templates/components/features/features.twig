@@ -1,0 +1,19 @@
+<div class="features {{ modifier }}">
+    <div class="h-container">
+        <div class="features__inner">
+            {% if features %}
+            <ul class="features__list">
+                {% for feature in features %}
+                <li class="features__item">
+                    {% include '@icon' with { modifier: feature.icon, class: 'features__icon' } %}
+                    <div class="features__text text">
+                        <h4 class="features__title">{{ feature.title }}</h4>
+                        <p class="features__description">{{ feature.text }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>

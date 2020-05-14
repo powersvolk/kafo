@@ -1,0 +1,64 @@
+{
+    "key": "group_59d248280aaa4",
+    "title": "Product review response mail",
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gtap-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567769563,
+    "fields": [
+        {
+            "key": "field_59d24836a7001",
+            "label": "Mail title",
+            "name": "rating_mail_title",
+            "type": "text",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_59d2484ba7002",
+            "label": "Mail content",
+            "name": "rating_mail_content",
+            "type": "wysiwyg",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        }
+    ]
+}

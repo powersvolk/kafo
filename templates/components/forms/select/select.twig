@@ -1,0 +1,14 @@
+<div class="form-textfield form-select {{ modifier }}{% if class %} {{ class }}{% endif %}" {% if isDefault %}data-default="true"{% endif %}>
+    <div class="form-textfield__inner">
+        {% if label %}
+        <label class="form-textfield__label" for="{{ id }}">{{ label }}</label>
+        {% endif %}
+        <select name="{{ name|default('select') }}" id="{{ id }}" class="form-textfield__input{% if isDefault %} form-textfield__input--default{% endif %} {{ innerClass }}"{% if isDisabled %} disabled{% endif %} {{ data }}{% if validate %} data-validate="true"{% endif %}>
+            {% if label %}<option value="" disabled selected>{{ label }}</option>{% endif %}
+            {% for option in options %}
+            <option value="{{ option.value }}" {% if option.isSelected %} selected {% endif %}>{{ option.name }}</option>
+            {% endfor %}
+        </select>
+        {% if icon %}{% include '@icon' with { modifier: icon, class: 'form-textfield__edit-icon' } %}{% endif %}
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="contact">
+    <div class="contact__section contact__section--general lazyload" data-bgset="{{ generalSection.background }}" data-sizes="auto">
+        <div class="contact__section-inner">
+            <h1 class="contact__section-title">{{ generalSection.title }}</h1>
+            {% if generalSection.contactGroups %}
+            <div class="contact__groups">
+                {% for contactGroup in generalSection.contactGroups %}
+                <div class="contact__group">
+                    <h3 class="contact__group-title">{{ contactGroup.title }}</h3>
+
+                    {% if contactGroup.phoneNumber %}
+                    <div class="contact__group-inner">
+                        {% if contactGroup.phonePrepend %}
+                            <span class="contact__group-link-prepend">{{ contactGroup.phonePrepend }}: </span>
+                        {% endif %}
+                        <a href="tel:{{ contactGroup.phoneNumber }}" class="contact__group-link">
+                            {% include '@icon' with { modifier: 'ic_24_phone', class: 'contact__group-link-icon' } %}
+                            {{ contactGroup.phoneNumber }}
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if contactGroup.email %}
+                    <div class="contact__group-inner">
+                        <a href="mailto:{{ contactGroup.email }}" class="contact__group-link">
+                            {% include '@icon' with { modifier: 'ic_24_email', class: 'contact__group-link-icon' } %}
+                            {{ contactGroup.email }}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% include '@button' with generalSection.navigationButton %}
+            {% if generalSection.contactLinks %}
+                {% include '@button-group' with { class: 'contact__links', groupButtons: generalSection.contactLinks } %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="contact__section contact__section--locations lazyload" data-bgset="{{ locationsSection.background }}" data-sizes="auto">
+        <div class="contact__section-inner">
+            <h2 class="contact__section-title">{{ locationsSection.title }}</h2>
+            {% include '@select' with { id: 'location-select', class: 'contact__locations-select js-change-location', label: false, options: locationsSection.locations } %}
+            <div class="contact__locations">
+                {% for location in locationsSection.locations %}
+                <div class="contact__location{% if loop.first %} is-visible{% endif %} text" data-location="{{ location.value }}">
+                    <h3 class="contact__location-title">{{ location.name }}</h3>
+                    <div class="contact__location-address">{{ location.address }}</div>
+                    <a href="{{ location.map.link }}" target="_lank" type="button" class="contact__location-map lazyload" data-bgset="{{ location.map.triggerBackground }}" data-sizes="auto">
+                        <span class="contact__location-map-inner">{{ location.map.triggerText }}</span>
+                    </a>
+                    <div class="contact__location-contacts">{{ location.contact }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

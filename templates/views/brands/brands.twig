@@ -1,0 +1,27 @@
+{% include '@header' with header %}
+{% embed '@section' with { modifier: 'section--bottom-padding section--brands', title: brandsTitle|default('Kaubamärgid'), isMainTitle:true } %}
+    {% block section_content %}
+        <div class="h-container">
+            {% include '@article-grid' with { columns: brands.columns, modifier: 'article-grid--square', hasFeatured: false } %}
+        </div>
+    {% endblock %}
+{% endembed %}
+{% if emo %}
+    {% include '@emo' with { modifier: 'emo--large emo--reverse emo--background emo--top-wave', title: emo.title, description: emo.description, button: emo.button, image: emo.image } %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+{% if reviewSlider %}
+    {% embed '@section' with { modifier: 'section--background-gray' ~ ((emo or emoModule.module_emo) ? ' section--surf' : '') } %}
+        {% block section_content %}
+            {% include '@review-slider' with reviewSlider %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

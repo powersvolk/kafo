@@ -1,0 +1,22 @@
+
+<div class="dropdown  {{ modifier }} {{ class }}">
+    <a href="#" class="dropdown__label js-dropdown-toggle" data-activates="{{ id }}">{{ label }}</a>
+    {% if isClean %}
+        <div id="{{ id }}" class="dropdown__options">
+        {% block content%}
+        {% endblock %}
+        </div>
+    {% else %}
+        <div id="{{ id }}" class="dropdown__content">
+            <ul class="dropdown__options">
+                {% for option in options %}
+                <li class="dropdown__option">
+                    <a href="{{ option.href }}" class="dropdown__option-link {{ option.class }}">
+                        {{ option.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>

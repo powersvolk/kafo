@@ -1,0 +1,8 @@
+<div class="form-textfield form-textfield--floating-label form-datepicker {{ modifier }}{% if class %} {{ class }}{% endif %}">
+    <div class="form-textfield__inner">
+        <input class="form-textfield__input js-datepicker{% if customClass %} {{ customClass }}{% endif %}" type="text" name="{{ name }}" id="{{ id }}" value="{{ value }}" {% if isDisabled %}disabled{% endif %}>
+        {% if label %}<label class="form-textfield__label" for="{{ id }}" >{{ label }}</label>{% endif %}
+        {% include '@icon' with { modifier: icon, class: 'form-textfield__icon' } %}
+    </div>
+</div>
+

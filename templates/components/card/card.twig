@@ -1,0 +1,22 @@
+<{{ element|default('div') }} {% if element == 'a' %} href="{{ link|default('#') }}"{% endif %} class="card {{ modifier }}">
+    {% if image %}
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" alt="" class="card__image lazyload">
+    {% else %}
+        {% if background %}
+        <picture class="card__background">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ background }}" data-sizes="auto" alt="" class="card__image lazyload">
+        </picture>
+        {% endif %}
+    {% endif %}
+    <div class="card__content text">
+        {% block card_content %}
+            {% if title %}<div class="card__title">{{ title }}</div>{% endif %}
+
+            {% if cta.url %}
+            <a href="{{ cta.url }}" class="card__link">{{ cta.text }}</a>
+            {% elseif cta.text %}
+            <span class="card__link">{{ cta.text }}</span>
+            {% endif %}
+        {% endblock %}
+    </div>
+</{{ element|default('div') }}>

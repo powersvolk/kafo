@@ -1,0 +1,143 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero|merge( { modifier:'hero--top-content hero--portrait hero--large-title' }) %}
+        {% include '@features' with { modifier: '', features: features } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: 'section--bottom-padding', id: 'packages', isContainer: true } %}
+    {% block section_content %}
+        {% if popular %}
+            {% include '@events-grid' with { class: 'js-slider js-product-slider', title: popular.title, products: popular.products } %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: '' } %}
+    {% block section_content %}
+        <div class="accordion accordion--full accordion--padded js-accordion-group">
+            <div class="accordion__item js-accordion" id="events-terms">
+                <a href="#events-terms" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ packageAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        {% if packageAccordion.content.title and packageAccordion.content.content %}
+                        <div class="h-container">
+                            <div class="grid">
+                                <div class="grid__col--md-7 text">
+                                    {% if packageAccordion.content.title %}
+                                        <h3 class="h3--alt">{{ packageAccordion.content.title }}</h3>
+                                    {% endif %}
+                                    {% if packageAccordion.content.content %}
+                                        {{ packageAccordion.content.content }}
+                                    {% endif %}
+                                </div>
+                                <div class="grid__col--md-5">
+                                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                         data-srcset="{{ packageAccordion.content.image.srcset }}"
+                                         class="split-content__image lazyload">
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item js-accordion" id="events-terms">
+                <a href="#events-terms" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ termsAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        {% if termsAccordion.content.title and termsAccordion.content.content %}
+                            <div class="h-container">
+                                <div class="grid grid--center-sm grid--start-md">
+                                    <div class="grid__col--sm-9 grid__col--md-7 text">
+                                        {% if termsAccordion.content.title %}
+                                            <h3 class="h3--alt">{{ termsAccordion.content.title }}</h3>
+                                        {% endif %}
+                                        {% if termsAccordion.content.content %}
+                                            {{ termsAccordion.content.content }}
+                                            <br>
+                                        {% endif %}
+                                    </div>
+                                    <div class="grid__col--sm-12">
+                                        <div class="grid__col-offset--xs grid__col-offset--reset-sm">
+                                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                 data-srcset="{{ termsAccordion.content.image.srcset }}"
+                                                 class="h-img-fluid lazyload">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item js-accordion" id="events-extra">
+                <a href="#events-extra" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ extraAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        {% if extraAccordion.content.title and extraAccordion.content.content %}
+                        <div class="h-container">
+                            <div class="grid">
+                                <div class="grid__col--md-7 text">
+                                    {% if extraAccordion.content.title %}
+                                        <h3 class="h3--alt">{{ extraAccordion.content.title }}</h3>
+                                    {% endif %}
+                                    {% if extraAccordion.content.content %}
+                                        {{ extraAccordion.content.content }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% if emo1 and emo2 %}
+            {% include '@emo' with { modifier: 'emo--background emo--bottom-wave', title: emo1.title, description: emo1.description, image: emo1.image } %}
+            {% include '@emo' with { modifier: 'emo--large emo--background emo--reverse emo--bottom-wave', title: emo2.title, description: emo2.description, button: emo2.button, image: emo2.image } %}
+        {% elseif emoModule %}
+            {% include '@emo--module' with emoModule %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% if reviewSlider %}
+    {% embed '@section' with { modifier: 'section--background-gray' ~ ((emo1 or emo2 or emoModule.module_emo) ? ' section--surf' : '') } %}
+        {% block section_content %}
+            {% include '@review-slider' with reviewSlider %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' with { title: cardsTitle, description: true, modifier: 'section--cards' } %}
+    {% block section_description %}
+        {{ cardsContent }} {% if cardsLink.link is defined %}{% include '@button' with { element: 'a', link: cardsLink.link, modifier: 'button--icon button--naked', text: cardsLink.text|default('Loe kõiki stoorisid'), icon: 'arrow-right', iconAlign: 'right' } %}{% endif %}
+    {% endblock %}
+    {% block section_content %}
+        {% include '@card-grid' with { class: 'js-testimonial-slider', cards: cards } %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with { modifier: 'quote--front', text: footerQuote.text, button: footerQuote.button } %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

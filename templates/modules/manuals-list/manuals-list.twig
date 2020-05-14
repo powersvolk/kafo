@@ -1,0 +1,40 @@
+{% for resultItem in results %}
+    <div class="accordion {{ resultItem.accordionSimple.modifier }} js-accordion-group js-manuals-search-group">
+        {% for accordionItem in resultItem.accordionSimple.accordionItems %}
+        <div class="accordion__item js-accordion" id="{{ id }}-{{ index }}">
+            <a href="#{{ id }}-{{ index }}" class="accordion__header js-accordion-control">
+                <div class="accordion__title accordion__title-manuals">
+                    {{ accordionItem.title }}
+                </div>
+            </a>
+            <div class="accordion__content js-accordion-content">
+                <div class="accordion__inner">
+                    <div class="accordion {{ resultItem.accordionManuals.modifier }} js-accordion-group">
+                        {% for accordionItem in resultItem.accordionManuals.accordionItems %}
+                        <div class="accordion__item js-accordion js-manuals-search-item" id="{{ id }}-{{ index }}">
+                            <a href="#{{ id }}-{{ index }}" class="accordion__header-second js-accordion-control">
+                                <div class="accordion__title">
+                                    {{ accordionItem.title }}
+                                    {% if resultItem.accordionManuals.triggerIcons %}
+                                        {% for triggerIcon in resultItem.accordionManuals.triggerIcons %}
+                                            {% include '@icon' with { modifier: triggerIcon.icon|default('ic_24_dropdown'), class: triggerIcon.class|default('accordion__icon') } %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div class="accordion__content js-accordion-content">
+                                <div class="accordion__inner">
+                                    {% for item in accordionItem.manuals %}
+                                        <div class="manuals-list__item"><a href="{{ item.url }}" class="manuals-list__item-link">{% include '@icon' with { modifier: 'ic_24_download', class:'' } %}{{ item.name }}</a></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}

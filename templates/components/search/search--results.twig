@@ -1,0 +1,27 @@
+{% if groups %}
+    {% for group in groups %}
+        <div class="search__results-row">
+            <div class="grid grid--no-vertical-gutter">
+                <div class="grid__col--xs-4 grid__col--sm-3">
+                    <div class="search__results-title">{{ group.title }}</div>
+                </div>
+                <div class="grid__col--xs-8 grid__col--sm-9">
+                    <ul class="search__results-list">
+                        {% for result in group.results %}
+                            <li class="search__results-item">
+                                {% if result.link %}
+                                    <a href="{{ result.link }}" class="search__results-link">{{ result.title }}</a>
+                                {% else %}
+                                    <span class="search__results-link">{{ result.title }}</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% if group.more %}
+                        <a href="{{ group.moreLink }}" class="search__results-all">{{ group.more }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

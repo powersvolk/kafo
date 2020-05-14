@@ -1,0 +1,42 @@
+<div class="shop {{ modifier }}">
+    <div class="h-container shop__inner">
+        <div class="shop__head">
+            <div class="shop__header-col">
+                <h1 class="shop__title h3">{% include '@icon' with { modifier: 'ic_40_lock', class: 'shop__title-icon' } %}<span class="shop__title-text">{{ title }}</span></h1>
+                {% if headContent %}{{ headContent }}{% endif %}
+            </div>
+            <div class="shop__header-col shop__header-col--last {% if backButton %}shop__header-col--even{% endif %}">
+                {% if backButton %}
+                    {% include '@button' with { element: 'a', link: backButton.link, modifier: 'button--small', icon: '', text: backButton.text , class: 'shop__back-button' } %}
+                {% endif %}
+                <div class="shop__tip">
+                    {% include '@icon' with { modifier: tip.icon, class: 'shop__tip-icon' } %}
+                    <div class="shop__tip-text">{{ tip.content }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="shop__grid">
+            <div class="shop__column shop__primary {% if primaryClass %}{{ primaryClass }}{% endif %}">
+                <div class="shop__panel">
+                    {{ primary }}
+                </div>
+                <div class="shop__tip">
+                    {% include '@icon' with { modifier: tip.icon, class: 'shop__tip-icon' } %}
+                    <div class="shop__tip-text">{{ tip.content }}</div>
+                </div>
+            </div>
+            {% if secondary %}
+            <div class="shop__column shop__secondary">
+                {{ secondary }}
+            </div>
+            {% endif %}
+            {% block bottom %}
+            {% endblock %}
+        </div>
+        <div class="shop__footer">
+            <div class="shop__back">
+                <a href="{{ back.link }}" class="shop__back-link">{% include '@icon' with { modifier: 'chevron', class: 'shop__back-icon' } %}<span class="shop__back-text">{{ back.text }}</span></a>
+            </div>
+        </div>
+    </div>
+</div>

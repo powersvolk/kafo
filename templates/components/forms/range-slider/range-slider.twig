@@ -1,0 +1,6 @@
+<div class="range-slider js-range-slider {{ modifier }}{% if postfix %} has-postfix{% endif %}" data-min="{{ minValue }}" data-max="{{ maxValue }}" data-step="{{ step }}" data-postfix="{{ postfix }}" {% if controls %} data-controls="{{ controls }}" {% endif %}>
+    <div class="range-slider__inner">
+        <div class="range-slider__field"></div>
+    </div>
+    <input type="hidden" name="{{ inputName|default('input') }}" {% if inputValue %}data-init-value="{{ inputValue }}"{% endif %}{{ attributes }}>
+</div>

@@ -1,0 +1,48 @@
+{% set popupContent %}
+    <div class="popup {{ modifier }}" data-id="{{ popupData.settings.id }}" data-timeout="{{ popupData.settings.timeout }}">
+        {% if popupData.image %}
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ popupData.image.srcset }}" alt="{{ popupData.image.alt }}" data-sizes="auto" class="popup__image h-img-fluid lazyload">
+        {% endif %}
+        {% if popupData.content.title %}
+            <p class="popup__title">{{ popupData.content.title }}</p>
+        {% endif %}
+
+        {% if popupData.form %}
+        <form class="popup__form">
+            <div class="popup__form-content">
+                {% if popupData.form.title %}
+                    <h2 class="popup__form-title"><strong>{{ popupData.form.title }}</strong></h2>
+                {% endif %}
+                {% if popupData.form.text %}
+                    <p class="popup__form-text">{{ popupData.form.text }}</p>
+                {% endif %}
+            </div>
+            <div class="popup__form-fields">
+                <input type="hidden" name="action" value="popup-subscribe">
+                <input type="hidden" name="list_id" value="{{ popupData.settings.listid }}">
+
+                <div class="form-group">
+                    <div class="form-group__row form-group__row--double">
+                        {% include '@textfield' with popupData.form.field|merge({type: 'email', name: 'email', class: 'popup__form-field', validate: true}) %}
+                    </div>
+                    <div class="form-group__row form-group__row--last">
+                        {% include '@button' with popupData.form.button|merge({type: 'submit', modifier: 'button--block', class: 'popup__form-button js-popup-newsletter'}) %}
+                    </div>
+                </div>
+            </div>
+            <div class="popup__form-success">
+                {% include '@icon' with { modifier: 'ic_24_checkmark', class:'popup__form-success-icon' }%}
+                <h2 class="popup__form-success-title"><strong>{{ popupData.form.success.title }}</strong></h2>
+                <div class="text">
+                    {{ popupData.form.success.content }}
+                </div>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endset %}
+
+{% if popupData.settings.is_active %}
+<a href="#{{ popupData.settings.id }}" class="h-hidden js-popup-modaal" data-custom-class="modaal--small modaal--popup">Popup trigger</a>
+{% include '@modaal' with popupData.settings|merge({content: popupContent}) %}
+{% endif %}

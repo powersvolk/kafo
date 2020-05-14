@@ -1,0 +1,87 @@
+<div class="filter filter--{{ modifier }}">
+    {% include '@button' with { modifier: 'button--icon-rect', class: 'filter__close js-close-filter', icon: 'ic_24_close', text: '' } %}
+    <form method="post" action="{{ formPost }}">
+        {% if header %}
+        <div class="filter__header">
+            <h3 class="filter__title">{{ header.title }}</h3>
+            {% if header.content %}
+            <div class="filter__header-content">
+                {% if header.content.leaseTypes %}
+                <div class="grid js-lhv-calc-types">
+                    {% for leaseType in header.content.leaseTypes %}
+                    <div class="grid__col--sm-6">
+                        {% include '@radio' with leaseType %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if header.content.dataList %}
+                <ul class="filter__data-list">
+                    {% for data in header.content.dataList %}
+                    <li class="filter__data-item"><div class="filter__data-label">{{ data.label }}</div> <div class="filter__data">{{ data.data }}</div></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="filter__form">
+            <div class="form-group">
+                {% for field in filters %}
+                <div class="form-group__row form-group__row--clean filter__row">
+                    <div class="grid grid--no-gutter grid--middle-sm filter__toggle js-accordion">
+                        <a href="#" class="grid__col--sm-4 {% if field.hideLabel %}h-hidden-sm h-hidden-md h-hidden-lg{% endif %} js-accordion-control filter__toggle-header">
+                            <div class="filter__label">{{ field.label }}{% if field.subLabel %}<br><div class="filter__label-sub">{{ field.subLabel }}</div>{% endif %}</div>
+                            <div class="filter__arrow">{% include '@icon' with { modifier: 'ic_24_dropdown', class: 'filter__icon'} %}</div>
+                        </a>
+                        <div class="{% if field.hideLabel %}grid__col--sm-12{% else %} grid__col--sm-8{% endif %} js-accordion-content filter__toggle-content">
+                            <div class="filter__field">
+                            {% if field.field == 'checkbox' %}
+                                <ul class="filter__checkbox-list">
+                                {% for item in field.checkbox %}
+                                     <li class="filter__checkbox-item">{% include '@check' with item|merge({ modifier: 'check--large'}) %}</li>
+                                {% endfor %}
+                                </ul>
+                            {% elseif field.field == 'range-slider' %}
+                                {% include '@range-slider' with field.rangeslider|merge({ modifier: '', label: '', id: 'type-1' }) %}
+                            {% elseif field.field == 'select' %}
+                                <div class="filter__select-list">
+                                    {% for item in field.select %}
+                                        {% include '@dropdown' with { modifier: '', label: item.label, id: item.id, options: item.options, class: 'filter__select-item js-filter-sort' } %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if category %}
+                    <input type="hidden" name="product_cat" value="{{ category }}">
+					<input type="hidden" name="type_tem" value="{{ type_tem }}">
+                {% endif %}
+                {% if action %}
+                    <input type="hidden" name="action" value="{{ action }}">
+                {% endif %}
+            </div>
+        </div>
+        {% if footer %}
+        <div class="filter__footer">
+            <div class="grid grid--no-gutter grid--middle-sm">
+                <div class="grid__col--sm-6">
+                    <div class="filter__result">
+                        {% if footer.text %}<p class="filter__result-text">{{ footer.text }}</p>{% endif %}
+                        <div class="filter__result-nr js-result">{{ footer.result }}</div>
+                    </div>
+                </div>
+                {% if footer.button %}
+                <div class="grid__col--sm-6 filter__submit">
+                    {% include '@button' with { modifier: footer.button.modifiers, type: footer.button.type ? footer.button.type : 'button', icon: footer.button.icon, iconAlign: 'right', text: footer.button.text, class: 'js-close-filter', customAttributes: footer.button.customAttributes } %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </form>
+</div>

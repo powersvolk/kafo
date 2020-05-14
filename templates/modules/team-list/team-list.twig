@@ -1,0 +1,23 @@
+<div class="team-list {{ modifier }}">
+    <div class="grid">
+        <div class="grid__col--md-12 grid--center-sm">
+            <div class='grid__col-xs-12 grid__col--sm-8 grid__col--md-7 grid--center-sm'>
+                <p class="team-list__title">{{ title }}</p>
+                <p class="team-list__subtitle">{{ subtitle }}</p>
+            </div>
+        </div>
+        <div class="grid team-list__cards">
+            {% for card in cards %}
+            <div class='grid__col--sm-4 grid__col--md-3'>
+                <div class="team-list__card">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ card.image }}" data-sizes="auto" class="team-list__image lazyload">
+                    <p class="team-list__name"> {{ card.name }} </p>
+                    <p class="team-list__job"> {{ card.job }} </p>
+                    <p class="team-list__email"> {{ card.email }} </p>
+                    <p class="team-list__phone"> {{ card.phone }} </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

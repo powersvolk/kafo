@@ -1,0 +1,45 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero|merge({ modifier:'hero--top-content hero--portrait hero--large-title' }) %}
+        {% include '@features' with { modifier: '', features: features } %}
+    {% endblock %}
+{% endembed %}
+{% if reviewSlider %}
+    {% embed '@section' with { modifier: 'section--background-gray' ~ ((emo1 or emo2 or emo3 or emoModule.module_emo) ? ' section--surf' : '') } %}
+        {% block section_content %}
+            {% include '@review-slider' with reviewSlider %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@properties' with properties|merge({ modifier:'properties--meeting' }) %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: '' } %}
+    {% block section_content %}
+        <div class="accordion accordion--full accordion--meeting accordion--padded">
+            <div class="accordion__item is-open js-accordion" id="meeting-length">
+                <a href="#meeting-length" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ meetingPackages.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner {{ accordionItem.modifier }}">
+                        {% include '@meeting' with meetingPackages.packages %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with { modifier: 'quote--front', text: footerQuote.text, button: footerQuote.button } %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

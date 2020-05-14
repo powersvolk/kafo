@@ -1,0 +1,16 @@
+<div class="social-media {{ modifier }}">
+    <div class="social-media__content">
+        <p class="social-media__title">{{ title }}</p>
+    </div>
+    <div class="social-media__logos">
+    {% if logos %}
+        {% for icon in logos %}
+        <div class="social-media__logo social-media__logo--{{ icon.class }}">
+            <a href="{{ icon.link }}" class="social-media__link js-share-{{ icon.class }}">
+                {% include '@icon' with { modifier: icon.icon, class: 'social-media__icon' } %}
+            </a>
+        </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+</div>

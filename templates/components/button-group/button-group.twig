@@ -1,0 +1,7 @@
+<div class="button-group {{ modifier }}{% if class %} {{ class }}{% endif %}">
+    {% for groupButton in groupButtons %}
+    <div class="button-group__button">
+        {% include '@button' with groupButton %}
+    </div>
+    {% endfor %}
+</div>

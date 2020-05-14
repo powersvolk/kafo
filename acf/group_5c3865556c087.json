@@ -1,0 +1,44 @@
+{
+    "key": "group_5c3865556c087",
+    "title": "ReCaptcha",
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gtap-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567769563,
+    "fields": [
+        {
+            "key": "field_5c38655a44611",
+            "label": "Form label",
+            "name": "recaptcha_label",
+            "type": "wysiwyg",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        }
+    ]
+}

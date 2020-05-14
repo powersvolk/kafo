@@ -1,0 +1,65 @@
+{# Cant build component like this, will break include #}
+{#{% embed '@card--default' with { element: 'div' } %}
+{% block card_content %}#}
+
+<div class="order-summary {{ modifier }} cart_totals woocommerce-checkout-review-order-table">
+    <h2 class="order-summary__title">{{ strings.title.cartSummary }}</h2>
+    {% if products %}
+    <div class="order-summary__products">
+        {% for product in products %}
+        <div class="order-summary__product">
+            <div class="order-summary__product-figure">
+                <img class="order-summary__product-image h-img-fluid lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ product.image }}" data-sizes="auto">
+            </div>
+            <div class="order-summary__product-content">
+                <span class="order-summary__product-title">{{ product.title }}</span>
+                <span class="order-summary__product-price">{{ product.price }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div id="order_review" class="order-summary__table woocommerce-checkout-review-order">
+        {% for summaryTableRow in summaryTable %}
+            <div class="order-summary__row {% if summaryTableRow.gift %}js-giftcard{% endif %}">
+                <div class="order-summary__row-label">
+                    {% if summaryTableRow.sum %}<strong>{% endif %}{{ summaryTableRow.label }}{% if summaryTableRow.sum %}</strong>{% endif %}
+                </div>
+                <div class="order-summary__row-value{% if summaryTableRow.gift %} text-red{% endif %}">
+                    {% if summaryTableRow.sum %}<strong>{% endif %}
+                        {{ summaryTableRow.value }}
+                    {% if summaryTableRow.sum %}</strong>{% endif %}
+                </div>
+
+                {% if summaryTableRow.gift %}
+                <a href="{{ summaryTableRow.remove.link }}" class="order-summary__row-delete woocommerce-remove-coupon" {{ summaryTableRow.remove.data }}>
+                    {% include '@icon' with { modifier: 'ic_24_close', class: 'order-summary__row-icon' } %}
+                </a>
+                {% endif %}
+
+                {% if summaryTableRow.select %}
+                {% include '@select' with { class: 'order-summary__row-select', options: transportOptions } %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% if isCheckout %}
+        <div class="place-order">
+        {% if terms %}
+            <div class="order-summary__terms terms wc-terms-and-conditions">
+                {% include '@check' with terms.input %}
+                <input type="hidden" name="terms-field" value="1" />
+            </div>
+            {% include '@modaal' with terms.modal only %}
+        {% endif %}
+            {% include '@button' with {type: 'submit', class: 'order-summary__button', modifier: 'button--no-shadow button--block', name: 'woocommerce_checkout_place_order', id: 'place_order', text: button.text } %}
+        </div>
+    {% else %}
+        <div class="wc-proceed-to-checkout">
+            {% include '@button' with { element:'a', link:button.link, text: button.text, modifier: 'button--no-shadow button--block', class: 'order-summary__button' } %}
+        </div>
+    {% endif %}
+</div>
+
+{#{% endblock %}
+{% endembed %}#}

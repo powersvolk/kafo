@@ -1,0 +1,100 @@
+<div class="category-product">
+			{% if product.price.normal is not empty and product.price.sale is not empty %}
+				<div class="badge product__badge">
+					<div class="badge__inner">%</div>
+				</div>
+			{% endif %}
+			<div class="category-product__image">
+				<img src="{{ product.image_full }}" srcset="{{ product.image }}" class="lazyload">
+			</div>
+			<div class="category-product__content">
+				<div class="category-product-left">
+					<h3 class="category-product__title">
+						{{ product.title }}
+					</h3>
+					<div class="category-product__info">
+						{% for attr in product.attributes %}
+							<div class="category-product__info-item">
+								<span>{{ attr.attr_name }}</span>
+								<span>{{ attr.attr_description }}</span>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="category-product__right">
+					<div class="category-product__price">
+						<div>
+							{% if product.price.normal is not empty and product.price.sale is not empty %}
+								<span class="category-product__price-in category-product__price-old">
+									{{ product.price.normal }}
+								</span>
+								<span class="category-product__price-in category-product__price-new">
+									{{ product.price.sale }}
+								</span>
+							{% endif %}
+							{% if product.price.normal is not empty and product.price.sale is empty %}
+								<span class="category-product__price-in category-product__price-new">
+									{{ product.price.normal }}
+								</span>
+							{% endif %}
+							
+						</div>
+						<span class="category-product__price-info">
+							{{ product.price_info }}
+						</span>
+					</div>
+					<div class="category-product__nav">
+						<div class="category-product__nav-in">
+							
+							 <a href="{{ link }}" class="product {{ modifier }} button button--small product__button js-modal-add-to-cart" data-id="{{ id }}" > 
+								
+								{% if inModal %}
+									{% include '@button' with { class: 'js-modal-add-to-cart', text: strings.button.addCart|default('Lisa Korvi'),  customAttributes: 'data-id="' ~ id ~ '"' } %}
+								{% else %}
+									{% include '@button' with { modifier: 'button--product', class: 'product__button js-add-to-card', text: strings.button.addCart|default('Lisa Korvi'), icon:'ic_24_cart', iconAlign: 'right', iconClass: 'product__button-icon' } %}
+								{% endif %}
+								
+							</a>
+							
+							<a href="{{ product.link }}" class="button button--small button--dark " >
+								<span class="button__inner">{{ product.link_name }}</span>
+								<i class="button__bubble" style="left: 159.5px; top: 25.5px;"></i>
+							</a>
+						</div>
+						<div class="category-product__compare">
+								<svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.99 5V8L9 4L12.99 0V3H20V5H12.99ZM0 9H7.01V6L11 10L7.01 14V11H0V9Z"></path>
+                                </svg>
+							
+							<div class="woocommerce product compare-button">
+								<a href="{{product.cururl}}?action=yith-woocompare-add-product&amp;id={{ id }}&amp;lang=et" class="compare " data-product_id="{{ id }}" rel="nofollow">
+									{{ product.compare_button }}
+								</a>
+							</div>
+							
+							<!-- {% filter shortcodes %} -->
+								<!-- [yith_compare_button product] -->
+							<!-- {% endfilter %} -->
+							
+
+						</div>
+						
+					 <a href="#" class="category-product__mobile-more">
+							{{ product.lisainfo }}
+							<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M6.82361 8C6.56761 8 6.32267 7.89576 6.14526 7.71106L0.262862 1.5936C-0.0976116 1.21901 -0.0858469 0.623009 0.288979 0.262771C0.66357 -0.0974671 1.25934 -0.0859377 1.61958 0.288888L6.82361 5.70092L12.0276 0.288887C12.3876 -0.0857044 12.9834 -0.0974693 13.3582 0.262768C13.7331 0.623006 13.7448 1.21901 13.3844 1.5936L7.50197 7.71106C7.32456 7.89576 7.07962 8 6.82361 8Z" />
+							</svg>
+						</a>
+					</div>
+					<div class="category-product__info-mobile">
+						{% for attr in product.attributes %}
+							<div class="category-product__info-item">
+								<span>{{ attr.attr_name }}</span>
+								<span>{{ attr.attr_description }}</span>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			
+			</div>
+		</div>

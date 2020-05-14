@@ -1,0 +1,19 @@
+<div class="form-group form-group--product">
+    <div class="form-group__row">
+        <div class="form-group__row-item form-group__row-count_items">
+            {#{% include '@select' with { id:'quantity', name: 'quantity', modifier:'form-select--special form-select--large', innerClass: 'qty', isDefault: true, options: amountOptions } %}#}
+            {# {% include '@textfield' with { id: 'quantity', name: 'quantity', value: amountVal, type: 'number', modifier: 'form-textfield--special', innerClass: 'qty'} %} #}
+            {% include '@number' with { id: 'quantity', name: 'quantity', value: amountVal, type: 'number', innerClass: 'qty'} %}
+        </div>
+        <div class="form-group__row-item form-group__row-item--action">
+            {%  if type == 'variable' %}
+                {% include '@button' with { id: 'add-to-cart', type: 'submit', modifier: 'button--block button--no-shadow', text: strings.button.addCart|default('Lisa korvi'), class: 'js-button-trigger single_add_to_cart_button' } %}
+                <input type="hidden" name="add-to-cart" value="{{ cartValue }}">
+                <input type="hidden" name="product_id" value="{{ cartValue }}">
+                <input type="hidden" name="variation_id" value="0">
+            {% else %}
+                {% include '@button' with { id: 'add-to-cart', name: 'add-to-cart', value: cartValue, type: 'submit', modifier: 'button--block button--no-shadow', text: strings.button.addCart|default('Lisa korvi'), class: 'js-button-trigger single_add_to_cart_button' } %}
+            {% endif %}
+        </div>
+    </div>
+</div>

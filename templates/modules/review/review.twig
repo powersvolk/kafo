@@ -1,0 +1,55 @@
+<div class="review {% if newReview %} review--new {% endif %} {% if withProduct %} review--product {% endif %}">
+    {% if productImage %}
+        <div class="review__image h-hidden-xs">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ productImage }}" data-sizes="auto" class="product-poster__image lazyload">
+        </div>
+    {% endif %}
+    <div class="review__content">
+        {% if withProduct %}
+        <div class="review__header">
+            {% if productImage %}
+                <div class="review__image h-visible-xs h-hidden">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ productImage }}" data-sizes="auto" class="product-poster__image lazyload">
+                </div>
+            {% endif %}
+            <h3 class="review__title">
+                <a href="{{ productPermalink }}">{{ productName }}</a>
+                <div class="review__price">
+                    {% if productPrice.sale %}
+                        <del>{{ productPrice.normal }}</del><span class="review__price-sale"> {{ productPrice.sale }}</span>
+                    {% else %}
+                        {{ productPrice.normal }}
+                    {% endif %}
+                </div>
+            </h3>
+        </div>
+        {% else %}
+        <div class="review__rating">
+            {% include '@rating' with { modifier: 'rating--static', static: true, rating: reviewRating, review: reviewsLink } %}
+        </div>
+        {% endif %}
+        <div class="review__author">
+            {% if withProduct %}
+                {% include '@rating' with { modifier: 'rating--static rating--clean', static: true, rating: reviewRating, clean: true } %}
+            {% endif %}
+            <div>
+                <span class="review__author-name">{{ author }}</span> - {{ date }}
+            </div>
+        </div>
+        <p class="review__text">{{ text }}</p>
+        {% if question %}
+        <div class="review__question">
+            <span class="review__question-text">{{ question.text }}</span>
+            <a href="#" class="review__question-rate js-review-question-up">
+                {% include '@icon' with { modifier: 'thumb-up', class: 'review__question-rate-icon' } %} <span class="review__question-rate-count">{{ question.upCount }}</span>
+            </a>
+            <a href="#" class="review__question-rate js-review-question-down">
+                {% include '@icon' with { modifier: 'thumb-down', class: 'review__question-rate-icon' } %} <span class="review__question-rate-count">{{ question.downCount }}</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% if not withProduct %}
+    <span class="review__number">{{ reviewRating|round(0, 'floor') }}</span>
+    {% endif %}
+</div>

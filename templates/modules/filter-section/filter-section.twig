@@ -1,0 +1,20 @@
+<div class="filter-section filter-section--{{ modifier }}">
+    <div class="filter-section__inner">
+        <div class="filter-section__filter" id="filter-modal">
+                {% include '@filter' with filterData %}
+        </div>
+		<div class="filter-section__content">
+            <h1 class="filter-section__title">{{ title }}</h1>
+            <div class="filter-section__text">{{ text }}</div>
+            <a href="#filter-modal" class="filter-section__trigger js-open-filter" data-custom-class="modaal--collapsed modaal--large">
+                <div class="filter-section__trigger-text">
+                    <span class="filter-section__trigger-text-inner">{{ strings.button.filterModal|default('Filter') }}</span>
+                </div>
+                <div class="filter-section__trigger-box">
+                    {% include '@icon' with { modifier: 'filter', class: 'filter-section__trigger-icon' } %}
+                </div>
+            </a>
+        </div>
+        
+    </div>
+</div>

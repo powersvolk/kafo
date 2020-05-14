@@ -1,0 +1,80 @@
+<div class="emo {{ modifier }}">
+    <div class="emo__inner">
+        <div class="emo__content text">
+            {% if title %}<h3 class="emo__title h1">{{ title }}</h3>{% endif %}
+            {% if description %}<p class="emo__description">{{ description }}</p>{% endif %}
+            {% if button %}
+                {% include '@button' with {
+                    element: 'a',
+                    link: modal ? '#' ~ modal.id : button.link,
+                    text: button.text,
+                    modifier: 'button button--small button--dark button--block-xs emo__button',
+                    class: modal ? 'js-modaal' : '',
+                    customAttributes: 'data-custom-class="' ~ modal.modifier ~ '"' }
+                %}
+            {% endif %}
+        </div>
+        <div class="emo__figure{% if video %} has-video{% endif %}">
+        {% if video %}
+            <iframe class="emo__video" width="560" height="315" src="{{ video }}?modestbranding=1&amp;autoplay=0" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+        {% if bg %}
+            <picture class="emo__picture">
+                <source media="(min-width: 1441px)"
+                data-srcset="{{ bg.lg }} 1920w, {{ bg.lg2x }} 3840w"
+                />
+                <source media="(min-width: 1201px)"
+                data-srcset="{{ bg.md }} 1440w, {{ bg.md2x }} 2880w"
+                />
+                <source media="(min-width: 521px)"
+                data-srcset="{{ bg.sm }} 768w, {{ bg.sm2x }} 1536w"
+                />
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ bg.xs }} 320w, {{ bg.xs2x }} 640w" data-sizes="auto" alt="" class="emo__image lazyload">
+            </picture>
+        {% endif %}
+        {% if image %}
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" alt="" class="emo__image lazyload">
+        {% endif %}
+        </div>
+    </div>
+    <div class="emo__overlay">
+        <div class="emo__overlay-inner"></div>
+    </div>
+</div>
+{% if modal %}
+    {% if modal.gravityForm %}
+        {% include '@modaal' with { modifier: modal.modifier, id: modal.id, title: modal.title, content: modal.gravityForm } %}
+    {% else  %}
+        {% set content %}
+        <form>
+            <div class="form-group">
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.name.label, id: modal.formData.name.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.email.label, id: modal.formData.email.id } %}
+                </div>
+                {% if modal.formData.phone %}
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: modal.formData.phone.label, id: modal.formData.phone.id } %}
+                </div>
+                {% endif %}
+                {% if modal.formData.date %}
+                <div class="form-group__row">
+                    {% include '@datepicker' with { modifier: '', class: '', label: modal.formData.date.label, id: modal.formData.date.id, icon: modal.formData.date.icon } %}
+                </div>
+                {% endif %}
+                {% if modal.formData.question %}
+                <div class="form-group__row">
+                    {% include '@textarea' with { modifier: '', class: 'form-textarea--small', label: modal.formData.question.label, id: modal.formData.question.id } %}
+                </div>
+                {% endif %}
+                <div class="form-group__row form-group__row--last">
+                    {% include '@button' with { modifier: 'button--block', text: modal.formData.submit } %}
+                </div>
+            </div>
+        </form>
+        {% endset %}
+        {% include '@modaal' with { modifier: modal.modifier, id: modal.id, title: modal.title, content: content } %}
+    {% endif %}
+{% endif %}

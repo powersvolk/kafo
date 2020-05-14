@@ -1,0 +1,40 @@
+{
+    "key": "group_598ef0858e151",
+    "title": "Attribute color",
+    "location": [
+        [
+            {
+                "param": "woocommerce",
+                "operator": "==",
+                "value": "attribute"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567769554,
+    "fields": [
+        {
+            "key": "field_598ef08af865a",
+            "label": "Color",
+            "name": "attr_color",
+            "type": "color_picker",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": ""
+        }
+    ]
+}

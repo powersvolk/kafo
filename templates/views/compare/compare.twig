@@ -1,0 +1,26 @@
+{% include '@header' with header %}
+
+
+{% for post in posts %}
+    <div class="compare">
+        <div class="h-container">
+
+            <h2 class="compare__title">{{ post.title }}</h2>
+            {% if post.content is defined %}
+                {{ post.content }}
+            {% else %}
+                {% include '@editor' %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+
+{% if emo %}
+{% include '@emo' with emo %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+
+
+{% include '@footer' with footer %}

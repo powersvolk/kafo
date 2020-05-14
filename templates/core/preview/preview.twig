@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ language }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/inc/favicon/apple-touch-icon.png'|path }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/inc/favicon/favicon-32x32.png'|path }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/inc/favicon//favicon-16x16.png'|path }}">
+    <link rel="manifest" href="{{ '/inc/favicon/manifest.json'|path }}">
+    <link rel="mask-icon" href="{{ '/inc/favicon/safari-pinned-tab.svg'|path }}" color="#e4091a">
+    <link rel="shortcut icon" href="{{ '/inc/favicon/favicon.ico'|path }}">
+    <meta name="msapplication-config" content="{{ '/inc/favicon/browserconfig.xml'|path }}">
+    <meta name="theme-color" content="#ffffff">
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+	
+    {% if wp_head is defined %}
+        {{ wp_head }}
+    {% else %}
+        <link media="all" rel="stylesheet" href="{{ ('/inc/css/global.' ~ version ~ '.min.css')|path }}">
+        <link media="all" rel="stylesheet" href="{{ ('/inc/css/utils.' ~ version ~ '.min.css')|path }}">
+        <title>{{ _target.title }}</title>
+    {% endif %}
+
+	<style>
+		.l__link {
+			display: block;
+			text-transform: uppercase;
+			font-weight: 500;
+			color: #1d1c1b;
+			text-align: center;
+		}
+		.languages__item.is-current>.l__link {
+			text-decoration: underline;
+		}
+		.header__actions .language__toggle {
+			display:block;
+		
+		}
+		.header__actions .languages__select{
+			display:none;
+		}
+		.languages:hover .languages__list {
+			opacity: 1;
+			visibility: visible;
+			transform: translate3d(0,0,0);
+			display:block;
+			overflow: visible;
+		}
+		.languages:hover .languages__list.lang_active {
+			opacity: 1;
+			visibility: visible;
+			transform: translate3d(0,0,0);
+			display:block;
+			overflow: visible;
+		}
+		
+	</style>
+
+	
+    {% if _target.meta.previewDisplay is not empty %}
+        <style>
+        body {
+            {% for key, value in _target.meta.previewDisplay %}
+            {{ key }}: {{ value }};
+            {% endfor %}
+        }
+        </style>
+    {% endif %}
+
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // Insert Your Facebook Pixel ID below.
+    fbq('init', '126314534621369');
+    fbq('track', 'PageView');
+    </script>
+    <!-- Insert Your Facebook Pixel ID below. -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=126314534621369&amp;ev=PageView&amp;noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <!-- Mailchimp script -->
+    <script id="mcjs">
+        !function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/dab54309d1908b3188f1838b7/d6e7c47314c018926fc972a1c.js");
+    </script>
+    <!-- End of Mailchimp script -->
+</head>
+{% set BEM -%}
+    {{- body_class -}}
+    {{- _target.meta.bodyClass -}}
+    {%- if header.profileBoxData.screens.reset.isActive %} is-scroll-disabled h-menu-open h-reset-password{% endif -%}
+    {%- if header.profileBoxData.isFixed %} has-overlay{% endif -%}
+{% endset %}
+<body class="{{ BEM }}">
+    {{ gtmNoscript|raw }}
+    <div class="h-canvas {% if header.bragBar %} h-canvas--brag {% endif %}">
+    {% block yield %}
+        {{ yield }}
+    {% endblock %}
+    </div>
+
+    {% if wp_footer is defined %}
+        {{ wp_footer }}
+    {% else %}
+        <script>
+        var gotoAndPlay = {
+            "version":"{{ version }}",
+            "templatePath":"{{ '/'|path }}",
+            "svgPath":"{{ ('/inc/svg/global.' ~ version ~ '.svg')|path }}"
+        };
+        </script>
+
+        <!-- The following script is intended only for demo purposes in the style guide and should never be included in an application environment. -->
+        <script src="{{ '/inc/js/iframeResizer.contentWindow.min.js'|path }}"></script>
+
+        <!-- The following scripts should always be included. -->
+        <script src="{{ '/inc/js/jquery-3.1.1.min.js'|path }}"></script>
+        <script src="{{ ('/inc/js/global.' ~ version ~ '.js')|path }}"></script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,40 @@
+<div class="blogi-signup-bar {{ modifier }}">
+    <div class="blogi-signup-bar__content">
+        <div class="h-container">
+            <div class="blogi-signup-bar__grid">
+                <div class="blogi-signup-bar__icon-container">
+                    {% include '@icon' with { modifier: bottomBar.icon, class: 'blogi-signup-bar__icon-notification' } %}
+                </div>
+                <p class="blogi-signup-bar__title">{{ bottomBar.title }}</p>
+                <a href="#{{ bottomBar.signupModal.id }}" data-custom-class="{{ bottomBar.signupModal.modifier }}"
+                   class="button button--small blogi-signup-bar__button js-modaal">
+                    {{ bottomBar.button }}
+                </a>
+                <a href="#" class="blogi-signup-bar__close">
+                    {% include '@icon' with { modifier: bottomBar.icon2 , class: 'blogi-signup-bar__icon-close' } %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% if bottomBar.signupModal %}
+    {% if bottomBar.signupModal.gravityForm %}
+        {% include '@modaal' with bottomBar.signupModal %}
+    {% else %}
+        {% set signupContent %}
+            <form>
+                <div class="form-group">
+                    {% if bottomBar.signupModal.formData.email %}
+                        <div class="form-group__row">
+                            {% include '@textfield' with { modifier: '', class: '', label: bottomBar.signupModal.formData.email.label, id: bottomBar.signupModal.formData.email.id } %}
+                        </div>
+                    {% endif %}
+                    <div class="form-group__row form-group__row--last">
+                        {% include '@button' with { modifier: 'button--block', text: bottomBar.signupModal.formData.submit } %}
+                    </div>
+                </div>
+            </form>
+        {% endset %}
+        {% include '@modaal' with bottomBar.signupModal|merge({content: signupContent}) %}
+    {% endif %}
+{% endif %}

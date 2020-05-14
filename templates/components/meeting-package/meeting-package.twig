@@ -1,0 +1,31 @@
+<div class="meeting-package {{ modifier }}">
+    <div class="meeting-package__content">
+        <div class="meeting-package__cards">
+            <div class="meeting-package__top-part">
+                <p class="meeting-package__title">{{ title }}</p>
+                <p class="meeting-package__subtitle">{{ subtitle }}</p>
+                <div class="meeting-package__list">
+                    <div class="text">
+                        <ul class="list">
+                            {% for item in list %}
+                                <li>{{ item.listItem }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="meeting-package__bottom-part">
+                <div class="meeting-package__time-container">
+                    {% if icon %}{% include '@icon' with { modifier: 'ic_24_timer', class: 'meeting-package__icon' } %}{% endif %}
+                    {% if time %}<p class="meeting-package__time">{{ time }}</p>{% endif %}
+                    {% if label %}<p class="meeting-package__label">{{ label }}</p>{% endif %}
+                </div>
+                <div class="meeting-package__price-container">
+                    <p class="meeting-package__price">{{ price }}</p>
+                    <p class="meeting-package__price-extra">{{ priceExtra }}</p>
+                </div>
+                {% include '@button' with { element:'a', link: button.link, modifier: 'button--white meeting-package__button', icon: '', text: button.text, class: button.class, customAttributes: button.customAttributes } %}
+            </div>
+        </div>
+    </div>
+</div>

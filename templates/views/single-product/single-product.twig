@@ -1,0 +1,377 @@
+{% include '@header' with header %}
+
+{{ content }}
+{% if (template_jura == 'jura') %}
+
+<style>
+	.form-group__row-count_items{
+		display:none;
+	}
+</style>
+
+<link rel="stylesheet" id="my-carouselmin-css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css?ver=5.1.1" type="text/css" media="all">
+<link rel="stylesheet" id="my-carousel-css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.css?ver=5.1.1" type="text/css" media="all">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" defer></script>
+
+
+
+<div class="prod category-new">
+    <div class="container">
+        <div class="prod__inner product-poster">
+            
+			{% include '@product-poster' with productPoster %}
+			
+        </div>
+    </div>
+
+    <div class="h-container">
+        <div class="prod__tabs-wrap">
+            <ul class="prod__tabs" id="prodTabs">
+			    <li class="prod__tabs-item "> 
+                    <a class="prod__tabs-link active" data-tab="tab1">
+                        {{ omadused }}
+                    </a>
+                </li>
+                <li class="prod__tabs-item" > 
+                    <a class="prod__tabs-link" data-tab="tab2">
+						{{ tehnilised_andmed }}
+                    </a>
+                </li>
+                <li class="prod__tabs-item"> 
+                    <a class="prod__tabs-link" data-tab="tab3">
+                    {{ lisatarvikud }}
+                    </a>
+                </li>
+                <li class="prod__tabs-item"> 
+                    <a class="prod__tabs-link" data-tab="tab4">
+                        {{ hooldustooted }}
+                    </a>
+                </li>
+                <li class="prod__tabs-item"> 
+                    <a class="prod__tabs-link" data-tab="tab5">
+                        {{ kasutusjuhendid }}
+                    </a>
+                </li>
+                <li class="prod__tabs-item"> 
+                    <a class="prod__tabs-link" data-tab="tab6">
+                        {{ arvustused }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="prod__in">
+            <div class="prod__in-tab active" data-tab="tab1">
+                <div class="prod-split">
+					{% for info in product_infos %}
+					
+					<div class="prod-split__item">
+                        <div class="prod-split__content">
+							{% if info.title is defined %}
+						    <h3 class="prod-split__title">
+                                {{ info.title }}
+                            </h3>
+							{% endif %}
+                            <p class="prod-split__info">
+                                {{ info.content }}
+							</p>
+                        </div>  
+                        <div class="prod-split__image" style="background: url({{ info.image }}) no-repeat center/contain">
+                        </div>
+                    </div>
+					{% endfor %}
+					
+                    
+                </div>
+                
+            </div>
+            <div class="prod__in-tab" data-tab="tab2">
+                <div class="prod-spec">
+                   
+				   {% for tech in techs %}
+						<table>
+							<thead>
+								<tr>
+									<th colspan="2">
+										{{ tech.teh_title }}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for info in tech.technical_information %}
+									<tr>
+										<td>
+											{{ info.technical_text }} 
+										</td>
+										{% if (info.content_type ==  "text") %}
+										<td>
+											{{ info.technical_info }}                                    
+										</td>
+										{% endif %}
+										
+										{% if (info.content_type ==  "yes") %}
+										<td>
+										   <p>
+												<span class="table-icon"></span>{{ info.yesno }}
+										   </p>
+										</td>
+										{% endif %}
+										
+									</tr>
+								{% endfor %}
+							</tbody>
+
+					   </table>
+				   
+					{% endfor %}
+				  
+                   
+                </div>
+
+            </div>
+			<style>
+				.product__image:before {
+					width: 0;
+					padding-top: 0; 
+				}
+			</style>
+			
+            <div class="prod__in-tab" data-tab="tab3">
+                <div class="prod-related">
+                    <div class="product-grid js-product-grid">
+                        {% for related in relatedList %}
+						{% for product in related.products %}
+							<div class="product-grid__item">
+                                <a href="{{ product.link }}" class="product {{ modifier }} button button--small product__button js-modal-add-to-cart"  data-id="{{ product.id }}">
+                                    <figure class="product__image">
+                                        <img src="{{ product.image_full }}" srcset="{{ product.image }}">
+                                    </figure>
+                                    <div class="product__content">
+                                        <h2 class="product__title">{{ product.title }}</h2>
+                                        <p class="prod-product__subtitle">
+                                            {{ product.description }}
+                                        </p>
+                                            
+										<span class="product__price">
+											{{ product.price.normal }}
+										</span>
+										{% include '@button' with { modifier: 'button--product', class: 'product__button js-add-to-card', text: strings.button.addCart|default('Lisa Korvi'), icon:'ic_24_cart', iconAlign: 'right', iconClass: 'product__button-icon' } %}            
+                                    
+									</div>
+                                </a>
+                            </div>
+						{% endfor %}	
+						{% endfor %}	
+                    </div>
+                </div>
+            </div>
+            <div class="prod__in-tab" data-tab="tab4">
+				<div class="prod-related">
+                    <div class="product-grid js-product-grid">
+						{% for hoold in hoolds %}
+							<div class="product-grid__item">
+                                <a href="{{ hoold.link }}" class="product {{ modifier }} button button--small product__button js-modal-add-to-cart"  data-id="{{ hoold.id }}">
+                                    <figure class="product__image">
+                                        <img src="{{ hoold.image_full }}" srcset="{{ hoold.image }}">
+                                    </figure>
+                                    <div class="product__content">
+                                        <h2 class="product__title">{{ hoold.title }}</h2>
+                                        <p class="prod-product__subtitle">
+                                            {{ hoold.description }}
+                                        </p>
+                                            
+										<span class="product__price">
+											{{ hoold.price.normal }}
+										</span>
+										{% include '@button' with { modifier: 'button--product', class: 'product__button js-add-to-card', text: strings.button.addCart|default('Lisa Korvi'), icon:'ic_24_cart', iconAlign: 'right', iconClass: 'product__button-icon' } %}            
+                                    
+									</div>
+                                </a>
+                            </div>
+						{% endfor %}	
+                    </div>
+                </div>
+            </div>
+            <div class="prod__in-tab" data-tab="tab5">
+                <div class="prod__list-doc">
+                    <ul>
+                        {% for pdf in pdfs %}
+						
+						<li>
+                            <a href="{{ pdf.file }}" class="prod__list-doc__item" download>
+                                <img src="https://dev3.kafo.ee/wp-content/themes/kafo/inc/img/icon-pdf.svg">
+								{{ pdf.label }}
+                                    <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 6H14L7 13L0 6H4V0H10V6ZM0 17V15H14V17H0Z" fill="black" fill-opacity="0.16"/>
+                                    </svg>
+                            </a>
+                        </li>
+						{% endfor %}
+                        
+                    </ul>
+                    
+                </div>
+            </div>
+            <div class="prod__in-tab" data-tab="tab6">
+				<div class="prod-comment">
+                  
+					<div class="review-group">
+						
+							<div class="review-group__header">
+								<h2 class="review-group__title">{{ strings.title.feedback }} ({{ productPoster.rating.count }})</h2>
+					{#{% include '@dropdown' with { id: 'reviews-sorting', class: 'review-group__sorting', modifier: 'form-select--naked', label: 'Sorteeri', options: accordion.tab3.sortOptions } %} #}
+								{% if accordion.tab3.canReview %}
+									{% include '@button' with { text: strings.label.addReview, element: 'a', link: '#add-comment', modifier: 'button--small button--yellow button--no-shadow', class: 'review-group__add js-add-reviews js-modaal', customAttributes:'data-custom-class="modaal--small"' } %}
+								{% endif %}
+							</div>
+							{% if accordion.tab3.reviews %}
+							<div class="review-group__reviews">
+								{% for review in accordion.tab3.reviews %}
+									{% if loop.index > 3 %}
+										<div class="h-hidden js-hidden-review">
+											{% include '@review' with review %}
+										</div>
+									{% else %}
+										{% include '@review' with review %}
+									{% endif %}
+								{% endfor %}
+							</div>
+							{% endif %}
+							{% if accordion.tab3.reviews|length > 3 %}
+								<div class="review-group__footer">
+									{% include '@button' with { text: accordion.tab3.showMore, modifier: 'button--small button--white button--text-dark button--no-shadow review-group__load-more', class: 'js-load-reviews' } %}
+								</div>
+							{% endif %}
+						
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+
+{% include '@product-poster' with productPoster %}
+
+
+{% set tab1Content %}
+    {% if accordion.tab1.type == 'split' %}
+        {% embed '@section' with { modifier: 'section--accordion', isContainer: false } %}
+            {% block section_content %}
+                <div class="h-container">
+                    {% include '@split-content' with {splitRows: accordion.tab1.content} %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% else %}
+        {% include '@properties' with accordion.tab1.properties|merge({ modifier:'properties--product' }) %}
+    {% endif %}
+{% endset %}
+{% set tab2Content %}
+    {% embed '@section' with { title: accordion.tab2.content.title, description: true, modifier:'section--cards section--cards-accordion' } %}
+        {% block section_description %}
+            {{ accordion.tab2.content.description }} {% include '@button' with { element: 'a', link: accordion.tab2.content.button.link, modifier: 'button--icon button--naked', text: accordion.tab2.content.button.text, icon: 'arrow-right', iconAlign: 'right' } %}
+        {% endblock %}
+        {% block section_content %}
+            {% include '@card-grid' with { class: 'js-testimonial-slider', cards: accordion.tab2.content.cards } %}
+        {% endblock %}
+    {% endembed %}
+{% endset %}
+{% set tab3Content %}
+    <div class="review-group">
+        <div class="h-container">
+            <div class="review-group__header">
+                <h2 class="review-group__title">{{ strings.title.feedback }} ({{ productPoster.rating.count }})</h2>
+    {#{% include '@dropdown' with { id: 'reviews-sorting', class: 'review-group__sorting', modifier: 'form-select--naked', label: 'Sorteeri', options: accordion.tab3.sortOptions } %} #}
+                {% if accordion.tab3.canReview %}
+                    {% include '@button' with { text: strings.label.addReview, element: 'a', link: '#add-comment', modifier: 'button--small button--yellow button--no-shadow', class: 'review-group__add js-add-reviews js-modaal', customAttributes:'data-custom-class="modaal--small"' } %}
+                {% endif %}
+            </div>
+            {% if accordion.tab3.reviews %}
+            <div class="review-group__reviews">
+                {% for review in accordion.tab3.reviews %}
+                    {% if loop.index > 3 %}
+                        <div class="h-hidden js-hidden-review">
+                            {% include '@review' with review %}
+                        </div>
+                    {% else %}
+                        {% include '@review' with review %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if accordion.tab3.reviews|length > 3 %}
+                <div class="review-group__footer">
+                    {% include '@button' with { text: accordion.tab3.showMore, modifier: 'button--small button--white button--text-dark button--no-shadow review-group__load-more', class: 'js-load-reviews' } %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endset %}
+{% include '@accordion' with { modifier: 'accordion--full', id: 'single-product', triggerIcons: [{icon:'chevron'}], accordionItems: [{title: accordion.tab1.title, content: tab1Content, hidden: accordion.tab1.isHidden}, {title: accordion.tab2.title, content: tab2Content, modifier: 'accordion__inner--no-padding', hidden: accordion.tab2.isHidden}, {title: accordion.tab3.title, content: tab3Content, modifier: 'accordion__inner--gray', hidden: accordion.tab3.isHidden}] } %}
+{% set reviewForm %}
+    <div class="form-group">
+        {{ accordion.tab3.reviewForm }}
+    </div>
+{% endset %}
+{% if accordion.tab3.canReview %}
+    {% include '@modaal' with { id: "add-comment", title: strings.title.feedback, content: reviewForm } %}
+{% endif %}
+
+
+{% if relatedList %}
+    {% for related in relatedList %}
+        {% set related_title %}
+            <div class="grid grid--middle-sm grid--between-sm">
+                <div class="grid__col--sm">
+                    <h2 class="section__title">{{ related.title }}</h2>
+                </div>
+                <div class="grid__col--sm">
+                    {% include '@button' with { element: 'a', link: related.button.link, text: related.button.text, modifier: 'button--small button--gray' } %}
+                </div>
+            </div>
+        {% endset %}
+        {% set related_content %}
+            <div class="h-offset-container">
+                {% include '@product-grid' with {class: 'js-product-slider', products: related.products} %}
+            </div>
+        {% endset %}
+        {% include '@section' with { isContainer: true, title: true, section_title:related_title, section_content:related_content, modifier:'section--product-alt' } %}
+    {% endfor %}
+{% endif %}
+
+{% if accessories.products %}
+    {% set accessories_title %}
+        <div class="grid grid--middle-sm grid--between-sm">
+            <div class="grid__col--sm">
+                <h2 class="section__title">{{ accessories.title }}</h2>
+            </div>
+            <div class="grid__col--sm">
+                {% include '@button' with { element: 'a', href: accessories.button.link, text: accessories.button.text, modifier: 'button--small button--gray' } %}
+            </div>
+        </div>
+    {% endset %}
+    {% set accessories_content %}
+        <div class="h-offset-container">
+            {% include '@product-grid' with { modifier: '', class: 'js-product-slider', products: accessories.products} %}
+        </div>
+    {% endset %}
+    {% include '@section' with { modifier: 'section--product-alt', isContainer: true, title: true, section_title:accessories_title, section_content:accessories_content } %}
+{% endif %}
+
+
+{% endif %}
+
+{% if emo %}
+    {% include '@emo' with { modifier: 'emo--reverse emo--background emo--top-wave', title: emo.title, description: emo.description, button: emo.button, image: emo.image } %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+
+{% include '@footer' with footer %}

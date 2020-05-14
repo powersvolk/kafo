@@ -1,0 +1,23 @@
+{% if isDemo %}
+    <a data-fancybox data-src="#{{ fancyboxId }}"  href="javascript:;">Open demo</a>
+    <div style="display: none;" id="{{ fancyboxId }}">
+        {{ lightbox_content }}
+    </div>
+{% endif %}
+{% if isVideo %}
+    <a class="lightbox__video" href="{{ data.url }}" data-fancybox>
+        <div class="lightbox__video-content">
+            <div class="lightbox__video-content-overlay">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" class="lazyload" />
+                <div class="lightbox__video-content-overlay-play"></div>
+            </div>
+        </div>
+    </a>
+{% elseif isReel %}
+    <a class="lightbox__video lightbox__reel-link" data-src="#{{ data.fancyboxId }}" data-fancybox>
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ data.image }}" class="lazyload" />
+    </a>
+    <div style="display: none;" class="lightbox__reel-container"  id="{{ data.fancyboxId }}">
+        {% include '@reel' with { reelImages: data.reelImages } %}
+    </div>
+{% endif %}

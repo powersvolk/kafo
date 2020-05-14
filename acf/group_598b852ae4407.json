@@ -1,0 +1,384 @@
+{
+    "key": "group_598b852ae4407",
+    "title": "Filter values",
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "gtap-filters"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567769555,
+    "fields": [
+        {
+            "key": "field_599ef7f46db2e",
+            "label": "Filters",
+            "name": "filter_list",
+            "type": "repeater",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_599fc1493a9d5",
+                    "label": "Fitlter title",
+                    "name": "product_filter_title",
+                    "type": "text",
+                    "value": null,
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_598b8533bb6b4",
+                    "label": "Filter items",
+                    "name": "product_filter",
+                    "type": "repeater",
+                    "value": null,
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "block",
+                    "button_label": "Add filter",
+                    "sub_fields": [
+                        {
+                            "key": "field_598c6717dffd8",
+                            "label": "Filter label",
+                            "name": "filter_label",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_598b856cbb6b5",
+                            "label": "Filter values",
+                            "name": "wc_attr_filter",
+                            "type": "select",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "pa_barista-toovahendid": "Barista töövahendid",
+                                "pa_blenderi-kasutus": "Blenderi kasutus",
+                                "pa_blenderi-varvus": "Blenderi värvus",
+                                "pa_blenderid": "Blenderid",
+                                "pa_e-smaspaeva-kategooria": "E-smaspäeva kategooria",
+                                "pa_espressomasina-varvus": "Espressomasina värvus",
+                                "pa_hario-noud": "HARIO nõud",
+                                "pa_jura-hooldusvahend": "JURA hooldusvahend",
+                                "pa_jura-lisatarvikud": "JURA lisatarvikud",
+                                "pa_jura-masin": "JURA masin",
+                                "pa_kannud": "KANNUD",
+                                "pa_kapamasinad": "Käpamasinad",
+                                "pa_kapslimasinad": "Kapslimasinad",
+                                "pa_kohvi-kaubamark": "Kohvi kaubamärk",
+                                "pa_kohvi-koostis": "Kohvi koostis",
+                                "pa_kohvi-omadus": "Kohvi omadus",
+                                "pa_kohvi-tuup": "Kohvi tüüp",
+                                "pa_lusikad": "LUSIKAD",
+                                "pa_muud-tooted": "Muud tooted",
+                                "pa_pakend_tee": "Pakend",
+                                "pa_place": "Place",
+                                "pa_serveering": "TASSID \/ KLAASID",
+                                "pa_servings_min": "Servings min",
+                                "pa_servings-max": "Servings max",
+                                "pa_siirupi-suurus": "Siirupi suurus",
+                                "pa_siirupi-tuup": "Siirupi tüüp",
+                                "pa_teesort": "Teesort",
+                                "pa_vali-varv": "Vali värv"
+                            },
+                            "default_value": [],
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "return_format": "value",
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_598b9066eabdf",
+                            "label": "Add range",
+                            "name": "filter_range",
+                            "type": "true_false",
+                            "value": null,
+                            "instructions": "Add a related range slider",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
+                            "key": "field_599d98c9ede89",
+                            "label": "Range filter label",
+                            "name": "filter_range_label",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_598b9066eabdf",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_599d8c80b48d9",
+                            "label": "Range min",
+                            "name": "filter_range_min",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "Default minimum value displayed on the slider. Related values can be defined under respective attribute",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_598b9066eabdf",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_599d8c99b48da",
+                            "label": "Range max",
+                            "name": "filter_range_max",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "Default maximum value displayed on the slider. Related values can be defined under respective attribute",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_598b9066eabdf",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_599d8cb4b48db",
+                            "label": "Range min attribute",
+                            "name": "wc_attr_filter_min",
+                            "type": "select",
+                            "value": null,
+                            "instructions": "Attribute used for range filtering",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_598b9066eabdf",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "pa_barista-toovahendid": "Barista töövahendid",
+                                "pa_blenderi-kasutus": "Blenderi kasutus",
+                                "pa_blenderi-varvus": "Blenderi värvus",
+                                "pa_blenderid": "Blenderid",
+                                "pa_e-smaspaeva-kategooria": "E-smaspäeva kategooria",
+                                "pa_espressomasina-varvus": "Espressomasina värvus",
+                                "pa_hario-noud": "HARIO nõud",
+                                "pa_jura-hooldusvahend": "JURA hooldusvahend",
+                                "pa_jura-lisatarvikud": "JURA lisatarvikud",
+                                "pa_jura-masin": "JURA masin",
+                                "pa_kannud": "KANNUD",
+                                "pa_kapamasinad": "Käpamasinad",
+                                "pa_kapslimasinad": "Kapslimasinad",
+                                "pa_kohvi-kaubamark": "Kohvi kaubamärk",
+                                "pa_kohvi-koostis": "Kohvi koostis",
+                                "pa_kohvi-omadus": "Kohvi omadus",
+                                "pa_kohvi-tuup": "Kohvi tüüp",
+                                "pa_lusikad": "LUSIKAD",
+                                "pa_muud-tooted": "Muud tooted",
+                                "pa_pakend_tee": "Pakend",
+                                "pa_place": "Place",
+                                "pa_serveering": "TASSID \/ KLAASID",
+                                "pa_servings_min": "Servings min",
+                                "pa_servings-max": "Servings max",
+                                "pa_siirupi-suurus": "Siirupi suurus",
+                                "pa_siirupi-tuup": "Siirupi tüüp",
+                                "pa_teesort": "Teesort",
+                                "pa_vali-varv": "Vali värv"
+                            },
+                            "default_value": [],
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "return_format": "value",
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_599d8e523f898",
+                            "label": "Range max attribute",
+                            "name": "wc_attr_filter_max",
+                            "type": "select",
+                            "value": null,
+                            "instructions": "Attribute used for range filtering",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_598b9066eabdf",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "pa_barista-toovahendid": "Barista töövahendid",
+                                "pa_blenderi-kasutus": "Blenderi kasutus",
+                                "pa_blenderi-varvus": "Blenderi värvus",
+                                "pa_blenderid": "Blenderid",
+                                "pa_e-smaspaeva-kategooria": "E-smaspäeva kategooria",
+                                "pa_espressomasina-varvus": "Espressomasina värvus",
+                                "pa_hario-noud": "HARIO nõud",
+                                "pa_jura-hooldusvahend": "JURA hooldusvahend",
+                                "pa_jura-lisatarvikud": "JURA lisatarvikud",
+                                "pa_jura-masin": "JURA masin",
+                                "pa_kannud": "KANNUD",
+                                "pa_kapamasinad": "Käpamasinad",
+                                "pa_kapslimasinad": "Kapslimasinad",
+                                "pa_kohvi-kaubamark": "Kohvi kaubamärk",
+                                "pa_kohvi-koostis": "Kohvi koostis",
+                                "pa_kohvi-omadus": "Kohvi omadus",
+                                "pa_kohvi-tuup": "Kohvi tüüp",
+                                "pa_lusikad": "LUSIKAD",
+                                "pa_muud-tooted": "Muud tooted",
+                                "pa_pakend_tee": "Pakend",
+                                "pa_place": "Place",
+                                "pa_serveering": "TASSID \/ KLAASID",
+                                "pa_servings_min": "Servings min",
+                                "pa_servings-max": "Servings max",
+                                "pa_siirupi-suurus": "Siirupi suurus",
+                                "pa_siirupi-tuup": "Siirupi tüüp",
+                                "pa_teesort": "Teesort",
+                                "pa_vali-varv": "Vali värv"
+                            },
+                            "default_value": [],
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "return_format": "value",
+                            "placeholder": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

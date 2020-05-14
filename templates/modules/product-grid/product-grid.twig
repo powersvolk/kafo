@@ -1,0 +1,7 @@
+<div class="product-grid js-slider {{ modifier }} {{ class }}">
+{% for product in products %}
+    <div class="product-grid__item">
+        {% include '@product' with { modifier: '', link: product.link, image: product.image, title: product.title, description: product.description, price: product.price, button: product.button} %}
+    </div>
+{% endfor %}
+</div>

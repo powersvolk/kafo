@@ -1,0 +1,21 @@
+<div class="form-group woocommerce-checkout-shipping" id="shipping_method">
+
+    {% if transport %}
+        {% for shipping in transport %}
+            <div class="form-group__row">
+                {% set hiddenContent %}
+                    {% if shipping.hasOptions %}
+                        {% include '@select' with { modifier: '', id: 'address', label: false, options: shipping.options } %}
+						
+					{% endif %}
+                {% endset %}
+                {% include '@radio' with shipping|merge({ modifier: '', hiddenContent: hiddenContent }) %}
+            </div>
+            {% if shipping.content %}
+                <table class="form-group__row form-group__row-shipping-info">
+                    {{ shipping.content }}
+                </table>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

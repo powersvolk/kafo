@@ -1,0 +1,22 @@
+<div class="form-check {{ modifier }} {{ class }}">
+    <input type="checkbox" id="{{ id }}" name="{{ name }}" value="{{ value }}" class="form-check__input" {% if isChecked %} checked="checked"{% endif %} {{ data }} {% if validate %} data-validate="true"{% endif %}>
+    <label for="{{ id }}" class="form-check__label {% if subLabel %}form-check__label--sublabel{% endif %}">
+        {{ label }}
+        {% if subLabel %}
+            <{{ subLabel.element|default('span') }}{% if subLabel.element == 'a' %} href="{{ subLabel.link|default('#') }}" {% endif %} class="form-check__label-sub {{ subLabel.class }}">{{ subLabel.text }}</{{ subLabel.element|default('span') }}>
+        {% endif %}
+    </label>
+    {% if image %}
+    <div class="form-check__image">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image.srcset }}" alt="{{ image.alt }}" data-sizes="auto" class="h-img-fluid lazyload">
+    </div>
+    {% endif %}
+    {% if hiddenContent %}
+    <div class="form-check__hidden">
+        {% block hidden_content %}
+            {{ hiddenContent }}
+        {% endblock %}
+    </div>
+    {% endif %}
+    <div class="form-check__bubble"></div>
+</div>

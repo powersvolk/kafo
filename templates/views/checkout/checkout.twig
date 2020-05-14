@@ -1,0 +1,235 @@
+{% include '@header' with header %}
+{% embed '@section' with { modifier: 'section--bottom-padding section--background-gray', title: false } %}
+    {% block section_content %}
+        {% set shop_primary %}
+        <form name="checkout" method="post" class="checkout woocommerce-checkout" action="{{ action }}" enctype="multipart/form-data">
+            <div class="checkout__content">
+                <div class="grid grid--equalheight checkout__grid">
+                    <div class="grid__col--sm-6 grid__col--md-4 checkout__column">
+                        <div class="card" id="customer_details">
+                            <div class="card__content">
+                                <div class="tabs tabs--simple tabs--checkout js-tabs">
+                                    <div class="tabs__nav">
+                                        <ul class="tabs__nav-list">
+                                            <li class="tabs__nav-item">
+                                                <a href="#eraklient" class="tabs__nav-link js-tabs-control is-current" data-form-type="user">{{ strings.label.checkoutUser|default('Sinu andmed') }}</a>
+                                            </li>
+                                            <li class="tabs__nav-item">
+                                                <a href="#ariklient" class="tabs__nav-link js-tabs-control " data-form-type="business">{{ strings.label.checkoutBusiness|default('Äriklient') }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tabs__content">
+                                        <div class="tabs__content-item js-tabs-content is-open" id="eraklient">
+                                            <div class="tabs__content-inner">
+                                                {% if billingFields %}
+                                                    {% include '@view-checkout--billing-user' %}
+                                                {% endif %}
+                                                {% if billingValues %}
+                                                    <script>
+                                                        var billingValues = '{{ billingValues|raw }}';
+                                                    </script>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="tabs__content-item js-tabs-content" id="ariklient">
+                                            <div class="tabs__content-inner">
+                                                {% if companyBillingFields %}
+                                                <div class="form-group billing_address js-billing-business">
+                                                    {% for field in companyBillingFields %}
+                                                        <div id="{{ field.id }}" class="form-group__row {{ field.class }}">
+                                                            {% if field.template %}
+                                                                {% if isStyleguide %}
+                                                                    {% if field.template == 'radio' %}
+                                                                        include radio
+                                                                    {% else %}
+                                                                        {% include '@'~field.template with field.input %}
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    {% if field.template == '@radio' %}
+                                                                        include radio
+                                                                    {% else %}
+                                                                        {% include field.template with field.input %}
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            {% if field.raw is defined %}
+                                                                {{ field.raw }}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if registerFields and displayRegister.display %}
+                                    {% set userFields %}
+                                    <div class="form-group create-account">
+                                        {% for field in registerFields %}
+                                            <div id="{{ field.id }}" class="form-group__row {{ field.class }}">
+                                                {% if field.template %}
+                                                    {% if isStyleguide %}
+                                                        {% if field.template == 'radio' %}
+                                                            {% for radio in field.input %}
+                                                                {% include 'radio' with radio %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% include '@'~field.template with field.input %}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if field.template == '@radio' %}
+                                                            {% for radio in field.input %}
+                                                                {% include '@radio' with radio %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% include field.template with field.input %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% elseif field.raw is defined %}
+                                                    {{ field.raw }}
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endset %}
+                                    <br>
+                                    <div class="woocommerce-account-fields">
+                                        {% embed '@check' with displayRegister.input|merge({modifier:'form-check--top-spacing'}) %}
+                                            {% block hidden_content %}
+                                                <p><b>{{ displayRegister.subtitle }}</b></p>
+                                                {{ userFields }}
+                                            {% endblock %}
+                                        {% endembed %}
+                                    </div>
+                                {% endif %}
+                                {% if shippingFields and displayShipping.display %}
+                                    {% set fields %}
+                                    <div class="form-group shipping_address">
+                                        {% for field in shippingFields %}
+                                            <div id="{{ field.id }}" class="form-group__row {{ field.class }}">
+                                                {% if field.template %}
+                                                    {% if isStyleguide %}
+                                                        {% if field.template == 'radio' %}
+                                                            {% for radio in field.input %}
+                                                                {% include 'radio' with radio %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% include '@'~field.template with field.input %}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if field.template == '@radio' %}
+                                                            {% for radio in field.input %}
+                                                                {% include '@radio' with radio %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% include field.template with field.input %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% elseif field.raw is defined %}
+                                                    {{ field.raw }}
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endset %}
+                                    <br>
+                                    <!-- <div id="ship-to-different-address"> -->
+                                    {% embed '@check' with displayShipping.input|merge({modifier:''}) %}
+                                        {% block hidden_content %}
+                                            {% if displayShipping.subtitle %}
+                                                <p><b>{{ displayShipping.subtitle }}</b></p>
+                                            {% endif %}
+                                            {{ fields }}
+                                        {% endblock %}
+                                    {% endembed %}
+                                    <!-- </div> -->
+                                {% endif %}
+                                <div class="checkout__notes">
+                                    {% if orderFields %}
+                                        <div class="form-group billing_address">
+                                            {% for field in orderFields %}
+                                                <div id="{{ field.id }}" class="form-group__row {{ field.class }}">
+                                                    {% if field.template %}
+                                                        {% if isStyleguide %}
+                                                            {% if field.template == 'radio' %}
+                                                                include radio
+                                                            {% else %}
+                                                                {% include '@'~field.template with field.input %}
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if field.template == '@radio' %}
+                                                                include radio
+                                                            {% else %}
+                                                                {% include field.template with field.input %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {% if field.raw is defined %}
+                                                        {{ field.raw }}
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid__col--sm-6 grid__col--md-4 checkout__column">
+                        <div class="card">
+                            <div class="card__content text">
+                                <strong>{{ strings.title.shipping }}</strong>
+                                {% include '@view-checkout--shipping' %}
+                                <p><strong>{{ strings.title.payments }}</strong></p>
+                                {% include '@view-checkout--payments' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid__col--md-4 checkout__column">
+                        <div class="shop__tip">
+                            {% include '@icon' with { modifier: tip.icon, class: 'shop__tip-icon' } %}
+                            <div class="shop__tip-text">{{ tip.content }}</div>
+                        </div>
+                        <div class="card">
+                            <div class="card__content text">
+                                {% include '@order-summary' with orderSummary|merge({modifier: 'order-summary--checkout'}) %}
+                                {{ nonce }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout__modals">
+                {% set content %}
+                <div class="form-group">
+                    {% if notes.modal.formData.notes %}
+                    <div class="form-group__row form-group__row--clean">
+                        {% include '@textarea' with { modifier: 'form-textarea--small', class: '', label: notes.modal.formData.notes.label, id: notes.modal.formData.notes.id } %}
+                    </div>
+                    {% endif %}
+                    <div class="form-group__row form-group__row--last">
+                        {% include '@button' with { modifier: 'button--block', text: notes.modal.formData.submit } %}
+                    </div>
+                </div>
+                {% endset %}
+                {% include '@modaal' with { id: notes.modal.id, title: notes.title, content: content } %}
+                {% if lhvModal %}
+                    <a href="#{{ lhvModal.id }}" class="js-modaal js-lhv-modal h-hidden" data-open="true" data-custom-class="{{ modifier }}">LHV notice</a>
+                    {% include '@modaal' with lhvModal %}
+                {% endif %}
+            </div>
+        </form>
+        {% endset %}
+        {% set shop_secondary %}
+        {% endset %}
+        {% include '@shop' with shop|merge({ title: shopTitle, modifier: 'shop--checkout', primary: shop_primary}) %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

@@ -1,0 +1,10 @@
+{% if tags %}
+    <div class="tags">
+        {% if prepend %}
+            <span class="tags__prepend">{{ prepend }}: </span>
+        {% endif %}
+        {% for tag in tags %}
+            <a class="tags__link" href="{{ tag.link }}">{{ tag.title }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

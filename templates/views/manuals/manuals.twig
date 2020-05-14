@@ -1,0 +1,25 @@
+{% include '@header' with header|merge({ modifier:'header--transparent' }) %}
+{% embed '@section' with { modifier: '', isContainer: false } %}
+    {% block section_content %}
+        {% include '@intro--manuals' with intro %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: 'section--top-padding section--bottom-padding section--background-light-gray', isContainer: true } %}
+    {% block section_content %}
+        {% embed '@search' with { modifier: 'search--page is-open js-manuals-search', search_placeholder:'Otsi nimekirjast' } %}
+            {% block search__field %}
+                {% include '@textfield' with { modifier: 'form-textfield--classic', class: 'search__textfield', noFloatingLabel: true, closeIcon: 'close', label: "Otsi nimekirjast", id: 'type-1' } %}
+            {% endblock %}
+            {% block search_results %}
+                {% include '@manuals-list' %}
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

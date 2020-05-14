@@ -1,0 +1,114 @@
+{% include '@header' with header %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@hero' with hero %}
+    {% endblock %}
+{% endembed %}
+{% embed '@section' with { modifier: '' } %}
+    {% block section_content %}
+        <div class="accordion accordion--full accordion--padded js-accordion-group">
+            <div class="accordion__item js-accordion js-slider-accordion" id="events-cat">
+                <a href="#events-cat" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ maintenanceAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        <div class="h-container">
+                            {% set section_content %}
+                                <div class="grid text">
+                                    <div class="grid__col--md-12">
+                                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                             data-srcset="{{ maintenanceAccordion.content.image.srcset }}"
+                                             class="h-img-fluid lazyload">
+                                    </div>
+                                    <div class="grid__col--md-8">
+                                        <div class="maintenance__long-description text">
+                                            {{ maintenanceAccordion.content.longDescription }}
+                                        </div>
+                                    </div>
+                                    <div class="grid__col--xs-12 h-hidden-xs">
+                                        <div class="maintenance__long-description">
+                                            {% include '@get-in-contact' with contactPerson %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endset %}
+                            {% include '@section' with { class: '', modifier: 'section--maintenance', title: maintenanceAccordion.content.title, description: maintenanceAccordion.content.description, content: section_content } %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item js-accordion" id="events-terms">
+                <a href="#events-terms" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ pricingAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        {% if pricingAccordion.content %}
+                            <div class="h-container">
+                                {% include '@meeting' with { meeting: pricingAccordion.content } %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item js-accordion" id="events-extra">
+                <a href="#events-extra" class="accordion__header js-accordion-control">
+                    <div class="accordion__title">
+                        {{ extraAccordion.title }}
+                        {% include '@icon' with { modifier: triggerIcon.icon|default('chevron'), class: triggerIcon.class|default('accordion__icon') } %}
+                    </div>
+                </a>
+                <div class="accordion__content js-accordion-content">
+                    <div class="accordion__inner">
+                        <div class="h-container">
+                            {% include '@split-content' with { modifier: 'split-content--video', splitRows: extraAccordion.content.splitRows } %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with { modifier: 'quote--front', text: footerQuote.text, button: footerQuote.button } %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}
+
+{% if maintananceModal %}
+    {% if maintananceModal.gravityForm %}
+        {% include '@modaal' with { id: maintananceModal.id, title:maintananceModal.title, content:maintananceModal.gravityForm } %}
+    {% else %}
+        {% set maintananceModalContent %}
+            <form>
+                <div class="form-group">
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: maintananceModal.formData.name.label, id: maintananceModal.formData.name.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: maintananceModal.formData.email.label, id: maintananceModal.formData.email.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@textfield' with { modifier: '', class: '', label: maintananceModal.formData.phone.label, id: maintananceModal.formData.phone.id } %}
+                    </div>
+                    <div class="form-group__row">
+                        {% include '@datepicker' with { modifier: '', class: '', label: maintananceModal.formData.date.label, id: maintananceModal.formData.date.id, icon: maintananceModal.formData.date.icon } %}
+                    </div>
+                    <div class="form-group__row form-group__row--last">
+                        {% include '@button' with { modifier: 'button--block', text: maintananceModal.formData.submit } %}
+                    </div>
+                </div>
+            </form>
+        {% endset %}
+        {% include '@modaal' with { id: maintananceModal.id, title:maintananceModal.title, content:maintananceModal } %}
+    {% endif %}
+{% endif %}

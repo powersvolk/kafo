@@ -1,0 +1,154 @@
+<div class="h-overlay "></div>
+{% if bragBar %}
+{% include '@brag-bar' with {modifier: 'header__brag-bar'} %}
+{% endif %}
+<div class="header js-menu {{ modifier }} {% if isNewHeader %} header--transparent header--new {% endif %} {% if dark %} header--dark {% endif %} {% if bragBar %} header--brag {% endif %}">
+    {% if isShop %}
+        <button type="button" class="header__toggle">
+            <i class="header__toggle-inner"></i>
+        </button>
+        {% include '@logo' with logo|merge({class: 'header__logo' }) %}
+        {% if help %}
+            <div class="header__help">
+                {% include '@button' with { element: 'a', link: 'phone: ' ~ help.phone, modifier: 'button--small button--icon button--icon-rect', class: 'header__help-phone', icon: "ic_24_phone" } %}
+                {% include '@icon' with { modifier: 'ic_24_phone', class: 'header__help-icon h-visible-sm' } %}
+                <div class="header__help-text"><span class="header__help-label h-hidden-xs h-hidden-sm">{{ help.label }}</span> {{ help.phone }}</div>
+            </div>
+        {% endif %}
+        {% if steps %}
+            <ul class="header__steps">
+            {% for step in steps %}
+                <div class="header__steps-xs {% if step.active %} header__steps-item--active{% endif %}">
+                    {% include '@icon' with { modifier: step.icon, class: 'header__steps-icon-xs h-visible-xs' } %}
+                    <li class="header__steps-item{% if step.active %} header__steps-item--active{% endif %}">{{ step.title }}</li>
+                </div>
+                {% if not loop.last %}
+                    {% include '@icon' with { modifier: 'chevron', class: 'header__steps-icon h-visible h-hidden-xs' }  %}
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% include '@button' with { element: 'a', link: closeBtn, modifier: 'button--small button--icon button--icon-rect button--dark', class:'header__abort-button', icon: "ic_24_close" } %}
+        {% if profileBoxData and not profileBoxData.isLogged %}
+        <div class="header__actions">
+            <ul class="header__actions-list">
+                <li class="header__actions-item header__actions-item--login js-overlay-hover">
+                    <button type="button" class="header__toggle">
+                        <i class="header__toggle-inner"></i>
+                    </button>
+                    {% include '@button' with {element: 'a', link: profileBoxData.account, modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button header__actions-button--profile', icon: "profile" } %}
+                    <div class="header__actions-item-modal js-login-box {% if profileBoxData.isFixed %}is-fixed{% else %}is-hidden{% endif %}">
+                        <div class="navigation__title">{{ strings.title.myMenu|default('Minu kasutaja') }}</div>
+                        {% include '@profile-box' with profileBoxData %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    {% elseif isNewHeader %}
+        <button type="button" class="header__toggle">
+            <i class="header__toggle-inner"></i>
+        </button>
+        {% include '@logo' with logo|merge({class: 'header__logo header__logo--new', alternative: true }) %}
+        <div class="header__inner">
+            {% include '@navigation' with { class: 'header__navigation', dark: dark }|merge(navigation) %}
+            {% include '@languages' with { class: 'header__languages' }|merge(languages) %}
+        </div>
+        {% include '@notification' with {modifier: 'header__notification', content: notification } %}
+        {% if dark %}
+            {% set color = " color-white" %}
+        {% else %}
+            {% set color = " color-black" %}
+        {% endif %}
+        <div class="header__actions header__actions--new">
+            <ul class="header__actions-list">
+                <li class="header__actions-item header__actions-item--new header__actions-item--location h-hidden-sm h-hidden-md h-hidden-lg">
+                    {% include '@button' with { modifier: 'button--small button--icon button--icon-rect button--naked', element: 'a', link:location_link|default('#'), class: 'header__actions-button header__actions-button--location button--naked' ~ color, icon: "ic_24_location" } %}
+                </li>
+                {% if profileBoxData %}
+                <li class="header__actions-item header__actions-item--new header__actions-item--login {% if profileBoxData.isActive %}header__actions-item--active{% endif %} is-hidden {% if not profileBoxData.isLogged %}js-overlay-hover{% endif %}">
+                    {% if profileBoxData.isLogged %}
+                        {% include '@button' with {element: 'a', link: profileBoxData.account, modifier: 'button--small button--icon button--icon-rect', class: 'header__actions-button button--naked' ~ color, icon: "profile" } %}
+                    {% else %}
+                        {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class: 'header__actions-button button--naked' ~ color, icon: "profile" } %}
+                        <div class="header__actions-item-modal js-login-box {% if profileBoxData.isFixed %}is-fixed{% else %}is-hidden{% endif %}">
+                            {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'navigation__back', icon: "chevron" } %}
+                            <div class="navigation__title">{{ strings.title.myMenu|default('Minu kasutaja') }}</div>
+                            {% include '@profile-box' with profileBoxData %}
+                        </div>
+                    {% endif %}
+                </li>
+                {% endif %}
+                <li class="header__actions-item header__actions-item--new">
+                    {% include '@search' with { modifier: 'search--header is-closed js-search-autosuggest js-search-open button--naked' ~ color, searchClose: true, searchOverlay: true, btnNaked: true, btnDark: dark } %}
+                </li>
+                <li class="header__actions-item header__actions-item--new header__actions-item--cart js-overlay-hover">
+                    {% include '@button' with { element:'a', modifier: 'button--small button--icon button--icon-rect button--naked' ~ color, class:'header__actions-button', icon: "ic_24_cart", link: cartLink, text: cartCount } %}
+                    <div class="header__actions-item-modal js-minicart">
+                        {% include '@cart' with minicart %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <button type="button" class="header__toggle">
+            <i class="header__toggle-inner"></i>
+        </button>
+        {% include '@logo' with logo|merge({class: 'header__logo'}) %}
+        <div class="header__inner">
+            {% include '@navigation' with { class: 'header__navigation' }|merge(navigation) %}
+            {% if mobileNavigation %}
+                {% include '@logo' with { class: 'navigation__logo' }|merge(logo) %}
+                <div class="header__actions-list header__actions-list--mobile">
+                    <li class="header__actions-item">
+                        {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', element: 'a', link: location_link|default('#'), class:'header__actions-button header__actions-button--location', icon: "ic_24_location" } %}
+                    </li>
+                    <li class="header__actions-item">
+                        {% include '@languages' with { class: 'header__languages' }|merge(languages) %}
+                    </li>
+                    {% if profileBoxData %}
+                    <li class="header__actions-item navigation__item--login {% if profileBoxData.isActive %}header__actions-item--active{% endif %} {% if not profileBoxData.isLogged %}js-overlay-hover{% endif %}">
+                        {% if profileBoxData.isLogged %}
+                            {% include '@button' with {element: 'a', link: profileBoxData.account, modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button header__actions-button--profile', icon: "profile" } %}
+                        {% else %}
+                            {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button header__actions-button--profile', icon: "profile" } %}
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% include '@navigation' with { class: 'header__navigation', modifier: 'header__navigation--mobile' }|merge(mobileNavigation) %}
+        </div>
+        {% include '@notification' with {modifier: 'header__notification', content: notification } %}
+        <div class="header__actions">
+            <ul class="header__actions-list">
+                <li class="header__actions-item header__actions-item--location h-hidden-sm h-hidden-md h-hidden-lg">
+                    {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', element: 'a', link:location_link|default('#'), class:'header__actions-button header__actions-button--location', icon: "ic_24_location" } %}
+                </li>
+                {% if profileBoxData %}
+                <li class="header__actions-item header__actions-item--login {% if profileBoxData.isActive %}header__actions-item--active{% endif %} is-hidden {% if not profileBoxData.isLogged %}js-overlay-hover{% endif %}">
+                    {% if profileBoxData.isLogged %}
+                        {% include '@button' with {element: 'a', link: profileBoxData.account, modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button header__actions-button--profile', icon: "profile" } %}
+                    {% else %}
+                        {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button header__actions-button--profile', icon: "profile" } %}
+                        <div class="header__actions-item-modal js-login-box {% if profileBoxData.isFixed %}is-fixed{% else %}is-hidden{% endif %}">
+                            {% include '@button' with { modifier: 'button--small button--icon button--icon-rect', class:'navigation__back', icon: "chevron" } %}
+                            <div class="navigation__title">{{ strings.title.myMenu|default('Minu kasutaja') }}</div>
+                            {% include '@profile-box' with profileBoxData %}
+                        </div>
+                    {% endif %}
+                </li>
+                {% endif %}
+                <li class="header__actions-item">
+                    {% include '@search' with { modifier:'search--header is-closed js-search-autosuggest js-search-open', searchClose: true, searchOverlay: true } %}
+                </li>
+                <li class="header__actions-item header__actions-item--cart js-overlay-hover">
+                    {% include '@button' with { element:'a', modifier: 'button--small button--icon button--icon-rect', class:'header__actions-button', icon: "ic_24_cart", link: cartLink, text: cartCount } %}
+                    <div class="header__actions-item-modal js-minicart">
+                        {% include '@cart' with minicart %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+</div>

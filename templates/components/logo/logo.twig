@@ -1,0 +1,9 @@
+<div class="logo {{ modifier }} {{ class }}">
+    <a href="{{ link|default('#') }}" class="logo__link">
+        {% if alternative %}
+            <img src="{{ '/inc/img/kafo-logo_v2.svg'|path }}" alt="{{ title }}" class="logo__img">
+        {% else %}
+            <img src="{{ '/inc/img/kafo-logo.svg'|path }}" alt="{{ title }}" class="logo__img">
+        {% endif %}
+    </a>
+</div>

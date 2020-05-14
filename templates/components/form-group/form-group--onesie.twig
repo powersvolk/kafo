@@ -1,0 +1,10 @@
+<form class="form-group form-group--onesie js-newsletter-subscribe">
+    <div class="form-group__row">
+        <div class="form-group__row-item">
+            {% include '@textfield' with { id: textfieldId, name: 'email', type: 'email', label: label|default('Sisesta e-mail'), noFloatingLabel: true, modifier:'form-textfield--classic', validate: true } %}
+        </div>
+        <div class="form-group__row-item form-group__row-item--action">
+            {% include '@button' with { modifier:'button--icon-rect button--green-success', id: 'newsletter-submit', icon:'arrow-right', type: 'submit' } %}
+        </div>
+    </div>
+</form>

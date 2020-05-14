@@ -1,0 +1,265 @@
+<div class="hero {{ modifier }}">
+    <figure class="hero__bg">
+        {% if bg.video %}
+        <iframe class="hero__video" width="640" height="360" src="https://player.vimeo.com/video/{{ bg.video }}?loop=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;background=1&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+        <picture class="hero__picture">
+            <source media="(min-width: 1921px)"
+            data-srcset="{{ bg.xl }}"
+            />
+            <source media="(min-width: 1441px)"
+            data-srcset="{{ bg.lg }} 1920w, {{ bg.lg2x }} 3840w"
+            />
+            <source media="(min-width: 1201px)"
+            data-srcset="{{ bg.md }} 1440w, {{ bg.md2x }} 2880w"
+            />
+            <source media="(min-width: 513px)"
+            data-srcset="{{ bg.sm }} 768w, {{ bg.sm2x }} 1536w"
+            />
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ bg.xs }} 320w, {{ bg.xs2x }} 640w" data-sizes="auto" alt="" class="hero__img lazyload">
+        </picture>
+    </figure>
+    <div class="hero__container h-container">
+        <div class="hero__inner">
+            <div class="hero__content">
+                {% if title %}<h1 class="hero__title">{{ title }}</h1>{% endif %}
+                {% if description %}<p class="hero__description">{{ description }}</p>{% endif %}
+                {% if nav %}
+                {% set mainTitle = '' %}
+                <ul class="hero__nav">
+                    {% for item in nav %}
+                    {% set mainTitle = mainTitle ~ item.title %}
+                    {% if loop.index < nav|length %}
+                    {% set mainTitle = mainTitle ~ ', ' %}
+                    {% endif %}
+                    <li class="hero__nav-item"><a href="{{ item.link }}" data-hover="{{ item.title }}" class="hero__nav-link">{{ item.title }}</a>{% include '@icon' with { modifier: 'ic_24_arrow', class: 'hero__nav-icon' } %}</li>
+                    {% endfor %}
+                </ul>
+                <h1 class="hero__hidden-title">{{ mainTitle }}</h1>
+                {% endif %}
+                {% if cats %}
+                <ul class="hero__cats">
+                    {% for item in cats %}
+                    <li class="hero__cats-item"><a href="{{ item.link }}" class="hero__cats-link">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if ctaButton and ctaButton.text %}
+                    {% include '@button' with {
+                        element: 'a',
+                        link: ctaButton.modal ? '#' ~ ctaButton.modal.id : ctaButton.link,
+                        text: ctaButton.text,
+                        modifier: 'button--block-xs hero__button',
+                        class: ctaButton.modal ? 'js-modaal ' ~ ctaButton.class : ctaButton.class,
+                        customAttributes: ctaButton.customAttributes }
+                    %}
+                {% endif %}
+                {% if ctaButton2 and ctaButton2.text %}
+                    {% include '@button' with {
+                        element: 'a',
+                        link: ctaButton2.modal ? '#' ~ ctaButton2.modal.id : ctaButton2.link,
+                        text: ctaButton2.text,
+                        modifier: 'button button--white button--block-xs hero__button',
+                        class: ctaButton2.modal ? 'js-modaal ' ~ ctaButton2.class : ctaButton2.class,
+                        customAttributes: ctaButton2.customAttributes }
+                    %}
+                {% endif %}
+            </div>
+            {% if packages %}
+            <div class="hero__packages">
+                {% for package in packages %}
+                <div class="hero__package">
+                    <div class="hero__package-title"><div class="hero__package-nr">{{ package.nr }}</div>{{ package.title }}</div>
+                    <div class="hero__package-content">
+                        <div class="hero__package-description">{{ package.description }}</div>
+                        {% if package.monthlyPricing or cuplyPricing %}<div class="hero__package-pricing">{{ package.monthlyPricing }} {% if package.monthlyPricing and package.cuplyPricing %}või {{ package.cuplyPricing }}{% else %}{{ package.cuplyPricing }}{% endif %}</div>{% endif %}
+                        {% include '@button' with {
+                            element: 'a',
+                            link: package.orderModal ? '#' ~ package.orderModal.id : '#',
+                            text: package.button,
+                            modifier: 'button button--white button--small hero__package-btn',
+                            class: package.orderModal ? 'js-modaal' : '',
+                            customAttributes: 'data-custom-class="' ~ package.orderModal.modifier ~ '"' }
+                        %}
+                        <a href="{% if package.detailsModaal %}#{{ package.detailsModaal.id }}{% endif %}" class="hero__package-details {% if package.detailsModaal %}js-modaal{% endif %}" data-custom-class="{{ package.detailsModaal.modifier }}">{{ package.details }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if heroBubble.srcset %}
+    <div class="hero__bubble">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ heroBubble.srcset }}" data-sizes="auto" alt="" class="hero__bubble-img lazyload">
+    </div>
+    {% endif %}
+</div>
+{% if packages %}
+    {% for package in packages %}
+        {% if package.detailsModaal %}
+            {% set content %}
+            <div class="package-details">
+                <div class="grid">
+                    <div class="grid__col--sm-5">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ package.image.srcset }}" alt="{{ package.image.alt }}" data-sizes="auto" class="h-img-fluid lazyload">
+                    </div>
+                    <div class="grid__col--sm-7">
+                        <h3 class="package-details__title">{{ package.title }}</h3>
+                        <div class="package-details__content">
+                        {% if package.monthlyPricing %}{{ package.monthlyPricing }}<br>{% endif %}
+                        {% if package.cuplyPricing %}{{ package.cuplyPricing }}<br>{% endif %}
+                        {% if package.buyNow %}{{ package.buyNow }}<br>{% endif %}
+                        </div>
+                        {% include '@button' with {
+                            element: 'a',
+                            link: '#' ~ package.orderModal.id,
+                            text: package.button,
+                            modifier: 'button button--small button--block-xs',
+                            class: package.orderModal ? 'js-modaal' : '',
+                            customAttributes: 'data-custom-class="' ~ package.orderModal.modifier ~ '"' }
+                        %}
+                    </div>
+                </div>
+            </div>
+            {% if package.detailsModaal.detailsContent %}
+            <div class="text">
+            {{ package.detailsModaal.detailsContent }}
+            </div>
+            {% endif %}
+            <hr>
+            {% if package.detailsModaal.contents.list %}
+            <div class="package-contents">
+                <h3 class="package-contents__title">{{ package.detailsModaal.contents.title }}</h3>
+                <div class="package-contents__header">
+                    <div class="package-contents__product-figure">{{ package.detailsModaal.contents.labels.name }}</div>
+                    <div class="package-contents__product-amount">{{ package.detailsModaal.contents.labels.amount }}</div>
+                    <div class="package-contents__product-price">{{ package.detailsModaal.contents.labels.price }}</div>
+                </div>
+                <div class="package-contents__list">
+                {% for item in package.detailsModaal.contents.list %}
+                    {% if not item.extra %}
+                    <div class="package-contents__list-item">
+                        <div class="package-contents__product-figure">
+                            <img class="package-contents__product-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ item.image }}" data-sizes="auto">
+                            <span class="package-contents__product-title">{{ item.title }}</span>
+                        </div>
+                        <div class="package-contents__product-amount"><div class="package-contents__product-data">{{ item.amount }} tk</div></div>
+                        <div class="package-contents__product-price"><div class="package-contents__product-data">{{ item.price }} €</div></div>
+                    </div>
+                    {% else %}
+                    <div class="package-contents__list-item package-contents__list-item--extra">
+                        <div class="package-contents__product-figure">
+                            <img class="package-contents__product-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ item.image }}" data-sizes="auto">
+                            <span class="package-contents__product-title">{{ item.title }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if package.detailsModaal.additions %}
+            <div class="package-additions">
+                <h3 class="package-additions__title">{{ package.detailsModaal.additions.title }}</h3>
+                <div class="text">
+                {{ package.detailsModaal.additions.content }}
+                </div>
+            </div>
+            {% endif %}
+            {% if package.detailsModaal.terms %}
+            <div class="package-terms">
+                {% include '@accordion' with { modifier: 'accordion--simple', id: 'meeeeeh', accordionItems: [{ title: package.detailsModaal.terms.title, content: package.detailsModaal.terms.content, modifier: 'text' }] } %}
+            </div>
+            {% endif %}
+            {% endset %}
+            {% include '@modaal' with { modifier: package.detailsModaal.modifier, id: package.detailsModaal.id, content: content } %}
+        
+		{% endif %}
+        {% if package.orderModal %}
+            {% set modalContent %}
+            <div class="order-package">
+                {% if package.orderModal.content %}
+                <div class="text">
+                    {{ package.orderModal.content }}
+                </div>
+                {% endif %}
+                {% if package.orderModal.formData %}
+                <form class="order-package__form">
+                    <div class="form-group">
+                        <div class="form-group__row">
+                            {% include '@textfield' with { modifier: '', class: '', label: package.orderModal.formData.name.label, id: package.orderModal.formData.name.id } %}
+                        </div>
+                        <div class="form-group__row">
+                            {% include '@textfield' with { modifier: '', class: '', label: package.orderModal.formData.email.label, id: package.orderModal.formData.email.id } %}
+                        </div>
+                        <div class="form-group__row">
+                            {% include '@textfield' with { modifier: '', class: '', label: package.orderModal.formData.phone.label, id: package.orderModal.formData.phone.id } %}
+                        </div>
+                        <div class="form-group__row form-group__row--last">
+                            {% include '@button' with {
+                                element: 'a',
+                                link: '#' ~ thankyou.id,
+                                text: package.button,
+                                modifier: 'button button--block js-button-trigger',
+                                class: thankyou ? 'js-modaal' : '',
+                                customAttributes: 'data-custom-class="' ~ package.orderModal.formData.submit ~ '"' }
+                            %}
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+                {% if package.orderModal.gravityForm %}
+                    {{ package.orderModal.gravityForm }}
+                {% endif %}
+            </div>
+            {% endset %}
+            {% include '@modaal' with { modifier: package.orderModal.modifier, id: package.orderModal.id, title: package.title, content: modalContent } %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% if thankyou %}
+    {% include '@modaal' with { modifier: thankyou.modifier, headerIcon: thankyou.headerIcon, id: thankyou.id, title: thankyou.title, thankyou: true, content: thankyou.content } %}
+{% endif %}
+{% if ctaButton.modal %}
+    {% set modalSecondaryContent %}
+        <h3 class="modaal__title modaal__title--small">{{ ctaButton.modal.meetingDetails.title }}</h3>
+        <ul class="modaal__list">
+            {% if ctaButton.modal.meetingDetails.price %}<li class="modaal__list-item"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.priceLabel }}</span><br>{{ ctaButton.modal.meetingDetails.price }}</li>{% endif %}
+            {% if ctaButton.modal.meetingDetails.length %}<li class="modaal__list-item"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.lengthLabel }}</span><br>{{ ctaButton.modal.meetingDetails.length }}</li>{% endif %}
+            {% if ctaButton.modal.meetingDetails.time %}<li class="modaal__list-item"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.timeLabel }}</span><br>{{ ctaButton.modal.meetingDetails.time }}</li>{% endif %}
+            {% if ctaButton.modal.meetingDetails.location %}<li class="modaal__list-item"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.locationLabel }}</span><br>{{ ctaButton.modal.meetingDetails.location }}</li>{% endif %}
+            {% if ctaButton.modal.meetingDetails.priceTotal %}<li class="modaal__list-item modaal__list-item--total"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.priceTotalLabel }}</span><br>{{ ctaButton.modal.meetingDetails.priceTotal }}</li>{% endif %}
+            {% if ctaButton.modal.meetingDetails.next %}<li class="modaal__list-item modaal__list-item--last h-hidden-xs"><span class="modaal__list-label">{{ ctaButton.modal.meetingDetails.nextLabel }}</span><br>{{ ctaButton.modal.meetingDetails.next }}</li>{% endif %}
+        </ul>
+    {% endset %}
+    {% if ctaButton.modal.gravityForm %}
+        {% include '@modaal' with { modifier: ctaButton.modal.modifier, id: ctaButton.modal.id, title: ctaButton.modal.title, split: true, modalPrimaryContent: ctaButton.modal.gravityForm, modalSecondaryContent: modalSecondaryContent } %}
+    {% else %}
+        {% set modalPrimaryContent %}
+        <form>
+            <div class="form-group">
+                <div class="form-group__row">
+                    {% include '@select' with { modifier: '', class: '', label: ctaButton.modal.formData.meeting.label, id: ctaButton.modal.formData.meeting.id, options: ctaButton.modal.formData.meeting.options } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: ctaButton.modal.formData.name.label, id: ctaButton.modal.formData.name.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: ctaButton.modal.formData.email.label, id: ctaButton.modal.formData.email.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@textfield' with { modifier: '', class: '', label: ctaButton.modal.formData.phone.label, id: ctaButton.modal.formData.phone.id } %}
+                </div>
+                <div class="form-group__row">
+                    {% include '@datepicker' with { modifier: '', class: '', label: ctaButton.modal.formData.date.label, id: ctaButton.modal.formData.date.id, icon: ctaButton.modal.formData.date.icon } %}
+                </div>
+                <div class="form-group__row form-group__row--last">
+                    {% include '@button' with { modifier: 'button--block', text: ctaButton.modal.formData.submit } %}
+                </div>
+            </div>
+        </form>
+        {% endset %}
+        {% include '@modaal' with { modifier: ctaButton.modal.modifier, id: ctaButton.modal.id, title: ctaButton.modal.title, split: true, modalPrimaryContent: modalPrimaryContent, modalSecondaryContent: modalSecondaryContent } %}
+    {% endif %}
+{% endif %}

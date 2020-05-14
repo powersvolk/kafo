@@ -1,0 +1,19 @@
+<div class="postmeta">
+    <div class="postmeta__content">
+        <div class="postmeta__container">
+            <div class="postmeta__author">
+                <div class="postmeta__image">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="{{ image }}" data-sizes="auto" class="postmeta__img lazyload">
+                </div>
+                    <div class="postmeta__text">
+                        <p class="postmeta__title">{{ name }}</p>
+                        <p class="postmeta__subtitle">{{ count }}</p>
+                    </div>
+            </div>
+            <div class="postmeta__icons">
+                {% include '@icon' with { modifier: icon, class: 'postmeta__icon' } %}
+                <p class="postmeta__title2">{{ length }}</p>
+            </div>
+        </div>
+    </div>
+</div>

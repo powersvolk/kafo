@@ -1,0 +1,12 @@
+<div class="review-slider">
+    <div class="h-container">
+        <div class="review-slider__header">
+            <h2 class="review-slider__title">
+                {{ title }}
+            </h2>
+        </div>
+        <div class="review-slider__container">
+            {% include '@slider' with { sliderMod: 'js-dots-slider', modifier: 'slider--template', class: 'review-slider__slider', template: '@review', slides: reviews} %}
+        </div>
+    </div>
+</div>

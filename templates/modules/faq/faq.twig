@@ -1,0 +1,27 @@
+<div class="faq">
+    <div class="faq__content">
+        <div class="faq__content-categories h-visible-xs">
+            <span class="faq__content-categories-title">{{ faqCategorySelectTitle }}</span>
+            {% set categories = {} %}
+            {% for index, faqCategory in faqCategories %}
+                {% set categories = categories|merge({ (loop.index0) : {name: faqCategory.categoryName, value: faqCategory.categorySlug} }) %}
+            {% endfor %}
+            {% include '@select' with { modifier: 'form-select--simple', class: 'faq__content-categories-select js-faq-category-select', options: categories } %}
+        </div>
+        {% for index, faqCategory in faqCategories %}
+            <div id="{{ faqCategory.categorySlug }}" class="faq__content-item{% if not index %} is-current{% endif %}">
+                {% include '@accordion' with { id: faqCategory.categorySlug, modifier: 'accordion--faq', accordionItems: faqCategory.categoryQuestions } %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="faq__side">
+        <span class="faq__side-title h-visible-xs">{{ faqCategorySectionTitle }}</span>
+        <ul class="faq__categories">
+            {% for index, faqCategory in faqCategories %}
+            <li class="faq__category{% if not index %} is-current{% endif %}">
+                <a href="#{{ faqCategory.categorySlug }}" class="faq__category-link js-faq-category-link">{{ faqCategory.categoryName }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

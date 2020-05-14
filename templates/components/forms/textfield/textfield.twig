@@ -1,0 +1,19 @@
+<div class="form-textfield {% if not noFloatingLabel %}form-textfield--floating-label {% endif %}{{ modifier }}{% if class %} {{ class }}{% endif %}">
+    <div class="form-textfield__inner">
+        <input class="form-textfield__input {{ innerClass }}" type="{{ type|default('text') }}" id="{{ id }}" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}" {% if isDisabled %}disabled{% endif %} {{ data }}{% if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}{% if validate %} data-validate="true"{% endif %}>
+        {% if label %}<label class="form-textfield__label" for="{{ id }}" >{{ label }}</label>{% endif %}
+        {% if giftField %}
+            <div class="form-textfield__icon-container">
+                {% include '@icon' with { modifier: 'ic_24_checkmark', class: 'form-textfield__icon form-textfield__icon--edit' } %}
+                {% include '@icon' with { modifier: 'ic_24_close', class: 'form-textfield__icon form-textfield__icon--close h-hidden js-icon-error' } %}
+            </div>
+        {% else %}
+            {% if icon %}{% include '@icon' with { modifier: icon, class: 'form-textfield__icon' } %}{% endif %}
+        {% endif %}
+    </div>
+    {% if message or giftField %}
+    <div class="form-textfield__message">
+        <div class="form-textfield__message-text js-textfield-error">{{ message }}</div>
+    </div>
+    {% endif %}
+</div>

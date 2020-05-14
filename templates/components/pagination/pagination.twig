@@ -1,0 +1,82 @@
+{% macro li(item, class, version, pages) %}
+    <li class="pagination__item {{ class }}">
+        {% if item.url %}
+            {% if item.type == "select" %}
+                <div class="pagination__select">
+                    <div class="pagination__select-inner">
+                        <select class="pagination__select-input">
+                            {% for page in pages %}
+                                <option value="{{ page.url }}"{% if item.paged == page.paged %} selected="selected"{% endif %}>{{ page.paged }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            {% else %}
+                {% if item.paged == 0 or (pages > 0 and item.paged > pages) %}
+                    <span class="pagination__link is-disabled">{{ item.text }}</span>
+                {% else %}
+                    <a href="{{ item.url }}" class="pagination__link" data-paged="{{ item.paged }}">{{ item.text }}</a>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <span class="pagination__link">{{ item.text }}</span>
+        {% endif %}
+    </li>
+{% endmacro %}
+{% macro separator() %}
+    <li class="pagination__item pagination__item--separator">
+        <span class="pagination__span">...</span>
+    </li>
+{% endmacro %}
+{% import _self as ul %}
+{% if pages > 1 %}
+    <div class="pagination {{ modifier }}">
+        <ul class="pagination__list">
+            {{ ul.li(previous, 'pagination__item--prev', version, pages) }}
+            {% if page > 1 %}
+                {% if first %}
+                    {{ ul.li(first, 'pagination__item--first') }}
+                {% endif %}
+                {% if extraPagesLimit %}
+                    {% for i in range(1, extraPagesLimit) if ( i < page - nearbyPagesLimit ) %}
+                        {{ ul.li(items[i]) }}
+                    {% endfor %}
+                {% endif %}
+                {% if nearbyPagesLimit %}
+                    {% if extraPagesLimit + 1 < page - nearbyPagesLimit %}
+                        {{ ul.separator() }}
+                    {% endif %}
+                    {% for i in range(page - nearbyPagesLimit, page - 1) if ( i > 0 ) %}
+                        {{ ul.li(items[i]) }}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {{ ul.li(current, 'pagination__item--current') }}
+            {% if page < pages %}
+                {% if nearbyPagesLimit %}
+                    {% for i in range(page + 1, page + nearbyPagesLimit) if ( i <= pages ) %}
+                        {{ ul.li(items[i]) }}
+                    {% endfor %}
+                    {% if  (pages - extraPagesLimit) > (page + nearbyPagesLimit) %}
+                        {{ ul.separator() }}
+                    {% endif %}
+                {% endif %}
+                {% if extraPagesLimit %}
+                    {% for i in range(pages - extraPagesLimit + 1, pages) if ( i > page + nearbyPagesLimit ) %}
+                        {{ ul.li(items[i]) }}
+                    {% endfor %}
+                {% endif %}
+                {% if last %}
+                    {{ ul.li(last, 'pagination__item--last') }}
+                {% endif %}
+            {% endif %}
+            {% if select and pages > 2 %}
+                {{ ul.li(select, 'pagination__item--select js-change-page', version, items) }}
+            {% endif %}
+            {{ ul.li(next, 'pagination__item--next', version, pages) }}
+        </ul>
+        {% if showAll %}
+            <a href="{{ showAll.link }}" class="pagination__all">{{ showAll.text }}</a>
+        {% endif %}
+    </div>
+{% endif %}

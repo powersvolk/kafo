@@ -1,0 +1,18 @@
+{% if textWrapper %}
+<div class="text">
+{% endif %}
+<{{ element|default('ul') }} class="list {{ modifier }} {{ class }}">
+    {% for listItem in listItems %}
+        <li class="list__item">
+            {% if listItem.icon %}
+            <div class="list__icon">
+                {% include '@icon' with { modifier: listItem.icon, class: 'list__icon-svg'} %}
+            </div>
+            {% endif %}
+            {{ listItem.text }}
+        </li>
+    {% endfor %}
+</{{ element|default('ul') }}>
+{% if textWrapper %}
+</div>
+{% endif %}

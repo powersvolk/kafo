@@ -1,0 +1,89 @@
+{% include '@header' with header %}
+{% if filterSectionData is defined %}
+    {% include '@filter-section' with { modifier: filterSectionData.modifier, title: filterSectionData.title, text: filterSectionData.text, filterData: filterSectionData.filterData } %}
+{% endif %}
+{% if results.productsCount > 0 %}
+    {% embed '@section' with { id: 'products', title: results.productsTitle, modifier: 'section--search js-section js-section-filter js-section-products' } %}
+        {% block section_content %}
+            <div class="h-container">
+                <div class="grid js-product-grid js-section-sort">
+                    {% include '@loader' with { loaderText: strings.label.loader, modifier: ''} %}
+                    {% for index, product in results.products %}
+                        <div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36 js-article js-search-sortable"{% if index >= 12 %} style="display: none;"{% endif %}
+                             data-stamp="{{ product.timestamp }}" data-price="{{ product.priceRaw }}">
+                            {% include '@product' with product|merge({modifier: ''}) %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if results.productsCount > 12 %}
+                <div class="h-container">
+                    <div class="section__footer">
+                        {% include '@button' with { modifier: 'button--small button--gray button--block-xs', text: strings.button.viewAll|default('Vaata kõiki'), class: 'section__show-all js-section-show-all' } %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% if results.categoriesCount > 0 %}
+    {% embed '@section' with { id: 'categories', title: results.categoriesTitle, modifier: 'section--search js-section-filter js-section-categories' } %}
+        {% block section_content %}
+            <div class="h-container">
+                <div class="grid">
+                    {% for card in results.categories %}
+                        <div class="grid__col--sm-6 grid__col--md-4 grid__col--vertical-gutter-36 js-search-sortable">
+                            {% include '@card' with card %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% if results.articlesCount > 0 %}
+    {% embed '@section' with { id: 'blog', title: results.articlesTitle, modifier: 'section--search js-section js-section-filter js-section-blog' } %}
+        {% block section_content %}
+            <div class="h-container">
+                {% include '@article-grid' with { modifier: '', class: 'js-section-sort', columns: results.articles, hideFrom: 12 } %}
+            </div>
+            {% if results.articlesCount > 12 %}
+                <div class="h-container">
+                    <div class="section__footer">
+                        {% include '@button' with { modifier: 'button--small button--gray button--block-xs', text: strings.button.viewAll|default('Vaata kõiki'), class: 'section__show-all js-section-show-all' } %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% if results.recipesCount > 0 %}
+    {% embed '@section' with { id: 'recipes', title: results.recipesTitle, modifier: 'section--search js-section-filter js-section-recipes' } %}
+        {% block section_content %}
+            <div class="h-container">
+                {% include '@article-grid' with { modifier: '', class: 'js-section-sort', columns: results.recipes } %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% if results.pagesCount > 0 %}
+    {% embed '@section' with { id: 'pages', title: results.pagesTitle, modifier: 'section--search section--bottom-padding js-section-filter js-section-pages' } %}
+        {% block section_content %}
+            <div class="h-container">
+                {% include '@article-grid' with { modifier: 'article-grid--page', class: 'js-section-sort', columns: results.pages } %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endif %}
+{% if emo %}
+    {% include '@emo' with { modifier: 'emo--large emo--reverse emo--background emo--top-wave', title: emo.title, description: emo.description, button: emo.button, image: emo.image } %}
+{% elseif emoModule %}
+    {% include '@emo--module' with emoModule %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+        {% include '@quote' with footerQuote %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

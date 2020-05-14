@@ -1,0 +1,14 @@
+<div class="events-grid">
+    {% if title %}
+    <div class="events-grid__container">
+        <h3 class="events-grid__title">{{ title }}</h3>
+    </div>
+    {% endif %}
+     <div class="events-grid__cards {{ class }}">
+        {% for product in products %}
+            <div class="events-grid__item">
+                {% include '@event-package' with product.productData %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

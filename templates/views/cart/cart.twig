@@ -1,0 +1,59 @@
+{% include '@header' with header %}
+{% if not summary.hasItems %}
+    {% set primary_class %}shop__primary--full{% endset %}
+{% endif %}
+{{ cartPage }}
+{% embed '@section' with { modifier: 'section--background-gray section--bottom-padding', title: false  } %}
+    {% block section_content %}
+        {% set shop_primary %}
+        {% if summary.hasItems %}
+        <form class="woocommerce-cart-form" action="{{ action }}" method="post">
+            <div class="woocommerce-cart-form__contents">
+                {% include '@cart' with cart|merge({modifier: ''}) %}
+            </div>
+            <div class="actions">
+                {% if shop.giftcard %}
+                    <div class="shop__giftcard coupon">
+                        <a href="#giftcardform" class="shop__giftcard-link js-toggle-by-id">{{ shop.giftcard.label }}</a>
+                        <div class="shop__giftcard-form" id="giftcardform">
+                            {% include '@textfield' with shop.giftcard.field|merge({ modifier: 'form-textfield--giftcode js-gift-field', giftField: true}) %}
+                            <input type="submit" class="button h-hidden" name="apply_coupon" value="{{ strings.button.addCode|default('Lisa kood') }}" />
+                        </div>
+                    </div>
+                {% endif %}
+                <input type="submit" class="button h-hidden" name="update_cart" value="{{ strings.button.updateCart }}" />
+            </div>
+            {{ nonce }}
+        </form>
+        {% else %}
+        <h4>{{ strings.label.emptyCart|default('Tooteid pole lisatud') }}</h4>
+        {% endif %}
+        {% endset %}
+        {% if summary.hasItems %}
+            {% set shop_secondary %}
+            <div class="card shop__summary">
+                <div class="card__content">
+                {% include '@order-summary' with summary %}
+                </div>
+            </div>
+            {% endset %}
+        {% endif %}
+        {% include '@shop' with shop|merge({ modifier: 'shop--cart', primary: shop_primary, secondary: shop_secondary, primaryClass: primary_class }) %}
+        {% if shop.modal %}
+            {% include '@modaal' with shop.modal %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+{% if related.products %}
+{% embed '@section' with { modifier: 'section--background section--padding section--related', title: related.title, isContainer: true } %}
+    {% block section_content %}
+       {% include '@product-grid' with { modifier: '', class: 'js-product-slider', products: related.products} %}
+    {% endblock %}
+{% endembed %}
+{% endif %}
+{% embed '@section' %}
+    {% block section_content %}
+        {% include '@brands-list' with footerBrands %}
+    {% endblock %}
+{% endembed %}
+{% include '@footer' with footer %}

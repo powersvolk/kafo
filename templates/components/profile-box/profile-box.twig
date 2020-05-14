@@ -1,0 +1,91 @@
+<div class="profile-box {{ modifier }}">
+    <div class="profile-box__head">
+        {% for headLink in headLinks %}
+        <a href="{{ headLink.link }}" class="profile-box__head-link{% if headLink.isCurrent %} is-current{% endif %} js-profile-box-show">{{ headLink.title }}</a>
+        {% endfor %}
+    </div>
+    <div class="profile-box__content{% if contentModifier %} {{ contentModifier }}{% endif %}">
+        {% if screens %}
+            {% for boxType, screen in screens %}
+                <div id="profile-{{ boxType }}" class="profile-box__inner profile-box__inner--{{ boxType }} js-profile-box js-profile-{{ boxType }} {% if screen.isActive == false %}h-hidden{% endif %} {{ screen.modifier }}" data-type="{{ boxType }}">
+                    {% if screen.contentIcon %}
+                        {% include '@icon' with { modifier: screen.contentIcon, class: 'profile-box__icon' } %}
+                    {% endif %}
+                    {% if screen.title %}
+                        <h4 class="profile-box__title">{{ screen.title }}</h4>
+                    {% endif %}
+                    {% if screen.description %}
+                        <p class="profile-box__description">{{ screen.description }}</p>
+                    {% endif %}
+                    <form {% if screen.form.name %}name="{{ screen.form.name }}" id="{{ screen.form.name }}"{% endif %} {% if screen.form.action %}action="{{ screen.form.action }}"{% endif %} method="post" class="profile-box__form {{ screen.form.class }}" autocomplete="off">
+                        {% if screen.fields %}
+                            {% for field in screen.fields %}
+                                {% include '@textfield' with field|merge({ class: 'profile-box__input', autocomplete: 'off', validate: true }) %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if screen.submitButton %}
+                            {% if screen.submitButton.isNav %}
+                                {% include '@button' with screen.submitButton|merge({modifier: 'button--no-shadow button--small button--block', class: 'profile-box__button js-profile-box-show' }) %}
+                            {% else %}
+                                {% include '@button' with screen.submitButton|merge({modifier: 'button--no-shadow button--small button--block', class: 'profile-box__button' }) %}
+                            {% endif %}
+                        {% endif %}
+                        {% if screen.form.redirect %}
+                            <input type="hidden" name="redirect_to" value="{{ screen.form.redirect }}" />
+                        {% endif %}
+                        {% if screen.form.nonce %}
+                            <input type="hidden" name="nonce" value="{{ screen.form.nonce }}">
+                        {% endif %}
+                        {% if screen.form.ajaxAction %}
+                            <input type="hidden" name="action" value="{{ screen.form.ajaxAction }}">
+                        {% endif %}
+                        {% if boxType == 'reset' %}
+                            <input type="hidden" name="reset_key" value="{{ screen.form.reset_key }}">
+                            <input type="hidden" name="user_login" value="{{ screen.form.user_login }}">
+                        {% endif %}
+                        <div class="profile-box__error js-profile-error">{{ screen.error }}</div>
+                        {% if boxType == 'register' %}
+                        <input class="recaptcha-token" type="hidden" val="" name="g-recaptcha-response">
+                        <div class="profile-box__recaptcha-label">{{ screen.recaptchaLabel }}</div>
+                        {% endif %}
+                    </form>
+                    {% if screen.bottomLink %}
+                        {% include '@button' with screen.bottomLink|merge({ element: 'a', modifier: 'button--naked' }) %}
+                    {% endif %}
+                    {% if screen.backLink %}
+                        {% include '@button' with screen.backLink|merge({ element: 'a', modifier: 'button--naked button--naked-gray', icon: 'arrow-simple-left' }) %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            {# for styleguide #}
+            <div class="profile-box__inner">
+                {% if contentIcon %}
+                    {% include '@icon' with { modifier: contentIcon, class: 'profile-box__icon' } %}
+                {% endif %}
+                {% if title %}
+                    <h4 class="profile-box__title">{{ title }}</h4>
+                {% endif %}
+                {% if description %}
+                    <p class="profile-box__description">{{ description }}</p>
+                {% endif %}
+                <form class="profile-box__form">
+                    {% if fields %}
+                        {% for field in fields %}
+                            {% include '@textfield' with { type: field.type|default('text'), id: field.id, label: field.label, class: 'profile-box__input' } %}
+                        {% endfor %}
+                    {% endif %}
+                    {% if submitButton %}
+                        {% include '@button' with { text: submitButton.text, modifier: 'button--no-shadow button--small button--block', class: 'profile-box__button' } %}
+                    {% endif %}
+                </form>
+                {% if bottomLink %}
+                    {% include '@button' with { element: 'a', link: bottomLink.link, text: bottomLink.title, modifier: 'button--naked', class: 'profile-box__link' } %}
+                {% endif %}
+                {% if backLink %}
+                    {% include '@button' with { element: 'a', link: backLink.link, text: backLink.title, modifier: 'button--naked button--naked-gray', class: 'profile-box__back', icon: 'arrow-right' } %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
